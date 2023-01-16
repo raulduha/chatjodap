@@ -6,7 +6,11 @@ import 'loginScreen.dart';
 import 'home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+void main() async{
+  
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 DatabaseReference usersRef = FirebaseDatabase.instance.reference().child("users");
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Your App',
-      initialRoute: '/home',
+      initialRoute: '/register',
       onGenerateRoute: Routers.generateRoute,
       
       //initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,

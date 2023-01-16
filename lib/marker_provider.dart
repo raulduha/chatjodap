@@ -7,7 +7,7 @@ class MarkerProvider {
   //static const _apiKey = 'AIzaSyADfCV_QEzetFvQ5MG4Hj0zH3QBYX-F0hU';
   final Location _location = Location();
   
-
+  
   Future<List<Marker>> getMarkersFromAddresses(List<String> addresses) async {
     final markers = <Marker>[];
     for (final address in addresses) {

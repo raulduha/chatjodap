@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bottom_nav_bar.dart';
 import 'package:flutter_application_1/favorites.dart';
 import 'package:flutter_application_1/home_screen.dart';
+import 'package:flutter_application_1/loginScreen.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile_screen.dart';
+import 'package:flutter_application_1/registrationScreen.dart';
 import 'event_screen.dart';
 
 class Routers {
@@ -20,11 +22,18 @@ class Routers {
         page = FavoritesScreen();
         break;
       case '/events':
-        page = EventScreen();
+        page = EventPage();
         break;
       case '/profile':
         page = ProfileScreen();
         break;
+      case '/register':
+        page = RegistrationScreen();
+        break;
+      case '/login':
+        page = LoginScreen();
+        break;
+      
       default:
         page = HomePage();
     }
