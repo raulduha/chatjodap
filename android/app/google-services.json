@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "56598788205",
+    "project_id": "chatjodap",
+    "storage_bucket": "chatjodap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56598788205:android:7428e9dcd682ddff3ca764",
+        "android_client_info": {
+          "package_name": "com.chatjodap.rauld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56598788205-4efnu4t5raqqlfj40vgfpen8dk76df09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8ZzqNJm_KF3oA-5MqpdNnzpgmn1FFT_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56598788205-4efnu4t5raqqlfj40vgfpen8dk76df09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
