@@ -22,7 +22,7 @@ class Routers {
         page = FavoritesScreen();
         break;
       case '/events':
-        page = EventPage();
+        page = EventsPage();
         break;
       case '/profile':
         page = ProfileScreen();
