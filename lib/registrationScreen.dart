@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'loginScreen.dart';
@@ -7,14 +8,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:flutter_application_1/widgets/divider.dart';
 import 'router.dart';
+import 'package:intl/intl.dart';
+import 'package:age_calculator/age_calculator.dart';
+
 class RegistrationScreen extends StatelessWidget 
 {
   static const String idScreen = "register";
 
   TextEditingController nameTextEditingController = TextEditingController();
+  TextEditingController lastnameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+
+  bool minim_age = true;
+  TextEditingController dateTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -22,18 +30,17 @@ class RegistrationScreen extends StatelessWidget
       backgroundColor: Colors.white,
       body: Column(
         children:[
-          const SizedBox(height: 15.0,),
-          const Image(image: AssetImage('images/bplogo.png'),
-          width:100.0,
-          height: 100.0,
-          alignment: Alignment.center,
+          // const SizedBox(height: 1.0,),
+          // const Image(image: AssetImage('images/bplogo.png'),
+          // width:100.0,
+          // height: 100.0,
+          // alignment: Alignment.center,
+          // ),
 
-          ),
           const SizedBox(height:15.0,),
           const Text(
-            "Registro de Usuarios",
+            "Regístrate!",
             style: TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
-
             textAlign: TextAlign.center,
           ),
 
@@ -48,6 +55,23 @@ class RegistrationScreen extends StatelessWidget
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Name",
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+
+                const SizedBox(height: 1.0,),
+                TextField(
+                  controller: lastnameTextEditingController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: "Last Name",
                     labelStyle: TextStyle(
                       fontSize: 15.0,
                     ),
@@ -109,6 +133,43 @@ class RegistrationScreen extends StatelessWidget
                   ),
                   style: TextStyle(fontSize: 10.0),
                 ),
+
+                const SizedBox(height: 1.0,),
+                TextField(
+                  controller: dateTextEditingController, //editing controller of this TextField
+                  decoration: InputDecoration( 
+                   icon: Icon(Icons.calendar_today), //icon of text field
+                   labelText: "Enter Birth Date" //label text of field
+                  ),
+                  onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context, initialDate: DateTime.now(),
+                      firstDate: DateTime(1930), //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime.now()
+                  );
+
+                    if(pickedDate != null ){
+                        //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
+                        log(formattedDate); 
+                        ////formatted date output using intl package =>  2021-03-16
+                        //you can implement different kind of Date Format here according to your requirement
+                        dateTextEditingController.text = formattedDate;
+
+                        DateDuration age = AgeCalculator.age(pickedDate);
+                        int ageInYears = age.years;
+                        
+                        if (ageInYears < 18) {
+                          log("menor de edad");
+                          minim_age = false;
+                        }
+                    }
+                  }
+                ),
+
+
+
+
                 const SizedBox(height: 1.0,),
                 ElevatedButton(
                 style: ButtonStyle(
@@ -135,12 +196,17 @@ class RegistrationScreen extends StatelessWidget
                   {
                     displayToastMessage("password must be atleast 6 characters.");
                   }
+                  else if (minim_age == false) {
+                    displayToastMessage("You must be 18+ years to Join");
+                  }
                   
-                  registerNewUser(context);
+                  else {
+                    registerNewUser(context);
+                  }
+                  
                 },
                 child: const Text('Enabled Button')),
                   const SizedBox(height: 10),
-            
             ],
             ),
               
@@ -167,7 +233,6 @@ class RegistrationScreen extends StatelessWidget
       builder: (BuildContext context)
       {
           return ProgessDialog(message: "Registering, please wait..");
-
       }
     );
 
@@ -186,6 +251,7 @@ class RegistrationScreen extends StatelessWidget
     
     Map userDataMap = {
       "name": nameTextEditingController.text.trim(),
+      "lastname": lastnameTextEditingController.text.trim(),
       "email": emailTextEditingController.text.trim(),
       "phone": phoneTextEditingController.text.trim(),
     };
@@ -205,4 +271,5 @@ class RegistrationScreen extends StatelessWidget
   {
   Fluttertoast.showToast(msg: message);
   }
+  
 }

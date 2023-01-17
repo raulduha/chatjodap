@@ -8,6 +8,7 @@ import 'registrationScreen.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:flutter_application_1/widgets/divider.dart';
 import 'router.dart';
+import 'dart:developer';
 
 
 import 'package:firebase_database/firebase_database.dart';
@@ -24,13 +25,14 @@ class LoginScreen extends StatelessWidget
       backgroundColor: Colors.white,
       body: Column(
         children:[
-          const SizedBox(height: 65.0,),
-          const Image(image: AssetImage('images/bplogo.png'),
-          width:120.0,
-          height: 120.0,
-          alignment: Alignment.center,
 
-          ),
+          // const SizedBox(height: 65.0,),
+          // const Image(image: AssetImage('images/bplogo.png'),
+          // width:120.0,
+          // height: 120.0,
+          // alignment: Alignment.center,
+          // ),
+
           const SizedBox(height:15.0,),
           const Text(
             "Ingreso de Usuarios",
