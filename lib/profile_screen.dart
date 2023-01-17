@@ -6,6 +6,7 @@ import 'bottom_nav_bar.dart';
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('profile screen'),
@@ -16,4 +17,10 @@ class ProfileScreen extends StatelessWidget {
       
     );
   }
+  
+  
+  
 }
+
+
+
