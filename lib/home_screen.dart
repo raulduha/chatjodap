@@ -56,25 +56,27 @@ class _HomePageState extends State<HomePage> {
     _getMarkers();
 
   }
-  void _getMarkers() async {
+void _getMarkers() async {
     // Retrieve events data from Firebase
     final eventsSnapshot = await _database.reference().child("events").once();
-  
-
-    // Create a new list of addresses
-    final addresses = <String>[];
-
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
+
+    // Create a new list of addresses and names
+    final addresses = <String>[];
+    final names = <String>[];
     if (eventsData != null) {
-    eventsData.forEach((key, value) {
-    final address = value['address'];
-    addresses.add(address);
-  });
+        eventsData.forEach((key, value) {
+            final address = value['address'];
+            final name = value['name'];
+            addresses.add(address);
+            names.add(name);
+        });
+    }
+
+    // Call _getMarkers() function with the new list of addresses and names
+    markers = await markerProvider.getMarkersFromAddresses(addresses, names);
 }
 
-    // Call _getMarkers() function with the new list of addresses
-    markers = await markerProvider.getMarkersFromAddresses(addresses);
-}
   
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
 
           (
           markers: Set<Marker>.of(markers),
-          
+
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
           mapType: MapType.normal,
           myLocationButtonEnabled: true,
