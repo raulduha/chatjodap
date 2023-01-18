@@ -1,3 +1,6 @@
+
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:flutter/animation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,12 +9,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:firebase_database/firebase_database.dart';
 
+
 class MarkerProvider {
   //static const _apiKey = 'AIzaSyADfCV_QEzetFvQ5MG4Hj0zH3QBYX-F0hU';
   //final Location _location = Location();
   //final FirebaseDatabase _database = FirebaseDatabase.instance;
   
+
+  
   Future<List<Marker>> getMarkersFromAddresses(List<String> addresses, List<String> names) async {
+    final byteData = await rootBundle.load("images/markerpink2.png");
+    final image = Uint8List.view(byteData.buffer);
+    
     final markers = <Marker>[];
     for (int i = 0; i < addresses.length; i++) {
         final coordinates = await _getCoordinatesFromAddress(addresses[i]);
@@ -20,7 +29,9 @@ class MarkerProvider {
             markerId: MarkerId(addresses[i]),
             position: coordinates,
             infoWindow: InfoWindow(title: names[i]),
-            visible: true,
+            icon: BitmapDescriptor.fromBytes(image),
+            
+            
         ));
     }
     return markers;
