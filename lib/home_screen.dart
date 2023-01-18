@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
 import 'marker_provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -24,6 +25,8 @@ class _HomePageState extends State<HomePage> {
     late Position currentPosition;
     var geolocator = Geolocator();
     double bottomPaddingOfMap = 0;
+
+    final FirebaseDatabase _database = FirebaseDatabase.instance;
   
   
 
@@ -54,9 +57,24 @@ class _HomePageState extends State<HomePage> {
 
   }
   void _getMarkers() async {
-    final addresses = ['New York City, NY', 'cerro punta de damas 12218, lo barnechea', '1600 Pennsylvania Ave NW, Washington, DC 20500','1130 Alta Ave, Mountain View, CA 94043, USA'];
+    // Retrieve events data from Firebase
+    final eventsSnapshot = await _database.reference().child("events").once();
+  
+
+    // Create a new list of addresses
+    final addresses = <String>[];
+
+    final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
+    if (eventsData != null) {
+    eventsData.forEach((key, value) {
+    final address = value['address'];
+    addresses.add(address);
+  });
+}
+
+    // Call _getMarkers() function with the new list of addresses
     markers = await markerProvider.getMarkersFromAddresses(addresses);
-  }
+}
   
   @override
   Widget build(BuildContext context) {
