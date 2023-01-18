@@ -4,6 +4,8 @@ import 'event_getter.dart';
 import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 import 'event_getter.dart';
+import 'widgets/Divider.dart';
+import 'event_detail_page.dart';
 
 class EventsPage extends StatefulWidget {
   @override
@@ -64,7 +66,7 @@ class _EventsPageState extends State<EventsPage> {
               },
             ),
           ),
-          Expanded(
+        Expanded(
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())
                 : ListView.builder(
@@ -72,16 +74,23 @@ class _EventsPageState extends State<EventsPage> {
                     itemBuilder: (context, index) {
                       final event = _events[index];
                       return ListTile(
-                        title: Text(event.name),
                         
+                        title: Text(event.name),
                         subtitle: Text("${event.distance}km"),
+                        key: Key(event.id),
                         onTap: () {
-                          // Navigate to event details page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventDetailPage(event: event),
+                            ),
+                          );
                         },
                       );
                     },
                   ),
           ),
+
           Container(
             height: 50,
             child: Row(
