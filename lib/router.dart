@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bottom_nav_bar.dart';
 import 'package:flutter_application_1/favorites.dart';
-import 'package:flutter_application_1/home_screen.dart';
+import 'package:flutter_application_1/map_screen.dart';
 import 'package:flutter_application_1/loginScreen.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_application_1/profile_screen.dart';
 import 'package:flutter_application_1/registrationScreen.dart';
 import 'event_screen.dart';
+import 'home_page.dart';
 
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -18,8 +19,8 @@ class Routers {
       case '/home':
         page = HomePage();
         break;
-      case '/favorite':
-        page = FavoritesScreen();
+      case '/map':
+        page = MapPage();
         break;
       case '/events':
         page = EventsPage();

@@ -47,7 +47,7 @@ class _EventsPageState extends State<EventsPage> {
     Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Events'),
+        title: Text('Closest Events'),
       ),
       body: Column(
         children: [
