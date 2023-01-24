@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/home_screen.dart';
+import 'package:flutter_application_1/map_screen.dart';
 import 'router.dart';
 import 'registrationScreen.dart';
 import 'loginScreen.dart';
-import 'home_screen.dart';
+import 'map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Your App',
-      initialRoute: '/home',
+      initialRoute: '/map',
       onGenerateRoute: Routers.generateRoute,
       
       //initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,

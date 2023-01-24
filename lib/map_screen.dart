@@ -8,12 +8,13 @@ import 'marker_provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 
-class HomePage extends StatefulWidget {
+class MapPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MapPageState createState() => _MapPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MapPageState extends State<MapPage> {
+  
     final Completer<GoogleMapController> _controllerGoogleMap = Completer<GoogleMapController>();
     
     late GoogleMapController newGoogleMapController;
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   
 
   void _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       currentPosition = position;
 
       LatLng latLatPosition = LatLng(position.latitude, position.longitude);
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       CameraPosition cameraPosition = new CameraPosition(target: latLatPosition, zoom: 14);
       newGoogleMapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    
+    _getMarkers();
     }
 
     static const CameraPosition _kGooglePlex = CameraPosition(
@@ -52,43 +53,46 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
     _getMarkers();
+    _getCurrentLocation();
+    
 
   }
-  void _getMarkers() async {
+void _getMarkers() async {
     // Retrieve events data from Firebase
     final eventsSnapshot = await _database.reference().child("events").once();
-  
-
-    // Create a new list of addresses
-    final addresses = <String>[];
-
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
+
+    // Create a new list of addresses and names
+    final addresses = <String>[];
+    final names = <String>[];
     if (eventsData != null) {
-    eventsData.forEach((key, value) {
-    final address = value['address'];
-    addresses.add(address);
-  });
+        eventsData.forEach((key, value) {
+            final address = value['address'];
+            final name = value['name'];
+            addresses.add(address);
+            names.add(name);
+        });
+    }
+    // Call _getMarkers() function with the new list of addresses and names
+      markers = await markerProvider.getMarkersFromAddresses(addresses, names);;
+  
 }
 
-    // Call _getMarkers() function with the new list of addresses
-    markers = await markerProvider.getMarkersFromAddresses(addresses);
-}
   
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('MAPA')),
       body:
       Stack(
       children: [
-          GoogleMap
-
-          (
+          GoogleMap(
+            
           markers: Set<Marker>.of(markers),
-          
+
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
           mapType: MapType.normal,
           myLocationButtonEnabled: true,
@@ -101,7 +105,6 @@ class _HomePageState extends State<HomePage> {
           {
             _controllerGoogleMap.complete(controller);
             newGoogleMapController = controller;
-        
             // for black theme google maps and no marker
             newGoogleMapController.setMapStyle('''
                     [
@@ -271,16 +274,14 @@ class _HomePageState extends State<HomePage> {
             
             setState(() {
               bottomPaddingOfMap = 130.0;
-            });
+              
+            });     
             
-            
+            setState(() {
+              _getMarkers();
             _getCurrentLocation();
-            
-            
+            });
           },
-          
-
-          
           ),
       ]
       
