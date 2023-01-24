@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/favorites.dart';
-import 'package:flutter_application_1/home_screen.dart';
+import 'package:flutter_application_1/map_screen.dart';
 import 'package:flutter_application_1/profile_screen.dart';
 import 'event_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-        Navigator.pushNamed(context, '/favorite');
+        Navigator.pushNamed(context, '/map');
         break;
       case 2:
         Navigator.pushNamed(context, '/events');
@@ -50,8 +50,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'fav',
+          icon: Icon(Icons.map),
+          label: 'map',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.event),

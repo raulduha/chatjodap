@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'main.dart';
 import 'loginScreen.dart';
-import 'home_screen.dart';
+import 'map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'registrationScreen.dart';

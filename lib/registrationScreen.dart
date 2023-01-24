@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'loginScreen.dart';
-import 'home_screen.dart';
+import 'map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
