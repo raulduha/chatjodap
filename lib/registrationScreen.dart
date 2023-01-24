@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:flutter_application_1/widgets/divider.dart';
+import 'package:division/division.dart';
 import 'router.dart';
 import 'package:intl/intl.dart';
 import 'package:age_calculator/age_calculator.dart';
@@ -18,18 +19,26 @@ class RegistrationScreen extends StatelessWidget
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController lastnameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController repeatpasswordTextEditingController = TextEditingController();
 
+  // ignore: non_constant_identifier_names
   bool minim_age = true;
   TextEditingController dateTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: rgb(28, 27, 27),
+      resizeToAvoidBottomInset: false,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children:[
+
+          const SizedBox(height: 30),
+
+          // imagen Logo?
+
           // const SizedBox(height: 1.0,),
           // const Image(image: AssetImage('images/bplogo.png'),
           // width:100.0,
@@ -37,192 +46,301 @@ class RegistrationScreen extends StatelessWidget
           // alignment: Alignment.center,
           // ),
 
-          const SizedBox(height:15.0,),
           const Text(
-            "Regístrate!",
-            style: TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
+            "Sign Up!",
+            style: TextStyle(fontSize: 34.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
 
+          const SizedBox(height: 10),
+          const Text(
+            "The best events are waiting for you",
+            style: TextStyle(fontSize: 20, fontFamily: "Brand Bold", color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: nameTextEditingController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
+
+
+                // Name
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
                     ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: nameTextEditingController,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Name',
+                          icon: Icon(Icons.person, color: Colors.grey,),
+                        ),
+                      ),
                     ),
-                  ),
-                  style: TextStyle(fontSize: 20.0),
+                  )
                 ),
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: lastnameTextEditingController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Last Name",
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
+                // Last Name
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
                     ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: lastnameTextEditingController,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Last Name',
+                          icon: Icon(Icons.person, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+
+
+                // Email
+
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: emailTextEditingController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email',
+                          icon: Icon(Icons.email, color: Colors.grey,),
+                        ),
+                      ),
                     ),
                   ),
-                  style: TextStyle(fontSize: 20.0),
                 ),
+
+
+                // Birth Date
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: dateTextEditingController,
+                        onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context, initialDate: DateTime.now(),
+                            firstDate: DateTime(1930), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime.now()
+                        );
+
+                          if(pickedDate != null ){
+                              //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
+                              log(formattedDate); 
+                              ////formatted date output using intl package =>  2021-03-16
+                              //you can implement different kind of Date Format here according to your requirement
+                              dateTextEditingController.text = formattedDate;
+                              DateDuration age = AgeCalculator.age(pickedDate);
+                              int ageInYears = age.years;
+                              if (ageInYears < 18) {
+                                log("menor de edad");
+                                minim_age = false;
+                              }
+                              else {
+                                minim_age = true;
+                              }
+                          }
+                        },
+
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Birthday',
+                          icon: Icon(Icons.calendar_month, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+
+
+
+                 // Password
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: passwordTextEditingController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Password',
+                          icon: Icon(Icons.lock, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                    ),
+                ),
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: repeatpasswordTextEditingController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Repeat Password',
+                          icon: Icon(Icons.lock, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                    ),
+                ),
+
+
+
 
                 const SizedBox(height: 10.0,),
-                TextField(
-                  controller: emailTextEditingController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10.0,
-                    ),
-                  ),
-                  style: TextStyle(fontSize: 10.0),
-                ),
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: phoneTextEditingController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: "Phone",
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10.0,
-                    ),
-                  ),
-                  style: TextStyle(fontSize: 10.0),
-                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Center(
+                    child: ElevatedButton(
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: passwordTextEditingController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10.0,
-                    ),
-                  ),
-                  style: TextStyle(fontSize: 10.0),
-                ),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(const Size(310, 45)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: dateTextEditingController, //editing controller of this TextField
-                  decoration: InputDecoration( 
-                   icon: Icon(Icons.calendar_today), //icon of text field
-                   labelText: "Enter Birth Date" //label text of field
-                  ),
-                  onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(1930), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime.now()
-                  );
-
-                    if(pickedDate != null ){
-                        //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); 
-                        log(formattedDate); 
-                        ////formatted date output using intl package =>  2021-03-16
-                        //you can implement different kind of Date Format here according to your requirement
-                        dateTextEditingController.text = formattedDate;
-
-                        DateDuration age = AgeCalculator.age(pickedDate);
-                        int ageInYears = age.years;
-                        
-                        if (ageInYears < 18) {
-                          log("menor de edad");
-                          minim_age = false;
+                      onPressed: () {
+                        if(nameTextEditingController.text.length < 4)
+                        {
+                          displayToastMessage("name must be atleast 3 characters.");
                         }
-                    }
-                  }
+                        else if(!emailTextEditingController.text.contains("@"))
+                        {
+                          displayToastMessage("email address is not Valid.");
+                        }
+                        else if(passwordTextEditingController.text.length<6)
+                        {
+                          displayToastMessage("password must be atleast 6 characters.");
+                        }
+                        else if (minim_age == false) {
+                          displayToastMessage("You must be 18+ years to Join");
+                        }
+                        else if (passwordTextEditingController.text != repeatpasswordTextEditingController.text) {
+                          displayToastMessage("Passwords must match");
+                        }
+                        else {
+                          registerNewUser(context);
+                        }
+                      },
+                      child: const Text('Sign Up')),
+                  ),
                 ),
 
 
 
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 
-                const SizedBox(height: 1.0,),
-                ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(10)),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 10, color: Colors.white))),
-                onPressed: () 
-                {
-                  if(nameTextEditingController.text.length < 4)
-                  {
-                    displayToastMessage("name must be atleast 3 characters.");
-                  }
-                  else if(!emailTextEditingController.text.contains("@"))
-                  {
-                    displayToastMessage("email address is not Valid.");
-                  }
-                  else if(phoneTextEditingController.text.isEmpty)
-                  {
-                    displayToastMessage("Phone number is mandatory.");
-                  }
-                  else if(passwordTextEditingController.text.length<7)
-                  {
-                    displayToastMessage("password must be atleast 6 characters.");
-                  }
-                  else if (minim_age == false) {
-                    displayToastMessage("You must be 18+ years to Join");
-                  }
-                  
-                  else {
-                    registerNewUser(context);
-                  }
-                  
-                },
-                child: const Text('Enabled Button')),
-                  const SizedBox(height: 10),
+                    const Text(
+                      "Already have an account?",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+
+                    TextButton(
+                      onPressed: (){
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.idScreen, (route) => false);
+                      }, 
+                      child: const Text(
+                        "Login here",
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                      ),
+                    ),
+                  ],
+                )
+
+
+
             ],
             ),
-              
-          ),
-        TextButton(
-          onPressed: (){
-            Navigator.pushNamedAndRemoveUntil(context, LoginScreen.idScreen, (route) => false);
-          }, 
-          child: const Text(
-            "already have an account? login here. ",
-          ),
           ),
         ],
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   void registerNewUser(BuildContext context) async
@@ -253,7 +371,7 @@ class RegistrationScreen extends StatelessWidget
       "name": nameTextEditingController.text.trim(),
       "lastname": lastnameTextEditingController.text.trim(),
       "email": emailTextEditingController.text.trim(),
-      "phone": phoneTextEditingController.text.trim(),
+      
     };
     usersRef.child(firebaseUser.uid).set(userDataMap);
     displayToastMessage("Congratulations, yout account has been created.");

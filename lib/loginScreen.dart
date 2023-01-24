@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'main.dart';
 import 'loginScreen.dart';
 import 'map_screen.dart';
@@ -6,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'registrationScreen.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
-import 'package:flutter_application_1/widgets/divider.dart';
+import 'package:division/division.dart';
 import 'router.dart';
 import 'dart:developer';
 
@@ -22,9 +24,13 @@ class LoginScreen extends StatelessWidget
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: rgb(28, 27, 27),
+      resizeToAvoidBottomInset: false,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children:[
+
+          // Imagen Logo?
 
           // const SizedBox(height: 65.0,),
           // const Image(image: AssetImage('images/bplogo.png'),
@@ -33,93 +39,152 @@ class LoginScreen extends StatelessWidget
           // alignment: Alignment.center,
           // ),
 
-          const SizedBox(height:15.0,),
-          const Text(
-            "Ingreso de Usuarios",
-            style: TextStyle(fontSize: 24.0, fontFamily: "Brand Bold"),
 
+          const Text(
+            "Jodap",
+            style: TextStyle(fontSize: 34.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
 
+          const SizedBox(height: 10),
+          const Text(
+            "Welcome Back!",
+            style: TextStyle(fontSize: 20, fontFamily: "Brand Bold", color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: emailTextEditingController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
+
+
+                // Email Field
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
                     ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: emailTextEditingController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email',
+                          icon: Icon(Icons.email, color: Colors.grey,),
+                        ),
+                      ),
                     ),
-                  ),
-                  style: TextStyle(fontSize: 20.0),
+                    ),
                 ),
 
-                const SizedBox(height: 1.0,),
-                TextField(
-                  controller: passwordTextEditingController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: TextStyle(
-                      fontSize: 20.0,
+
+                // Password Field
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
                     ),
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: passwordTextEditingController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Password',
+                          icon: Icon(Icons.lock, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                    ),
+                ),
+
+
+                //Login Button
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(const Size(310, 45)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+
+                      onPressed: () {
+                        if(!emailTextEditingController.text.contains("@"))
+                        {
+                          displayToastMessage("email address is not Valid.");
+                        }
+                        else if(passwordTextEditingController.text.length<7)
+                        {
+                          displayToastMessage("password must be atleast 6 characters.");
+                        }
+                        else
+                        {
+                          loginAndAuthenticateUser(context);                          }
+                      },
+
+                      child: const Text("Login"),
                     ),
                   ),
-                  style: TextStyle(fontSize: 20.0),
                 ),
-                const SizedBox(height: 1.0,),
-                ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(10)),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 20, color: Colors.white))),
-                onPressed: () {
-                  if(!emailTextEditingController.text.contains("@"))
-                  {
-                    displayToastMessage("email address is not Valid.");
-                  }
-                  else if(passwordTextEditingController.text.length<7)
-                  {
-                    displayToastMessage("password must be atleast 6 characters.");
-                  }
-                  else
-                  {
-                    loginAndAuthenticateUser(context);
-                  }
-                  
-                },
-                child: const Text('Enabled Button')),
-            const SizedBox(height: 20),
-            
-            ],
+
+
+
+                // ACA AGREGAR AYUDA DE PASSWORD Y LA API DE INSTAGRAM
+
+
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    const Text(
+                      "Do not have an account?",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+
+                    TextButton(
+                      onPressed: (){
+                        Navigator.pushNamedAndRemoveUntil(context, RegistrationScreen.idScreen, (route) => false);
+                      }, 
+                      child: const Text(
+                        "Sign Up here",
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                      ),
+                    ),
+                  ],
+                )
+
+              ],
             ),
-              
-          ),
-        TextButton(
-          onPressed: (){
-            Navigator.pushNamedAndRemoveUntil(context, RegistrationScreen.idScreen, (route) => false);
-          }, 
-          child: const Text(
-            "Do not have an account? Register here. ",
-          ),
           ),
         ],
       ),
     );
   }
+
+
+
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   void loginAndAuthenticateUser(BuildContext context) async
