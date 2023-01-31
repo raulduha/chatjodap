@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/map_screen.dart';
+import 'package:flutter_application_1/provider/google_sign_in.dart';
+import 'package:flutter_application_1/screens/map_screen.dart';
+import 'package:provider/provider.dart';
 import 'router.dart';
 import 'registrationScreen.dart';
 import 'loginScreen.dart';
-import 'map_screen.dart';
+import 'screens/map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,23 +15,27 @@ void main() async{
   await Firebase.initializeApp();
   runApp(MyApp());
 }
-DatabaseReference usersRef = FirebaseDatabase.instance.reference().child("users");
+DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("users");
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => GoogleSignInProvider(),
+    
+    child: MaterialApp(
       title: 'Your App',
-      initialRoute: '/map',
+      initialRoute: '/login',
       onGenerateRoute: Routers.generateRoute,
-      
-      //initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,
+        
+      // initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,
       routes: 
       {
         RegistrationScreen.idScreen: (context) => RegistrationScreen(),
         LoginScreen.idScreen: (context) => LoginScreen(), // cambiar color para ingresar datos
-         // cambiar color para ingresar datos
+        // cambiar color para ingresar datos
       },
-    );
-  }
+    )
+  );
+    
 }
+

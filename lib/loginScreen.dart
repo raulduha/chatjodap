@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/screens/forgot_pw_page.dart';
+import 'package:flutter_application_1/widgets/brand_button.dart';
 import 'main.dart';
 import 'loginScreen.dart';
-import 'map_screen.dart';
+import 'screens/map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'registrationScreen.dart';
@@ -11,8 +13,9 @@ import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:division/division.dart';
 import 'router.dart';
 import 'dart:developer';
-
-
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/provider/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class LoginScreen extends StatelessWidget
@@ -27,8 +30,9 @@ class LoginScreen extends StatelessWidget
       backgroundColor: rgb(28, 27, 27),
       resizeToAvoidBottomInset: false,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children:[
+          const SizedBox(height: 160,),
 
           // Imagen Logo?
 
@@ -57,8 +61,8 @@ class LoginScreen extends StatelessWidget
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
 
                 // Email Field
 
@@ -113,15 +117,38 @@ class LoginScreen extends StatelessWidget
                 ),
 
 
-                //Login Button
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ForgotPasswordPage();
+                            },
+                          ),
+                        );
+                      }, 
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),                  ),
+                ),
 
-                const SizedBox(height: 10),
+
+                // SignIn button
+                const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Center(
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size(310, 45)),
+                        minimumSize: MaterialStateProperty.all(const Size(350, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                         backgroundColor: MaterialStateProperty.all(Colors.green),
                         textStyle: MaterialStateProperty.all(
@@ -140,21 +167,76 @@ class LoginScreen extends StatelessWidget
                         }
                         else
                         {
-                          loginAndAuthenticateUser(context);                          }
+                          loginAndAuthenticateUser(context);                          
+                        }
                       },
 
-                      child: const Text("Login"),
+                      child: const Text("Sign in"),
                     ),
                   ),
                 ),
 
 
 
-                // ACA AGREGAR AYUDA DE PASSWORD Y LA API DE INSTAGRAM
+                const SizedBox(height: 40),
 
 
-                const SizedBox(height: 15),
-                Row(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child:
+                    Row(
+                        
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                            Expanded(
+                                child: Divider(
+                                    color: Colors.grey[800],
+                                    thickness: 4,
+                                ),
+                            ),
+                            SizedBox(width: 8),
+                            Text("OR", style: TextStyle(color: Colors.white),),
+                            SizedBox(width: 8),
+                            Expanded(
+                                child: Divider(
+                                    color: Colors.grey[800],
+                                    thickness: 4,
+                                ),
+                            ),
+                        ],
+                    ),
+                ),
+
+
+
+
+                // Google Login
+
+                const SizedBox(height: 40),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: Center(
+                    child: GoogleButton(
+                      brandIcon: Image(image: AssetImage('images/google_icon.png')),
+                      label: 'Sign in with Google',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.grey,
+                      height: 45,
+                      
+                    )
+                  ),
+
+                ),
+
+
+
+              ],
+            ),
+          ),
+
+
+          const SizedBox(height: 50),
+          Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
@@ -173,11 +255,9 @@ class LoginScreen extends StatelessWidget
                       ),
                     ),
                   ],
-                )
+          )
 
-              ],
-            ),
-          ),
+
         ],
       ),
     );
@@ -187,50 +267,53 @@ class LoginScreen extends StatelessWidget
 
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  void loginAndAuthenticateUser(BuildContext context) async
-  {
+  void loginAndAuthenticateUser(BuildContext context) async {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context)
       {
           return ProgessDialog(message: "authenticating, please wait..");
-
       }
     );
     final User? firebaseUser  = (await _firebaseAuth.signInWithEmailAndPassword(
-    email: emailTextEditingController.text,
-    password: passwordTextEditingController.text
-  ).catchError((errMsg)
+      email: emailTextEditingController.text,
+      password: passwordTextEditingController.text
+    ).catchError((errMsg)
 
-  {
-    Navigator.pop(context);
-    displayToastMessage(errMsg.toString());
+    {
+      Navigator.pop(context);
+      displayToastMessage(errMsg.toString());
 
-  })).user;
-  if(firebaseUser != null) 
-  {
-    usersRef.child(firebaseUser.uid).once().then((DatabaseEvent snap){
-      if(snap.snapshot.value != null)
-      {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);;
-        displayToastMessage("You are logged in now. ");
-      }
-      else
-      {
-        Navigator.pop(context); 
-        _firebaseAuth.signOut();
-        displayToastMessage("No record exists for this user, please create a new account. ");
-      }
-    });
-  
+    })).user;
+    
+    if(firebaseUser != null) {
+      usersRef.child(firebaseUser.uid).once().then((DatabaseEvent snap){
+        if(snap.snapshot.value != null)
+          {
+            Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);;
+            displayToastMessage("You are logged in now. ");
+          }
+          else
+          {
+            Navigator.pop(context); 
+            _firebaseAuth.signOut();
+            displayToastMessage("No record exists for this user, please create a new account. ");
+          }
+        });
+      
+    }
+    else {
+      Navigator.pop(context);
+      displayToastMessage("Error Ocurred, can not Sign in.");
+    }
   }
-else
-{
-  Navigator.pop(context);
-  displayToastMessage("Error Ocurred, can not Sign in.");
-}
-  }
+
+
+
+
+
+
   displayToastMessage(String message)
   {
   Fluttertoast.showToast(msg: message);

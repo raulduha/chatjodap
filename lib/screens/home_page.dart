@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'event_detail_page.dart';
-import 'event_getter.dart';
+import '../event_detail_page.dart';
+import '../event_getter.dart';
+
 class HomePage extends StatefulWidget {
+
+  const HomePage({final Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
+  
 }
 
 class _HomePageState extends State<HomePage> {

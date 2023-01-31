@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'bottom_nav_bar.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override

@@ -1,9 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'main.dart';
 import 'loginScreen.dart';
-import 'map_screen.dart';
+import 'screens/map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:flutter_application_1/widgets/divider.dart';
@@ -12,8 +16,11 @@ import 'router.dart';
 import 'package:intl/intl.dart';
 import 'package:age_calculator/age_calculator.dart';
 
+
+
 class RegistrationScreen extends StatelessWidget 
 {
+
   static const String idScreen = "register";
 
   TextEditingController nameTextEditingController = TextEditingController();
@@ -35,7 +42,7 @@ class RegistrationScreen extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.center,
         children:[
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 90),
 
           // imagen Logo?
 
@@ -253,8 +260,7 @@ class RegistrationScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 10.0,),
-
+                const SizedBox(height: 25.0,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Center(
@@ -269,8 +275,8 @@ class RegistrationScreen extends StatelessWidget
                         ),
                       ),
 
-                      onPressed: () {
-                        if(nameTextEditingController.text.length < 4)
+                      onPressed: () async {
+                        if(nameTextEditingController.text.length < 3)
                         {
                           displayToastMessage("name must be atleast 3 characters.");
                         }
@@ -288,6 +294,9 @@ class RegistrationScreen extends StatelessWidget
                         else if (passwordTextEditingController.text != repeatpasswordTextEditingController.text) {
                           displayToastMessage("Passwords must match");
                         }
+                        else if (await checkIfEmailExists(emailTextEditingController.text)) {
+                          displayToastMessage("Email already used");
+                        }
                         else {
                           registerNewUser(context);
                         }
@@ -298,7 +307,8 @@ class RegistrationScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 15),
+
+                const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -389,5 +399,24 @@ class RegistrationScreen extends StatelessWidget
   {
   Fluttertoast.showToast(msg: message);
   }
-  
+
+
+  Future<bool> checkIfEmailExists(String email) async {
+    final query = FirebaseDatabase.instance.ref().child('users').orderByChild('email').equalTo(email);
+    final DatabaseEvent event = await query.once();
+    print(event.snapshot);
+    if (event.snapshot.exists) {
+      print(true);
+      return true;
+    }
+    else {
+      print(false);
+      return false;
+    }
+    
+  }
+
+
+
+
 }

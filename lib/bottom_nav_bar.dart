@@ -1,24 +1,25 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/favorites.dart';
-import 'package:flutter_application_1/map_screen.dart';
-import 'package:flutter_application_1/profile_screen.dart';
-import 'event_screen.dart';
+import 'package:flutter_application_1/screens/map_screen.dart';
+import 'package:flutter_application_1/screens/profile_screen.dart';
+import 'package:meta/meta.dart';
+import 'screens/event_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
+  
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
-      print(_selectedIndex);
+      selectedIndex = index;
+      print(selectedIndex);
     });
     switch (index) {
       case 0:
@@ -36,11 +37,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
+      selectedItemColor: Colors.green,
       backgroundColor: Colors.white,
       selectedLabelStyle: TextStyle(color: Colors.black),
       unselectedLabelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
@@ -62,8 +65,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           label: 'Profile',
         ),
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       onTap: _onItemTapped,
+      
     );
   }
 }

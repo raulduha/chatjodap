@@ -1,11 +1,11 @@
-import 'bottom_nav_bar.dart';
+import '../bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'event_getter.dart';
+import '../event_getter.dart';
 import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
-import 'event_getter.dart';
-import 'widgets/Divider.dart';
-import 'event_detail_page.dart';
+import '../event_getter.dart';
+import '../widgets/Divider.dart';
+import '../event_detail_page.dart';
 
 class EventsPage extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'event_screen.dart';
+import 'screens/event_screen.dart';
 import 'event_getter.dart';
 
 class EventDetailPage extends StatelessWidget {
