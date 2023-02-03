@@ -75,7 +75,10 @@ void _getMarkers() async {
         });
     }
     // Call _getMarkers() function with the new list of addresses and names
-      markers = await markerProvider.getMarkersFromAddresses(addresses, names);;
+      markers = await markerProvider.getMarkersFromAddresses(addresses, names);
+      setState(() {
+        
+      });
   
 }
 
@@ -277,10 +280,7 @@ void _getMarkers() async {
               
             });     
             
-            setState(() {
-              _getMarkers();
-            _getCurrentLocation();
-            });
+          
           },
           ),
       ]
