@@ -1,9 +1,45 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../event_detail_page.dart';
 import '../event_getter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Event> _recommendedEvents = [];
+  List<Event> _popularEvents = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  void _loadData() async {
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    DatabaseReference eventsRef = database.reference().child("events");
+    final eventsSnapshot = await eventsRef.once();
+    Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
+    List<Event> events = [];
+    eventsMap.forEach((key, value) {
+    final event = Event.fromJson(value);
+    events.add(event);
+  });
+    setState(() {
+      _recommendedEvents = events
+        .where((event) => event.promocionar != null )
+        .toList()
+        ..sort((a, b) => a.date.compareTo(b.date));
+      _popularEvents = events
+        .where((event) => event.promocionar == 'si')
+        .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,24 +63,13 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  EventCard(
-                    eventName: 'Event 1',
-                    eventLocation: 'Location 1',
-                    eventDate: '01-01-2023',
-                  ),
-                  EventCard(
-                    eventName: 'Event 2',
-                    eventLocation: 'Location 2',
-                    eventDate: '02-01-2023',
-                  ),
-                  EventCard(
-                    eventName: 'Event 3',
-                    eventLocation: 'Location 3',
-                    eventDate: '03-01-2023',
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: _recommendedEvents.length,
+                itemBuilder: (context, index) {
+                  return EventCard(
+                    event: _recommendedEvents[index], eventDate: '', eventLocation: '', eventName: '',
+                  );
+                },
               ),
             ),
             Padding(
@@ -59,24 +84,13 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  EventCard(
-                    eventName: 'Event 4',
-                    eventLocation: 'Location 4',
-                    eventDate: '04-01-2023',
-                  ),
-                  EventCard(
-                    eventName: 'Event 5',
-                    eventLocation: 'Location 5',
-                    eventDate: '05-01-2023',
-                  ),
-                  EventCard(
-                    eventName: 'Event 6',
-                    eventLocation: 'Location 6',
-                    eventDate: '06-01-2023',
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: _popularEvents.length,
+                itemBuilder: (context, index) {
+                  return EventCard(
+                    event: _popularEvents[index],eventDate: '', eventLocation: '', eventName: '',
+                  );
+                },
               ),
             ),
           ],
@@ -86,6 +100,7 @@ class HomePage extends StatelessWidget {
   }
 }
 class EventCard extends StatelessWidget {
+  final Event event;
   final String eventName;
   final String eventLocation;
   final String eventDate;
@@ -93,52 +108,48 @@ class EventCard extends StatelessWidget {
   EventCard({
     required this.eventName,
     required this.eventLocation,
-    required this.eventDate,
+    required this.eventDate, 
+    required this.event,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      padding: EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[800],
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Icon(Icons.emoji_symbols_outlined),
-              SizedBox(width: 10.0),
-              Text(
-                eventName,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10.0),
-          Text(
-            eventLocation,
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16.0,
-            ),
-          ),
-          SizedBox(height: 10.0),
-          Text(
-            eventDate,
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16.0,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+@override
+Widget build(BuildContext context) {
+return Container(
+margin: EdgeInsets.all(10.0),
+padding: EdgeInsets.all(20.0),
+decoration: BoxDecoration(
+color: Colors.grey[800],
+borderRadius: BorderRadius.all(Radius.circular(10.0)),
+),
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: <Widget>[
+Text(
+event.name,
+style: TextStyle(
+color: Colors.white,
+fontSize: 24.0,
+fontWeight: FontWeight.bold,
+),
+),
+SizedBox(height: 10.0),
+Text(
+event.address,
+style: TextStyle(
+color: Colors.grey[300],
+fontSize: 18.0,
+),
+),
+SizedBox(height: 10.0),
+Text(
+event.date,
+style: TextStyle(
+color: Colors.grey[300],
+fontSize: 18.0,
+),
+),
+],
+),
+);
+}
 }

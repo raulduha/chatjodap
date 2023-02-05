@@ -71,7 +71,8 @@ class _EventsPageState extends State<EventsPage> {
                 return EventCard(
                   eventName: events[index].name,
                   eventLocation: events[index].address,
-                  eventDate: '${events[index].date} ${events[index].time}',
+                  eventDate: '${events[index].date} ${events[index].time}', 
+                  event: events[index],
                 );
               },
             ),
