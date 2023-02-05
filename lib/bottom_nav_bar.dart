@@ -41,12 +41,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.green,
-      backgroundColor: Colors.white,
-      selectedLabelStyle: TextStyle(color: Colors.black),
-      unselectedLabelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+      selectedItemColor: Colors.white,
+      
+      selectedLabelStyle: TextStyle(color: Colors.grey),
+      unselectedLabelStyle: TextStyle(color: Colors.grey.withOpacity(0.5)),
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),

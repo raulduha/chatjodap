@@ -87,7 +87,9 @@ void _getMarkers() async {
   Widget build(BuildContext context) {
     
     return Scaffold(
+      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
         title: Text('MAPA')),
       body:
       Stack(

@@ -150,7 +150,7 @@ class LoginScreen extends StatelessWidget
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(const Size(350, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        backgroundColor: MaterialStateProperty.all(Colors.purple),
                         textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 18, color: Colors.white),
                         ),
@@ -178,7 +178,7 @@ class LoginScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
 
 
                 Padding(
@@ -212,7 +212,7 @@ class LoginScreen extends StatelessWidget
 
                 // Google Login
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: Center(
@@ -235,7 +235,7 @@ class LoginScreen extends StatelessWidget
           ),
 
 
-          const SizedBox(height: 50),
+          const SizedBox(height: 15),
           Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -251,7 +251,7 @@ class LoginScreen extends StatelessWidget
                       }, 
                       child: const Text(
                         "Sign Up here",
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
                       ),
                     ),
                   ],

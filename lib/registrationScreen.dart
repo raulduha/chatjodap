@@ -42,7 +42,7 @@ class RegistrationScreen extends StatelessWidget
         mainAxisAlignment: MainAxisAlignment.center,
         children:[
 
-          const SizedBox(height: 90),
+          const SizedBox(height: 50),
 
           // imagen Logo?
 
@@ -269,7 +269,7 @@ class RegistrationScreen extends StatelessWidget
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(const Size(310, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        backgroundColor: MaterialStateProperty.all(Colors.purple),
                         textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 18, color: Colors.white),
                         ),
@@ -308,7 +308,7 @@ class RegistrationScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -324,7 +324,7 @@ class RegistrationScreen extends StatelessWidget
                       }, 
                       child: const Text(
                         "Login here",
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
                       ),
                     ),
                   ],
