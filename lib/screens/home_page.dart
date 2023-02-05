@@ -112,44 +112,51 @@ class EventCard extends StatelessWidget {
     required this.event,
   });
 
-@override
-Widget build(BuildContext context) {
-return Container(
-margin: EdgeInsets.all(10.0),
-padding: EdgeInsets.all(20.0),
-decoration: BoxDecoration(
-color: Colors.grey[800],
-borderRadius: BorderRadius.all(Radius.circular(10.0)),
-),
-child: Column(
-crossAxisAlignment: CrossAxisAlignment.start,
-children: <Widget>[
-Text(
-event.name,
-style: TextStyle(
-color: Colors.white,
-fontSize: 24.0,
-fontWeight: FontWeight.bold,
-),
-),
-SizedBox(height: 10.0),
-Text(
-event.address,
-style: TextStyle(
-color: Colors.grey[300],
-fontSize: 18.0,
-),
-),
-SizedBox(height: 10.0),
-Text(
-event.date,
-style: TextStyle(
-color: Colors.grey[300],
-fontSize: 18.0,
-),
-),
-],
-),
-);
-}
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => EventDetailPage(event: event),
+        ),
+      ),
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[800],
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              event.name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              event.address,
+              style: TextStyle(
+                color: Colors.grey[300],
+                fontSize: 18.0,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              event.date,
+              style: TextStyle(
+                color: Colors.grey[300],
+                fontSize: 18.0,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
