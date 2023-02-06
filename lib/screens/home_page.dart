@@ -46,7 +46,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        
         title: Text('Home'),
+        
       ),
       body: Container(
         child: Column(
@@ -64,14 +66,21 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: ListView.builder(
+                
                 itemCount: _recommendedEvents.length,
+                
                 itemBuilder: (context, index) {
                   return EventCard(
                     event: _recommendedEvents[index], eventDate: '', eventLocation: '', eventName: '',
                   );
+                  
                 },
+                
+                
               ),
+              
             ),
+            
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(

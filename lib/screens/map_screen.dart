@@ -43,8 +43,8 @@ class _MapPageState extends State<MapPage> {
     _getMarkers();
     }
 
-    static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    static const CameraPosition _SantiagoCL = CameraPosition(
+    target: LatLng(-33.447487,  -70.673676),
     zoom: 14.4746,
   );
 
@@ -101,7 +101,7 @@ void _getMarkers() async {
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
           mapType: MapType.normal,
           myLocationButtonEnabled: true,
-          initialCameraPosition: _kGooglePlex,
+          initialCameraPosition: _SantiagoCL,
           myLocationEnabled: true,
           zoomGesturesEnabled: true,
           zoomControlsEnabled: true,

@@ -413,7 +413,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 8),
                                               const Text(
-                                                "Jodap FAQ",
+                                                "EVNT FAQ",
                                                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
                                               ),
                                             ],
@@ -595,17 +595,27 @@ class ProfileScreen extends StatelessWidget {
                           ],
                         );
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Container(
+                            width: 500,
+                            height: 500,
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                          ),
                         );
                       }
                     },
                   );
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                  return Container(
+                            width: 500,
+                            height: 500,
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                          ),
+                        );
+                      }
               },
             ),
           ],
