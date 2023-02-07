@@ -26,7 +26,11 @@ class LoginScreen extends StatelessWidget
   TextEditingController passwordTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context){
-    return Scaffold(
+    
+    return WillPopScope(
+      onWillPop: () async => false,
+      
+      child:Scaffold(
       backgroundColor: rgb(28, 27, 27),
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -266,7 +270,7 @@ class LoginScreen extends StatelessWidget
 
         ],
       ),
-    );
+    ));
   }
 
 
