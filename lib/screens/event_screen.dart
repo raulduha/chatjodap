@@ -13,8 +13,11 @@ class EventsPage extends StatefulWidget {
   @override
   _EventsPageState createState() => _EventsPageState();
 }
+
 class _EventsPageState extends State<EventsPage> {
   List<Event> events = [];
+  List<Event> filteredSearch = [];
+  late String searchText;
 
   @override
   void initState() {
@@ -30,10 +33,22 @@ class _EventsPageState extends State<EventsPage> {
         Event event = Event.fromJson(eventData);
         events.add(event);
       });
-      setState(() {});
+      setState(() {
+        filteredSearch = events;
+      });
     });
   }
 
+  void _filterEvents(String searchText) {
+    setState(() {
+      filteredSearch = events.where((event) {
+        return  event.name.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.address.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.date.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.time.toLowerCase().contains(searchText.toLowerCase());
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +61,7 @@ class _EventsPageState extends State<EventsPage> {
             height: 10.0,
             fit: BoxFit.cover,
             ),  
-        title: Text('Events'),
+        title: const Text('Upcoming Events'),
       ),
       body: Column(
         children: <Widget>[
@@ -67,18 +82,20 @@ class _EventsPageState extends State<EventsPage> {
                   borderSide: BorderSide(color: Colors.grey),
                 ),
               ),
+              onChanged: (text) {
+                _filterEvents(text);
+              },
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: events.length,
+              itemCount: filteredSearch.length,
               itemBuilder: (context, index) {
                 return EventCard (
-                  eventName: events[index].name,
-                  eventLocation: events[index].address,
-                  eventDate: '${events[index].date} ${events[index].time}', 
-                  event: events[index], 
-                
+                  eventName: filteredSearch[index].name,
+                  eventLocation: filteredSearch[index].address,
+                  eventDate: '${filteredSearch[index].date} ${filteredSearch[index].time}', 
+                  event: filteredSearch[index], 
                 );
               },
             ),
@@ -88,3 +105,6 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 }
+
+
+        
