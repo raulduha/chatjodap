@@ -95,6 +95,7 @@ flutter:
     - images/markerpink3.png
     - images/google_button.png
     - images/google_icon.png
+    - images/popularevents.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

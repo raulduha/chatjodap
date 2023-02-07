@@ -110,17 +110,13 @@ class _HomePageState extends State<HomePage> {
                     ),
             ),
             
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                'Popular Events',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-            ),
+            
+              
+            Image.asset('images/popularevents.png', 
+            width: 400.0,
+            height: 50.0,
+            fit: BoxFit.cover,
+            ),          
             Expanded(
               child: (_popularEvents.length == 0)
                   ? const Center(
