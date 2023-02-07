@@ -91,6 +91,7 @@ class _EventsPageState extends State<EventsPage> {
             child: ListView.builder(
               itemCount: filteredSearch.length,
               itemBuilder: (context, index) {
+                filteredSearch.sort((event1, event2) => event1.date.compareTo(event2.date));
                 return EventCard (
                   eventName: filteredSearch[index].name,
                   eventLocation: filteredSearch[index].address,
