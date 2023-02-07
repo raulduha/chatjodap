@@ -17,7 +17,7 @@ class MarkerProvider {
   
 
   
-  Future<List<Marker>> getMarkersFromAddresses(List<String> addresses, List<String> names) async {
+  Future<List<Marker>> getMarkersFromAddresses(List<String> addresses, List<String> names, List<String> date) async {
     final byteData = await rootBundle.load("images/markerpink2.png");
     final image = Uint8List.view(byteData.buffer);
     
@@ -28,7 +28,8 @@ class MarkerProvider {
             
             markerId: MarkerId(addresses[i]),
             position: coordinates,
-            infoWindow: InfoWindow(title: names[i]),
+        
+            infoWindow: InfoWindow(title: names[i],snippet: date[i]),
             icon: BitmapDescriptor.fromBytes(image),
             
             

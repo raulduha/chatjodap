@@ -71,8 +71,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
         
+        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        leading: Image.asset('images/binario1.png', 
+            width: 10.0,
+            height: 10.0,
+            fit: BoxFit.cover,
+            ),       
         title: Text('Home'),
         
       ),

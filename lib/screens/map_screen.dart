@@ -15,10 +15,11 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   
+  
     final Completer<GoogleMapController> _controllerGoogleMap = Completer<GoogleMapController>();
     
     late GoogleMapController newGoogleMapController;
-    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
     final MarkerProvider markerProvider = MarkerProvider();
     List<Marker> markers = [];
@@ -28,8 +29,12 @@ class _MapPageState extends State<MapPage> {
     double bottomPaddingOfMap = 0;
 
     final FirebaseDatabase _database = FirebaseDatabase.instance;
-  
-  
+
+    DateTime filterDate = DateTime.now();
+    List<Marker> filteredMarkers = [];
+    
+
+
 
   void _getCurrentLocation() async {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -53,50 +58,87 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+    
+    
     _getMarkers();
     _getCurrentLocation();
+    markers = filteredMarkers;
     
-
+    
+    
   }
 void _getMarkers() async {
     // Retrieve events data from Firebase
-    final eventsSnapshot = await _database.reference().child("events").once();
+    final eventsSnapshot = await _database.ref().child("events").once();
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
 
     // Create a new list of addresses and names
     final addresses = <String>[];
     final names = <String>[];
+    final dates = <String>[];
     if (eventsData != null) {
         eventsData.forEach((key, value) {
             final address = value['address'];
             final name = value['name'];
+            final date = value['date'];
             addresses.add(address);
             names.add(name);
+            dates.add(date);
         });
     }
     // Call _getMarkers() function with the new list of addresses and names
-      markers = await markerProvider.getMarkersFromAddresses(addresses, names);
+      
+      markers = await markerProvider.getMarkersFromAddresses(addresses, names, dates);
+      filteredMarkers = markers;
       setState(() {
-        
+      
       });
+      final defaultDate = DateTime.now();
+      _filterMarkers(defaultDate);
   
 }
+  void _filterMarkers(DateTime date) {
+    setState(() {
+        
+      filterDate = date;
+      filteredMarkers = markers.where((markers) {  
+      // get the timestamp of the event date in the marker and compare it to the selected date
+      String eventDate;
+      if (markers.infoWindow.snippet != null) {
+        eventDate = markers.infoWindow.snippet!;
+      } else {
+        eventDate = "Unknown";
+      }
+      final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
+      
+      return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
 
+    }).toList();
+    
+  });
+}
   
   @override
   Widget build(BuildContext context) {
     
+    
     return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Text('MAPA')),
+        backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+        leading: Image.asset('images/binario1.png', 
+            width: 50.0,
+            height: 50.0,
+            fit: BoxFit.cover,
+            ),  
+        title: const Text('Map')),
       body:
       Stack(
       children: [
           GoogleMap(
-            
-          markers: Set<Marker>.of(markers),
+          
+          markers: Set<Marker>.of(filteredMarkers.isNotEmpty ? filteredMarkers: markers),
+          
 
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
           mapType: MapType.normal,
@@ -280,15 +322,49 @@ void _getMarkers() async {
             setState(() {
               bottomPaddingOfMap = 130.0;
               
+              
             });     
             
           
           },
           ),
-      ]
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                onPressed: () async {
+                  final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: filterDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2030)
+                  );
+                    if (selectedDate != null) {
+                    _filterMarkers(selectedDate);
+                    setState(() {
+                    filterDate = selectedDate;
+                    
+                    });
+                  }
+                },
+                      child: const Text(
+                        
+                            'Filter by Date',
+                            style: TextStyle(
+
+                              fontSize: 20,
+                              color: Colors.white,
+                              
+                          ),
+                        ),
+                      ),
+                    ),
+                  )],
+                  )
+                );
+              }
+            }
       
-      ),
+  
       
-    );
-  }
-}

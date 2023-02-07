@@ -41,6 +41,11 @@ class _EventsPageState extends State<EventsPage> {
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        leading: Image.asset('images/binario1.png', 
+            width: 10.0,
+            height: 10.0,
+            fit: BoxFit.cover,
+            ),  
         title: Text('Events'),
       ),
       body: Column(

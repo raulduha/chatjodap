@@ -58,6 +58,8 @@ dependencies:
   cloud_firestore: ^4.3.1
   latlng: ^0.2.0
   geocode: ^1.0.2
+  flutter_launcher_icons: ^0.11.0
+  url_launcher: ^6.1.9
   
 
   
@@ -96,6 +98,8 @@ flutter:
     - images/google_button.png
     - images/google_icon.png
     - images/popularevents.png
+    - images/binario1.png
+    - images/binario.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

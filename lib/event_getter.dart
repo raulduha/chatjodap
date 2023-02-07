@@ -10,11 +10,15 @@ class Event {
   final String description;
   final String type;
   final String promocionar;
+  final String promotora;
+  final String buyLink;
+  
   late double lati;
   late double longi;
+
  
 
-  Event(  {required this.name, required this.address, required this.date,required this.time, required this.description, required this.type,required this.promocionar});
+  Event({required this.name, required this.address, required this.date,required this.time, required this.description, required this.type,required this.promocionar,required this.promotora,required this.buyLink,   });
 
   factory Event.fromJson(Map<dynamic, dynamic> json) {
     return Event(
@@ -25,6 +29,8 @@ class Event {
       description: json['description'],
       type: json['type'], 
       promocionar: json['promocionar'],
+      promotora: json['promotora'],
+      buyLink: json['buyLink']
       
 
 
