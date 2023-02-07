@@ -1,8 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart' as location;
 import '../event_detail_page.dart';
 import '../event_getter.dart';
+import 'dart:math';
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:geolocator/geolocator.dart' as geo;
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,10 +23,20 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _loadData();
   }
+  double haversine(double lat1, double lon1, double lat2, double lon2) {
+  double dlat = (lat2 - lat1) * (pi / 180);
+  double dlon = (lon2 - lon1) * (pi / 180);
+  double a = pow(sin(dlat / 2), 2) +
+      cos(lat1 * (pi / 180)) * cos(lat2 * (pi / 180)) * pow(sin(dlon / 2), 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  double d = 6371 * c;
+  return d;
+}
 
   void _loadData() async {
+    
     FirebaseDatabase database = FirebaseDatabase.instance;
-    DatabaseReference eventsRef = database.reference().child("events");
+    DatabaseReference eventsRef = database.ref().child("events");
     final eventsSnapshot = await eventsRef.once();
     Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
     List<Event> events = [];
@@ -29,11 +44,22 @@ class _HomePageState extends State<HomePage> {
     final event = Event.fromJson(value);
     events.add(event);
   });
+  Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+
+  List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
+    List<geocoding.Location> locations = await  geocoding.locationFromAddress(event.address);
+    geocoding.Location location = locations.first;
+    event.lati = location.latitude;
+    event.longi = location.longitude;
+    
+    return event;
+  }));
     setState(() {
       _recommendedEvents = events
         .where((event) => event.promocionar != null )
         .toList()
-        ..sort((a, b) => a.date.compareTo(b.date));
+        ..sort((a, b) => haversine(currentPosition.latitude, currentPosition.longitude, a.lati, a.longi)
+            .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, b.lati, b.longi)));
       _popularEvents = events
         .where((event) => event.promocionar == 'si')
         .toList();
@@ -56,29 +82,32 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(
-                'Recommended Events',
+                'Closest Events Recommended',
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[200],
                 ),
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                
-                itemCount: _recommendedEvents.length,
-                
-                itemBuilder: (context, index) {
-                  return EventCard(
-                    event: _recommendedEvents[index], eventDate: '', eventLocation: '', eventName: '',
-                  );
-                  
-                },
-                
-                
-              ),
-              
+              child: (_recommendedEvents.length == 0)
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: _recommendedEvents.length,
+                      itemBuilder: (context, index) {
+                        return EventCard(
+                          event: _recommendedEvents[index],
+                          eventDate: '',
+                          eventLocation: '',
+                          eventName: '',
+                        );
+                      },
+                    ),
             ),
             
             Padding(
@@ -86,21 +115,30 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 'Popular Events',
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[200],
                 ),
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: _popularEvents.length,
-                itemBuilder: (context, index) {
-                  return EventCard(
-                    event: _popularEvents[index],eventDate: '', eventLocation: '', eventName: '',
-                  );
-                },
-              ),
+              child: (_popularEvents.length == 0)
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: _popularEvents.length,
+                      itemBuilder: (context, index) {
+                        return EventCard(
+                          event: _popularEvents[index],
+                          eventDate: '',
+                          eventLocation: '',
+                          eventName: '',
+                        );
+                      },
+                    ),
             ),
           ],
         ),
@@ -113,6 +151,7 @@ class EventCard extends StatelessWidget {
   final String eventName;
   final String eventLocation;
   final String eventDate;
+  late double eventDis;
 
   EventCard({
     required this.eventName,
@@ -163,6 +202,7 @@ class EventCard extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
+            
           ],
         ),
       ),

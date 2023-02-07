@@ -18,7 +18,7 @@ class _MapPageState extends State<MapPage> {
     final Completer<GoogleMapController> _controllerGoogleMap = Completer<GoogleMapController>();
     
     late GoogleMapController newGoogleMapController;
-    GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+    GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     final MarkerProvider markerProvider = MarkerProvider();
     List<Marker> markers = [];
@@ -37,7 +37,7 @@ class _MapPageState extends State<MapPage> {
 
       LatLng latLatPosition = LatLng(position.latitude, position.longitude);
 
-      CameraPosition cameraPosition = new CameraPosition(target: latLatPosition, zoom: 14);
+      CameraPosition cameraPosition = CameraPosition(target: latLatPosition, zoom: 14);
       newGoogleMapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     _getMarkers();

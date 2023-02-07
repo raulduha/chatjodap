@@ -23,7 +23,7 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   void _getEvents() {
-    FirebaseDatabase.instance.reference().child("events").onValue.listen((event) {
+    FirebaseDatabase.instance.ref().child("events").onValue.listen((event) {
       DataSnapshot eventsDataSnapshot = event.snapshot;
       final Map<dynamic, dynamic> eventsData = eventsDataSnapshot.value as Map<dynamic, dynamic>;
       eventsData.forEach((eventId, eventData) {
@@ -53,11 +53,11 @@ class _EventsPageState extends State<EventsPage> {
                 prefixIcon: Icon(Icons.search),
                 filled: true,
                 fillColor: Colors.grey[800],
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(color: Colors.grey),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(color: Colors.grey),
                 ),
@@ -68,11 +68,12 @@ class _EventsPageState extends State<EventsPage> {
             child: ListView.builder(
               itemCount: events.length,
               itemBuilder: (context, index) {
-                return EventCard(
+                return EventCard (
                   eventName: events[index].name,
                   eventLocation: events[index].address,
                   eventDate: '${events[index].date} ${events[index].time}', 
-                  event: events[index],
+                  event: events[index], 
+                
                 );
               },
             ),

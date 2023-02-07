@@ -43,13 +43,19 @@ class LoginScreen extends StatelessWidget
           // alignment: Alignment.center,
           // ),
 
-
+          const SizedBox(height: 20),
+          const Text(
+            "JODAP",
+            style: TextStyle(fontSize: 40, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          /** 
           Image.asset(
               'images/evnt1.png',
               height: 100,
               width: 300,
               fit: BoxFit.cover,),
-
+          */
           const SizedBox(height: 25),
           const Text(
             "Welcome Back!",
