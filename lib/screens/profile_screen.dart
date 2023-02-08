@@ -14,6 +14,7 @@ import 'package:flutter_application_1/provider/google_sign_in.dart';
 import 'package:flutter_application_1/eventFAQ.dart';
 import 'package:flutter_application_1/reportBug.dart';
 import 'package:flutter_application_1/inviteFriend.dart';
+import 'package:flutter_application_1/terms.dart';
 
 
 
@@ -508,6 +509,53 @@ InkWell(
           const SizedBox(width: 8),
           const Text(
             "Invite a Friend",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.white24,
+        size: 28,
+      )
+    ],
+  ),
+),
+
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                              child: Column(
+                                children: [
+
+                                  
+InkWell(
+  onTap: () {
+    print("tapped INVITE");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TermsAndConditions(),
+      ),
+    );
+  },
+  splashColor: Colors.white,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.handshake,
+            color: Colors.deepPurpleAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Terms and conditions",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ],
