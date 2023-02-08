@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:location/location.dart' as location;
 import '../event_detail_page.dart';
 import '../event_getter.dart';
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     final event = Event.fromJson(value);
     events.add(event);
   });
-  Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+  geo.Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
 
   List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
     List<geocoding.Location> locations = await  geocoding.locationFromAddress(event.address);
@@ -58,8 +58,7 @@ class _HomePageState extends State<HomePage> {
       _recommendedEvents = events
         .where((event) => event.promocionar != null )
         .toList()
-        ..sort((a, b) => haversine(currentPosition.latitude, currentPosition.longitude, a.lati, a.longi)
-            .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, b.lati, b.longi)));
+        ..sort((event1, event2) => event1.date.compareTo(event2.date));
       _popularEvents = events
         .where((event) => event.promocionar == 'si')
         .toList();
@@ -87,9 +86,9 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(
-                'Closest Events Recommended',
+                'Upcoming Events Recommended',
                 style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 21.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[200],
                 ),

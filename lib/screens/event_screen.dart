@@ -1,14 +1,15 @@
-import '../bottom_nav_bar.dart';
+
 import 'package:flutter/material.dart';
+import 'package:geocode/geocode.dart';
 import '../event_getter.dart';
 import 'package:location/location.dart';
-import 'package:geolocator/geolocator.dart';
-import '../event_getter.dart';
-import '../widgets/Divider.dart';
-import '../event_detail_page.dart';
+
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:geolocator/geolocator.dart' as geo;
 import 'home_page.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import 'package:location/location.dart';
+import 'dart:math';
 class EventsPage extends StatefulWidget {
   @override
   _EventsPageState createState() => _EventsPageState();
@@ -17,31 +18,59 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List<Event> events = [];
   List<Event> filteredSearch = [];
+  List<Event> originalEvents = [];
   late String searchText;
+  late geo.Position currentPosition;
 
   @override
   void initState() {
     super.initState();
     _getEvents();
   }
+  
+  double haversine(double lat1, double lon1, double lat2, double lon2) {
+  double dlat = (lat2 - lat1) * (pi / 180);
+  double dlon = (lon2 - lon1) * (pi / 180);
+  double a = pow(sin(dlat / 2), 2) +
+      cos(lat1 * (pi / 180)) * cos(lat2 * (pi / 180)) * pow(sin(dlon / 2), 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  double d = 6371 * c;
+  return d;
+}
+  void _getEvents() async {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  final eventsRef = database.ref().child("events");
+  final eventsSnapshot = await eventsRef.once();
+  Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
+  List<Event> events = [];
 
-  void _getEvents() {
-    FirebaseDatabase.instance.ref().child("events").onValue.listen((event) {
-      DataSnapshot eventsDataSnapshot = event.snapshot;
-      final Map<dynamic, dynamic> eventsData = eventsDataSnapshot.value as Map<dynamic, dynamic>;
-      eventsData.forEach((eventId, eventData) {
-        Event event = Event.fromJson(eventData);
-        events.add(event);
-      });
-      setState(() {
-        filteredSearch = events;
-      });
+  eventsMap.forEach((key, value) {
+    final event = Event.fromJson(value);
+    events.add(event);
+  });
+
+  currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+  List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
+    final locations = await geocoding.locationFromAddress(event.address);
+    final location = locations.first;
+    event.lati = location.latitude;
+    event.longi = location.longitude;
+    return event;
+  }));
+
+  setState(() {
+      events = eventsWithCoordinates
+        ..sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+            .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+      originalEvents = events;
+      filteredSearch = events;
     });
   }
 
+
   void _filterEvents(String searchText) {
     setState(() {
-      filteredSearch = events.where((event) {
+      filteredSearch = originalEvents.where((event) {
         return  event.name.toLowerCase().contains(searchText.toLowerCase()) ||
                 event.address.toLowerCase().contains(searchText.toLowerCase()) ||
                 event.date.toLowerCase().contains(searchText.toLowerCase()) ||
@@ -50,27 +79,28 @@ class _EventsPageState extends State<EventsPage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
         leading: Image.asset('images/binario1.png', 
             width: 10.0,
             height: 10.0,
             fit: BoxFit.cover,
             ),  
-        title: const Text('Upcoming Events'),
+        title: const Text('Events close to you'),
       ),
       body: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search for events',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 filled: true,
                 fillColor: Colors.grey[800],
                 enabledBorder: const OutlineInputBorder(
@@ -88,16 +118,21 @@ class _EventsPageState extends State<EventsPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            
+            child: filteredSearch.isEmpty 
+              ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.purple)))
+              : ListView.builder(
               itemCount: filteredSearch.length,
               itemBuilder: (context, index) {
-                filteredSearch.sort((event1, event2) => event1.date.compareTo(event2.date));
+                filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+                    .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
                 return EventCard (
                   eventName: filteredSearch[index].name,
                   eventLocation: filteredSearch[index].address,
                   eventDate: '${filteredSearch[index].date} ${filteredSearch[index].time}', 
                   event: filteredSearch[index], 
                 );
+              
               },
             ),
           ),
@@ -106,6 +141,3 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 }
-
-
-        
