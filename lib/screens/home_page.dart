@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _getEvents() async {
     try {
-      final eventsSnapshot = await _database.reference().child("events").once();
+      final eventsSnapshot = await _database.ref().child("events").once();
       final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
       if (eventsData != null) {
         eventsData.forEach((key, value) {

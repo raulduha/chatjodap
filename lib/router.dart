@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bottom_nav_bar.dart';
 import 'package:flutter_application_1/screens/forgot_pw_page.dart';
-import 'package:flutter_application_1/profile_pages/favorites.dart';
 import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:flutter_application_1/loginScreen.dart';
 import 'package:flutter_application_1/main.dart';
