@@ -23,7 +23,7 @@ class TermsAndConditions extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
-            children: [
+            children:const  [
               Text("Terms and Conditions",  style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold)),
               SizedBox(height: 16.0),
               Text("Purpose of the App:",  style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold)),
