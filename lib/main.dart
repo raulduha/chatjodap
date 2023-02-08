@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     
     child: MaterialApp(
       title: 'Your App',
-      initialRoute: '/home',
+      initialRoute: '/login',
       onGenerateRoute: Routers.generateRoute,
         
       // initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,

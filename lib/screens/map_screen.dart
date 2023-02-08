@@ -330,15 +330,20 @@ void _getMarkers() async {
           ),
           Align(
             alignment: Alignment.bottomCenter,
+            
             child: Container(
+              
               margin: EdgeInsets.only(top: 20),
               child: ElevatedButton(
+                
+
                 onPressed: () async {
                   final selectedDate = await showDatePicker(
                   context: context,
                   initialDate: filterDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2030)
+                  
                   );
                     if (selectedDate != null) {
                     _filterMarkers(selectedDate);
@@ -348,23 +353,18 @@ void _getMarkers() async {
                     });
                   }
                 },
-                      child: const Text(
-                        
-                            'Filter by Date',
-                            style: TextStyle(
-
-                              fontSize: 20,
-                              color: Colors.white,
-                              
-                          ),
-                        ),
+                      
+                      child: const  Text('Filter by Date',style:  const TextStyle(fontSize: 20,color: Colors.white,),),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.purple),
                       ),
                     ),
-                  )],
                   )
-                );
-              }
-            }
+                )
+              ],
+            )
+          );
+        }
+      }
       
   
       
