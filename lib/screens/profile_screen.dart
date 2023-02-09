@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_application_1/profile_pages/edit_profile.dart';
+import 'package:flutter_application_1/profile_pages/history.dart';
 import 'package:flutter_application_1/widgets/alert_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -118,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
 
 
 
-                            // FAVORITES AND HISTORY
+                            // HISTORY
 
                             Padding(
                               
@@ -127,48 +128,13 @@ class ProfileScreen extends StatelessWidget {
                                 children: [
 
                                   InkWell(
-
-                                    onTap: () {
-                                      print("tapped Favorites");
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.favorite,
-                                                color: Colors.red[900],
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Favorites",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white24,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
-                                  ),
-
-
-                                  const SizedBox(height: 15,),
-                                  InkWell(
                                     
                                     onTap: () {
                                       print("tapped History");
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => HistoryPage()),
+                                      );
                                     },
 
                                     splashColor: Colors.white,
@@ -585,7 +551,6 @@ class ProfileScreen extends StatelessWidget {
 
 
                           // aca en vola logo con color??
-
 
 
 
