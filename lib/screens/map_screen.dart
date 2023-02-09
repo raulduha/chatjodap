@@ -15,6 +15,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   
+  
     final Completer<GoogleMapController> _controllerGoogleMap = Completer<GoogleMapController>();
     
     late GoogleMapController newGoogleMapController;
@@ -28,8 +29,12 @@ class _MapPageState extends State<MapPage> {
     double bottomPaddingOfMap = 0;
 
     final FirebaseDatabase _database = FirebaseDatabase.instance;
-  
-  
+
+    DateTime filterDate = DateTime.now();
+    List<Marker> filteredMarkers = [];
+    
+
+
 
   void _getCurrentLocation() async {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -37,14 +42,14 @@ class _MapPageState extends State<MapPage> {
 
       LatLng latLatPosition = LatLng(position.latitude, position.longitude);
 
-      CameraPosition cameraPosition = new CameraPosition(target: latLatPosition, zoom: 14);
+      CameraPosition cameraPosition = CameraPosition(target: latLatPosition, zoom: 14);
       newGoogleMapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
     _getMarkers();
     }
 
-    static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    static const CameraPosition _SantiagoCL = CameraPosition(
+    target: LatLng(-33.447487,  -70.673676),
     zoom: 14.4746,
   );
 
@@ -53,50 +58,92 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+    
+    
     _getMarkers();
     _getCurrentLocation();
+    markers = filteredMarkers;
     
-
+    
+    
   }
 void _getMarkers() async {
     // Retrieve events data from Firebase
-    final eventsSnapshot = await _database.reference().child("events").once();
+    final eventsSnapshot = await _database.ref().child("events").once();
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
 
     // Create a new list of addresses and names
     final addresses = <String>[];
     final names = <String>[];
+    final dates = <String>[];
     if (eventsData != null) {
         eventsData.forEach((key, value) {
             final address = value['address'];
             final name = value['name'];
+            final date = value['date'];
             addresses.add(address);
             names.add(name);
+            dates.add(date);
         });
     }
     // Call _getMarkers() function with the new list of addresses and names
-      markers = await markerProvider.getMarkersFromAddresses(addresses, names);;
+      
+      markers = await markerProvider.getMarkersFromAddresses(addresses, names, dates);
+      filteredMarkers = markers;
+      setState(() {
+      
+      });
+      final defaultDate = DateTime.now();
+      _filterMarkers(defaultDate);
   
 }
+  void _filterMarkers(DateTime date) {
+    setState(() {
+        
+      filterDate = date;
+      filteredMarkers = markers.where((markers) {  
+      // get the timestamp of the event date in the marker and compare it to the selected date
+      String eventDate;
+      if (markers.infoWindow.snippet != null) {
+        eventDate = markers.infoWindow.snippet!;
+      } else {
+        eventDate = "Unknown";
+      }
+      final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
+      
+      return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
 
+    }).toList();
+    
+  });
+}
   
   @override
   Widget build(BuildContext context) {
     
+    
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        title: Text('MAPA')),
+        backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+        leading: Image.asset('images/binario1.png', 
+            width: 50.0,
+            height: 50.0,
+            fit: BoxFit.cover,
+            ),  
+        title: const Text('Map')),
       body:
       Stack(
       children: [
           GoogleMap(
-            
-          markers: Set<Marker>.of(markers),
+          
+          markers: Set<Marker>.of(filteredMarkers.isNotEmpty ? filteredMarkers: markers),
+          
 
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
           mapType: MapType.normal,
           myLocationButtonEnabled: true,
-          initialCameraPosition: _kGooglePlex,
+          initialCameraPosition: _SantiagoCL,
           myLocationEnabled: true,
           zoomGesturesEnabled: true,
           zoomControlsEnabled: true,
@@ -275,18 +322,49 @@ void _getMarkers() async {
             setState(() {
               bottomPaddingOfMap = 130.0;
               
+              
             });     
             
-            setState(() {
-              _getMarkers();
-            _getCurrentLocation();
-            });
+          
           },
           ),
-      ]
+          Align(
+            alignment: Alignment.bottomCenter,
+            
+            child: Container(
+              
+              margin: EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                
+
+                onPressed: () async {
+                  final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: filterDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2030)
+                  
+                  );
+                    if (selectedDate != null) {
+                    _filterMarkers(selectedDate);
+                    setState(() {
+                    filterDate = selectedDate;
+                    
+                    });
+                  }
+                },
+                      
+                      child: const  Text('Filter by Date',style:  const TextStyle(fontSize: 20,color: Colors.white,),),
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.purple),
+                      ),
+                    ),
+                  )
+                )
+              ],
+            )
+          );
+        }
+      }
       
-      ),
+  
       
-    );
-  }
-}

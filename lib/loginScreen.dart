@@ -26,13 +26,17 @@ class LoginScreen extends StatelessWidget
   TextEditingController passwordTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context){
-    return Scaffold(
+    
+    return WillPopScope(
+      onWillPop: () async => false,
+      
+      child:Scaffold(
       backgroundColor: rgb(28, 27, 27),
       resizeToAvoidBottomInset: false,
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         children:[
-          const SizedBox(height: 160,),
+          const SizedBox(height: 80,),
 
           // Imagen Logo?
 
@@ -43,21 +47,27 @@ class LoginScreen extends StatelessWidget
           // alignment: Alignment.center,
           // ),
 
-
+          const SizedBox(height: 20),
           const Text(
-            "Jodap",
-            style: TextStyle(fontSize: 34.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
+            "JODAP",
+            style: TextStyle(fontSize: 40, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-
-          const SizedBox(height: 10),
+          /** 
+          Image.asset(
+              'images/evnt1.png',
+              height: 100,
+              width: 300,
+              fit: BoxFit.cover,),
+          */
+          const SizedBox(height: 25),
           const Text(
             "Welcome Back!",
             style: TextStyle(fontSize: 20, fontFamily: "Brand Bold", color: Colors.white),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -150,7 +160,7 @@ class LoginScreen extends StatelessWidget
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(const Size(350, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        backgroundColor: MaterialStateProperty.all(Colors.purple),
                         textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 18, color: Colors.white),
                         ),
@@ -178,7 +188,7 @@ class LoginScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
 
 
                 Padding(
@@ -212,7 +222,7 @@ class LoginScreen extends StatelessWidget
 
                 // Google Login
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 15),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: Center(
@@ -235,7 +245,7 @@ class LoginScreen extends StatelessWidget
           ),
 
 
-          const SizedBox(height: 50),
+          const SizedBox(height: 15),
           Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -251,7 +261,7 @@ class LoginScreen extends StatelessWidget
                       }, 
                       child: const Text(
                         "Sign Up here",
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
                       ),
                     ),
                   ],
@@ -260,7 +270,7 @@ class LoginScreen extends StatelessWidget
 
         ],
       ),
-    );
+    ));
   }
 
 

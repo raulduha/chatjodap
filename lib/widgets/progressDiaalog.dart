@@ -12,7 +12,7 @@ class ProgessDialog extends StatelessWidget
     
 
     return Dialog(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.purple,
       child: Container(
         margin: EdgeInsets.all(15.0),
         width: double.infinity,

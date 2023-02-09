@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
       routes: 
       {
         RegistrationScreen.idScreen: (context) => RegistrationScreen(),
-        LoginScreen.idScreen: (context) => LoginScreen(), // cambiar color para ingresar datos
-        // cambiar color para ingresar datos
+        LoginScreen.idScreen: (context) => LoginScreen(),
       },
     )
   );

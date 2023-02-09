@@ -11,59 +11,39 @@ import 'screens/home_page.dart';
 
 
 
+import 'package:flutter/material.dart';
+
+
+
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Widget page;
     switch (settings.name) {
       case '/':
-        page = HomePage();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
-        
+        page = BottomNavBar();
+        break;
       case '/home':
-        page = HomePage();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
+        page = BottomNavBar();
+        break;
       case '/map':
         page = MapPage();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
+        break;
       case '/events':
         page = EventsPage();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
+        break;
       case '/profile':
         page = ProfileScreen();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
-      case '/register':
-        page = RegistrationScreen();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-        ));
+        break;
       case '/login':
         page = LoginScreen();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-        ));
+        break;
+      case '/register':
+        page = RegistrationScreen();
+        break;
       default:
-        page = HomePage();
-        return MaterialPageRoute(builder: (_) => Scaffold(
-          body: page,
-          bottomNavigationBar: BottomNavBar(),
-        ));
+        page = BottomNavBar();
+        break;
     }
-
+    return MaterialPageRoute(builder: (context) => page);
   }
 }
-

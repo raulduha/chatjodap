@@ -9,12 +9,13 @@ import 'package:flutter_application_1/widgets/alert_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
-import 'dart:convert';
-import '../bottom_nav_bar.dart';
+
 import 'package:shadow_overlay/shadow_overlay.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
-
+import 'package:flutter_application_1/eventFAQ.dart';
+import 'package:flutter_application_1/reportBug.dart';
+import 'package:flutter_application_1/inviteFriend.dart';
+import 'package:flutter_application_1/terms.dart';
 
 
 
@@ -359,81 +360,81 @@ class ProfileScreen extends StatelessWidget {
 
                                   const SizedBox(height: 15,),
                                   InkWell(
-                                    
-                                    onTap: () {
-                                      print("tapped FAQ");
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.question_answer_rounded,
-                                                color: Colors.deepPurpleAccent[200],
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Jodap FAQ",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white24,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
-                                  ),
-
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventFAQPage(),
+      ),
+    );
+  },
+  splashColor: Colors.white,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.question_answer_rounded,
+            color: Colors.deepPurpleAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Jodap FAQ",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.white24,
+        size: 28,
+      )
+    ],
+  ),
+),
 
 
                                   const SizedBox(height: 15,),
                                   InkWell(
-                                    
-                                    onTap: () {
-                                      print("tapped REPORT BUG");
-                                    },
+  onTap: () {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ReportBugPage(),
+      ),
+    );
+  },
 
-                                    splashColor: Colors.white,
+  splashColor: Colors.white,
 
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.report_problem,
-                                                color: Colors.deepPurpleAccent[200],
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Report a Bug",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.report_problem,
+            color: Colors.deepPurpleAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Report a Bug",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
 
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white24,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
-                                  ),
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.white24,
+        size: 28,
+      )
+    ],
+  ),
+),
+
 
                                 ],
                               ),
@@ -450,44 +451,89 @@ class ProfileScreen extends StatelessWidget {
                               child: Column(
                                 children: [
 
+InkWell(
+  onTap: () {
+    print("tapped INVITE");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InviteFriendPage(),
+      ),
+    );
+  },
+  splashColor: Colors.white,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.person_add,
+            color: Colors.deepPurpleAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Invite a Friend",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.white24,
+        size: 28,
+      )
+    ],
+  ),
+),
 
-                                  InkWell(
-                                    
-                                
-                                    onTap: () {
-                                      print("tapped INVITE");
-                                    },
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                              child: Column(
+                                children: [
 
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.person_add,
-                                                color: Colors.deepPurpleAccent[200],
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Invite a Friend",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white24,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
-                                  ),
+                                  
+InkWell(
+  onTap: () {
+    print("tapped INVITE");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TermsAndConditions(),
+      ),
+    );
+  },
+  splashColor: Colors.white,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.handshake,
+            color: Colors.deepPurpleAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Terms and conditions",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+      const Icon(
+        Icons.arrow_forward_ios,
+        color: Colors.white24,
+        size: 28,
+      )
+    ],
+  ),
+),
 
                                 ],
                               ),
@@ -560,17 +606,27 @@ class ProfileScreen extends StatelessWidget {
                           ],
                         );
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return Container(
+                            width: 500,
+                            height: 500,
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                          ),
                         );
                       }
                     },
                   );
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+                  return Container(
+                            width: 500,
+                            height: 500,
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+                          ),
+                        );
+                      }
               },
             ),
           ],

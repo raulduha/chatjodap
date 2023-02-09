@@ -1,200 +1,143 @@
-import '../bottom_nav_bar.dart';
+
 import 'package:flutter/material.dart';
+import 'package:geocode/geocode.dart';
 import '../event_getter.dart';
 import 'package:location/location.dart';
-import 'package:geolocator/geolocator.dart';
-import '../event_getter.dart';
-import '../widgets/Divider.dart';
-import '../event_detail_page.dart';
 
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:geolocator/geolocator.dart' as geo;
+import 'home_page.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:location/location.dart';
+import 'dart:math';
 class EventsPage extends StatefulWidget {
   @override
   _EventsPageState createState() => _EventsPageState();
 }
 
 class _EventsPageState extends State<EventsPage> {
-  final Location _location = Location();
-  final EventGetter _eventGetter = EventGetter();
-  String _searchText = "";
-  String _selectedTypeOfMusic = "All";
-  String _selectedAgeRange = "All";
-  String _selectedDistance = "Any";
-  List<Event> _events = [];
-  bool _isLoading = true;
+  List<Event> events = [];
+  List<Event> filteredSearch = [];
+  List<Event> originalEvents = [];
+  late String searchText;
+  late geo.Position currentPosition;
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    _getEvents();
+  }
+  
+  double haversine(double lat1, double lon1, double lat2, double lon2) {
+  double dlat = (lat2 - lat1) * (pi / 180);
+  double dlon = (lon2 - lon1) * (pi / 180);
+  double a = pow(sin(dlat / 2), 2) +
+      cos(lat1 * (pi / 180)) * cos(lat2 * (pi / 180)) * pow(sin(dlon / 2), 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  double d = 6371 * c;
+  return d;
+}
+  void _getEvents() async {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  final eventsRef = database.ref().child("events");
+  final eventsSnapshot = await eventsRef.once();
+  Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
+  List<Event> events = [];
+
+  eventsMap.forEach((key, value) {
+    final event = Event.fromJson(value);
+    events.add(event);
+  });
+
+  currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+  List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
+    final locations = await geocoding.locationFromAddress(event.address);
+    final location = locations.first;
+    event.lati = location.latitude;
+    event.longi = location.longitude;
+    return event;
+  }));
+
+  setState(() {
+      events = eventsWithCoordinates
+        ..sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+            .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+      originalEvents = events;
+      filteredSearch = events;
+    });
   }
 
-  Future<void> _getCurrentLocation() async {
-    try {
-      final currentLocation = await _location.getLocation();
-      _eventGetter.getEvents().then((events) {
-        setState(() {
-          _isLoading = false;
-          _events = events;
-        });
-      });
-    } catch (e) {
-      print(e);
-    }
+
+  void _filterEvents(String searchText) {
+    setState(() {
+      filteredSearch = originalEvents.where((event) {
+        return  event.name.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.address.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.date.toLowerCase().contains(searchText.toLowerCase()) ||
+                event.time.toLowerCase().contains(searchText.toLowerCase());
+      }).toList();
+    });
   }
 
 
-    @override
-    Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        title: Text('Closest Events'),
+        backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+        leading: Image.asset('images/binario1.png', 
+            width: 10.0,
+            height: 10.0,
+            fit: BoxFit.cover,
+            ),  
+        title: const Text('Events close to you'),
       ),
       body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(20.0),
             child: TextField(
               decoration: InputDecoration(
-
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
+                hintText: 'Search for events',
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.grey[800],
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
               ),
               onChanged: (text) {
-                setState(() {
-                  _searchText = text;
-                });
+                _filterEvents(text);
               },
             ),
           ),
-        Expanded(
-            child: _isLoading
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: _events.length,
-                    itemBuilder: (context, index) {
-                      final event = _events[index];
-                      return ListTile(
-                        
-                        title: Text(event.name),
-                        subtitle: Text("${event.distance}km"),
-                        key: Key(event.id),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EventDetailPage(event: event),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
+          Expanded(
+            
+            child: filteredSearch.isEmpty 
+              ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.purple)))
+              : ListView.builder(
+              itemCount: filteredSearch.length,
+              itemBuilder: (context, index) {
+                filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+                    .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+                return EventCard (
+                  eventName: filteredSearch[index].name,
+                  eventLocation: filteredSearch[index].address,
+                  eventDate: '${filteredSearch[index].date} ${filteredSearch[index].time}', 
+                  event: filteredSearch[index], 
+                );
+              
+              },
+            ),
           ),
-
-          Container(
-            height: 50,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton<String>(
-                      value: _selectedTypeOfMusic,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text("All"),
-                          value: "All",
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Pop"),
-                          value: "Pop",
-                        ),
-                        DropdownMenuItem(
-                          child: Text("Rock"),
-                          value: "Rock",
-                        ),
-                        // Add more types of music here
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedTypeOfMusic = value ?? "All";
-                        });
-                      },
-                    ),
-                  ),
-                ),      
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButton<String>(
-                      value: _selectedAgeRange,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text("All"),
-                          value: "All",
-                        ),
-                        DropdownMenuItem(
-                          child: Text("18-25"),
-                          value: "18-25",
-                        ),
-                        
-                        DropdownMenuItem(
-                        child: Text("25-35"),
-                        value: "25-35",
-                        ),
-                        DropdownMenuItem(
-                        child: Text("35+"),
-                        value: "35+",
-                        )
-                        ],
-                        onChanged: (value) {
-                        setState(() {
-                        _selectedAgeRange = value  ?? "All";
-                        });     
-                        },
-                    ),
-                  ),
-                ), 
-                Expanded(
-                        child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButton<String>(
-                        value: _selectedDistance,
-                          items: [
-                              DropdownMenuItem(
-                              child: Text("Any"),
-                              value: "Any",
-                              ),
-                              DropdownMenuItem(
-                              child: Text("5km"),
-                              value: "5",
-                              ),
-                              DropdownMenuItem(
-                              child: Text("10km"),
-                              value: "10",
-                              ),
-                              DropdownMenuItem(
-                              child: Text("20km"),
-                              value: "20",
-                              ),
-                              ],
-                              onChanged: (value) {
-                              setState(() {
-                              _selectedDistance = value ?? "Any";
-                              });
-                            },
-                          
-                        
-                      
-                      
-                    )
-                  )
-                )
-              ]
-            )
-            )
-
-        ]
-        )
-        );
-        }}
+        ],
+      ),
+    );
+  }
+}
