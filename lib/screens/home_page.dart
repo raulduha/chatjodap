@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   });
   geo.Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
 
+
   List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
     List<geocoding.Location> locations = await  geocoding.locationFromAddress(event.address);
     geocoding.Location location = locations.first;
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> {
         .where((event) => event.promocionar == 'si')
         .toList();
     });
+    
   }
 
   @override
