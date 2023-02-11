@@ -97,24 +97,35 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
-              child: (_recommendedEvents.length == 0)
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: _recommendedEvents.length,
-                      itemBuilder: (context, index) {
-                        return EventCard(
-                          event: _recommendedEvents[index],
-                          eventDate: '',
-                          eventLocation: '',
-                          eventName: '',
-                        );
-                      },
-                    ),
-            ),
+  child: (_recommendedEvents.isEmpty)
+      ? const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+          ),
+        )
+      : ListView.builder(
+          itemCount: _recommendedEvents.length,
+          itemBuilder: (context, index) {
+            
+            DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
+            DateTime currentDate = DateTime.now();
+
+            // Compare year, month, and day
+            if (eventDate.year > currentDate.year ||
+                (eventDate.year == currentDate.year && eventDate.month > currentDate.month) ||
+                (eventDate.year == currentDate.year && eventDate.month == currentDate.month && eventDate.day >= currentDate.day)) {
+              return EventCard(
+                event: _recommendedEvents[index],
+                eventDate: '',
+                eventLocation: '',
+                eventName: '',
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+),
             
             
               
@@ -124,24 +135,36 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
             ),          
             Expanded(
-              child: (_popularEvents.length == 0)
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: _popularEvents.length,
-                      itemBuilder: (context, index) {
-                        return EventCard(
-                          event: _popularEvents[index],
-                          eventDate: '',
-                          eventLocation: '',
-                          eventName: '',
-                        );
-                      },
-                    ),
-            ),
+  child: (_recommendedEvents.isEmpty)
+      ? const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+          ),
+        )
+      : ListView.builder(
+          itemCount: _recommendedEvents.length,
+          itemBuilder: (context, index) {
+            
+            DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
+            DateTime currentDate = DateTime.now();
+
+            // Compare year, month, and day
+            if (eventDate.year > currentDate.year ||
+                (eventDate.year == currentDate.year && eventDate.month > currentDate.month) ||
+                (eventDate.year == currentDate.year && eventDate.month == currentDate.month && eventDate.day >= currentDate.day)) {
+              return EventCard(
+                event: _recommendedEvents[index],
+                eventDate: '',
+                eventLocation: '',
+                eventName: '',
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+),
+
           ],
         ),
       ),
