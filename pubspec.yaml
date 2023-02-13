@@ -100,6 +100,8 @@ flutter:
     - images/popularevents.png
     - images/binario1.png
     - images/binario.png
+    - images/finalmarker3.png
+    - images/markerballfinal.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
