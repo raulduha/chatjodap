@@ -137,7 +137,7 @@ void _getMarkers() async {
       children: [
           GoogleMap(
           
-          markers: Set<Marker>.of(filteredMarkers.isNotEmpty ? filteredMarkers: markers),
+          markers: filteredMarkers.isNotEmpty ? Set<Marker>.of(filteredMarkers) : Set<Marker>.of([]),
           
 
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
@@ -328,6 +328,7 @@ void _getMarkers() async {
           
           },
           ),
+          
           Align(
             alignment: Alignment.bottomCenter,
             
@@ -358,7 +359,8 @@ void _getMarkers() async {
                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.purple),
                       ),
                     ),
-                  )
+                  ),
+                  
                 )
               ],
             )
