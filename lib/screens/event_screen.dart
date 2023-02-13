@@ -69,15 +69,19 @@ class _EventsPageState extends State<EventsPage> {
 
 
   void _filterEvents(String searchText) {
-    setState(() {
-      filteredSearch = originalEvents.where((event) {
-        return  event.name.toLowerCase().contains(searchText.toLowerCase()) ||
-                event.address.toLowerCase().contains(searchText.toLowerCase()) ||
-                event.date.toLowerCase().contains(searchText.toLowerCase()) ||
-                event.time.toLowerCase().contains(searchText.toLowerCase());
-      }).toList();
-    });
-  }
+  setState(() {
+    filteredSearch = originalEvents.where((event) {
+      // Convert the event date to a string
+      String dateString = event.date.toString();
+      // Check if event date is greater than or equal to the current date
+      return dateString.compareTo(DateTime.now().toString()) >= 0 &&
+          (event.name.toLowerCase().contains(searchText.toLowerCase()) ||
+          event.address.toLowerCase().contains(searchText.toLowerCase()) ||
+          event.date.toLowerCase().contains(searchText.toLowerCase()) ||
+          event.time.toLowerCase().contains(searchText.toLowerCase()));
+    }).toList();
+  });
+}
 
 
   @override
@@ -126,6 +130,11 @@ class _EventsPageState extends State<EventsPage> {
               itemBuilder: (context, index) {
                 filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
                     .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+                var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].time}");
+                var currentDateTime = DateTime.now();
+                if (eventDateTime.millisecondsSinceEpoch < currentDateTime.millisecondsSinceEpoch) {
+                  return Container();
+                }
                 return EventCard (
                   eventName: filteredSearch[index].name,
                   eventLocation: filteredSearch[index].address,
