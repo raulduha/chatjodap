@@ -49,6 +49,9 @@ class _EventsPageState extends State<EventsPage> {
     events.add(event);
   });
 
+  // REQUEST PERMISO
+  var permission = await geo.Geolocator.requestPermission();
+
   currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
   List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
     final locations = await geocoding.locationFromAddress(event.address);

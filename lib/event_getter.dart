@@ -16,7 +16,7 @@ class Event {
   late double lati;
   late double longi;
 
- 
+
 
   Event({required this.name, required this.address, required this.date,required this.time, required this.description, required this.type,required this.promocionar,required this.promotora,required this.buyLink,   });
 
