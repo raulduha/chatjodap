@@ -28,7 +28,12 @@ class _ReportBugPageState extends State<ReportBugPage> {
                 fit: BoxFit.cover,
               ),
               const SizedBox(width: 16.0),
-              const Text("Report a Bug", style: TextStyle(color: Colors.grey)),
+              Container(
+  child: Image.asset('images/reportbug.png',
+  height: 50,
+  
+  )
+),
             ],
           ),
         ),

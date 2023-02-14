@@ -35,7 +35,12 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
               fit: BoxFit.cover,
             ),
             SizedBox(width: 16),
-            Text("Invite a Friend", style: TextStyle(color: Colors.grey[300]))
+            Container(
+  child: Image.asset('images/invite.png',
+  height: 50,
+  
+  )
+),
           ],
         ),
       ),

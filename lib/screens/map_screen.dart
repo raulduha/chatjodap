@@ -131,13 +131,17 @@ void _getMarkers() async {
             height: 50.0,
             fit: BoxFit.cover,
             ),  
-        title: const Text('Map')),
+        title: Container(
+            child: Image.asset('images/map_page2.png'),
+            height: 50,
+  ),
+        ),
       body:
       Stack(
       children: [
           GoogleMap(
           
-          markers: Set<Marker>.of(filteredMarkers.isNotEmpty ? filteredMarkers: markers),
+          markers: filteredMarkers.isNotEmpty ? Set<Marker>.of(filteredMarkers) : Set<Marker>.of([]),
           
 
           padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
@@ -328,6 +332,7 @@ void _getMarkers() async {
           
           },
           ),
+          
           Align(
             alignment: Alignment.bottomCenter,
             
@@ -358,7 +363,8 @@ void _getMarkers() async {
                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.purple),
                       ),
                     ),
-                  )
+                  ),
+                  
                 )
               ],
             )
