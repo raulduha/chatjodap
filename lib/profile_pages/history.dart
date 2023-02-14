@@ -1,9 +1,11 @@
-import 'dart:ffi';
+
 
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_application_1/screens/home_page.dart';
+import 'package:flutter_application_1/widgets/historyCard.dart';
 
 
 class HistoryPage extends StatefulWidget {
@@ -21,6 +23,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
   final List _events = [];
   bool _isLoading = true;
+  bool _getHistoryCalled = false;
 
 
   @override
@@ -44,24 +47,43 @@ class _HistoryPageState extends State<HistoryPage> {
       backgroundColor: rgb(28, 27, 27),
       resizeToAvoidBottomInset: false,
 
-      
-      body: _isLoading
-        ? const Center(child: CircularProgressIndicator(),)
-        : ListView.builder(
-            itemCount: _events.length,
-            itemBuilder: (context, index) {
-              final event = _events[index];
+      body: FutureBuilder(
+        future: Future.delayed(Duration(seconds: 5)), // 3 seconds delay
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return _events.isEmpty
+            ? const Center(
+                child: Text("No hay eventos en tu historial aún!",
+                  style: TextStyle(color: Colors.white, fontFamily: "Brand Bold", fontSize: 17)
+                ),
+              )
+            : ListView.builder(
+                itemCount: _events.length,
+                itemBuilder: (context, index) {
+                  final event = _events[index];
 
-              return ListTile(
-                isThreeLine: true,
-                title: Text(event['name']),
-                subtitle: Text(event['date']),
-                // subtitle: Text(event['type']),
+                  return HistoryCard(
+                    eventName: event['name'], 
+                    eventLocation: event['address'], 
+                    eventDate: event['date'], 
+                    eventType: event['type'],
+                  );
                   
+                },
               );
-            },
-          ),
-          
+          }
+        },
+      ),
+
+    
+
+
+
+
+
+
 
     );
     
@@ -71,32 +93,82 @@ class _HistoryPageState extends State<HistoryPage> {
 
 
 
-
-
-
   Future<void> _getHistory() async {
+    if (_getHistoryCalled == true) {
+      return;
+    }
+    
+    _getHistoryCalled = true;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    // await Future.delayed(Duration(seconds: 5));
+
     try {
 
       // user data
       User? user = _auth.currentUser;
       final userSnapshot =  _database.ref().child("users").child(user!.uid);
       final userHistory = await userSnapshot.child("history").once();
-      print(userHistory.snapshot.value);
-      final userHistoryData = userHistory.snapshot.value as Map<dynamic, dynamic>;
-      
-      if (userHistory != null) {
-        userHistoryData.forEach((key, value) {
-          _events.add(value);
+  
+      if (userHistory.snapshot.value != null) {
+
+        print(userHistory.snapshot.value);
+
+        final userHistoryData = userHistory.snapshot.value;
+        final userHistoryDataMap = userHistoryData as Map<dynamic, dynamic>;
+        final historyEvents = userHistoryDataMap.values.toList();
+
+        for (var element in (historyEvents)) {
+
+          // aca buscar elemento en la bdd
+          
+          final event = _database.ref().child("events").child(element);
+          
+          event.once().then((DatabaseEvent databaseEvent) {
+            final DataSnapshot snapshot = databaseEvent.snapshot;
+            final eventData = snapshot.value;
+            print("eventdata:");
+            print(eventData);
+            
+            _events.add(eventData);
+
+            print(_events);
+            print(_events.length);
+          });
+
+
+        }
+
+        // ARREGLAR, FUNCIONA A VECES
+        _events.sort((a, b) {
+          var dateA = DateTime.parse(a['date']);
+          var dateB = DateTime.parse(b['date']);
+          return dateB.compareTo(dateA);
+        });
+
+
+        setState(() {
+          _isLoading = false;
         });
       }
-      setState(() {
-        _isLoading = false;
-      });
+      else {
+        setState(() {
+          _isLoading = false;
+        });
+        print("no hay historial disponible");
+        
+      }
+      
       
     } catch (e) {
       print(e);
     }
   }
+
+
 
 
 

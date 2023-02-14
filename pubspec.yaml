@@ -54,13 +54,15 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   google_sign_in: ^5.4.3
   provider: ^6.0.5
-  font_awesome_flutter: ^10.3.0
+  font_awesome_flutter: ^9.0.0-nullsafety
   cloud_firestore: ^4.3.1
   latlng: ^0.2.0
   geocode: ^1.0.2
   flutter_launcher_icons: ^0.11.0
   url_launcher: ^6.1.9
   share: ^2.0.4
+  flutter_facebook_auth: ^5.0.7
+  flutter_signin_button: ^2.0.0
 
   
   
@@ -100,6 +102,7 @@ flutter:
     - images/popularevents.png
     - images/binario1.png
     - images/binario.png
+    - images/profileparty.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

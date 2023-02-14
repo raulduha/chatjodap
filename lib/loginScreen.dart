@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/provider/facebook_sign_in.dart';
 import 'package:flutter_application_1/screens/forgot_pw_page.dart';
-import 'package:flutter_application_1/widgets/brand_button.dart';
 import 'main.dart';
-import 'loginScreen.dart';
-import 'screens/map_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'registrationScreen.dart';
 import 'package:flutter_application_1/widgets/progressDiaalog.dart';
 import 'package:division/division.dart';
-import 'router.dart';
-import 'dart:developer';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginScreen extends StatelessWidget
 {
@@ -223,19 +219,26 @@ class LoginScreen extends StatelessWidget
                 // Google Login
 
                 const SizedBox(height: 15),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Center(
-                    child: GoogleButton(
-                      brandIcon: Image(image: AssetImage('images/google_icon.png')),
-                      label: 'Sign in with Google',
-                      backgroundColor: Colors.white,
-                      textColor: Colors.grey,
-                      height: 45,
-                      
-                    )
-                  ),
+                SignInButton(
+                  Buttons.Google,
+                  text: "Sign up with Google",
+                  onPressed: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                    provider.googleLogin(context);
+                  },
+                ),
 
+
+                // Facebook Login
+                const SizedBox(height: 15,),
+                SignInButton(
+                  Buttons.FacebookNew,
+                  text: "Continue with Facebook",
+                  onPressed: () {
+                    print("tapped FBLOGIN");
+                    final provider = Provider.of<FacebookSignInProvider>(context, listen: false);
+                    provider.facebookLogin(context);
+                  },
                 ),
 
 

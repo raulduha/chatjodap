@@ -8,6 +8,9 @@ class AlertDialogsInteractive {
     BuildContext context,
     String title,
     String body,
+    String cancelMsg,
+    String confirmMsg,
+    Color? confirmMsgColor,
   ) async {
     final action = await showDialog(
         context: context,
@@ -28,9 +31,9 @@ class AlertDialogsInteractive {
                     ),
                     onPressed: () =>
                         Navigator.of(context).pop(DialogsAction.cancel),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
+                    child: Text(
+                      cancelMsg,
+                      style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -41,9 +44,9 @@ class AlertDialogsInteractive {
                     ),
                     onPressed: () => Navigator.of(context).pop(DialogsAction.yes),
                     child: Text(
-                      'Confirm',
+                      confirmMsg,
                       style: TextStyle(
-                          color: Colors.red[400], fontWeight: FontWeight.w500),
+                          color: confirmMsgColor, fontWeight: FontWeight.w500),
                     ),
                   )
 

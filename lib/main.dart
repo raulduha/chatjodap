@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/provider/facebook_sign_in.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
 import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:provider/provider.dart';
@@ -21,20 +22,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => GoogleSignInProvider(),
-    
-    child: MaterialApp(
-      title: 'Your App',
-      initialRoute: '/login',
-      onGenerateRoute: Routers.generateRoute,
-        
-      // initialRoute: FirebaseAuth.instance.currentUser == null ? Loginscreen.idScreen :MainScreen.idScreen,
-      routes: 
-      {
-        RegistrationScreen.idScreen: (context) => RegistrationScreen(),
-        LoginScreen.idScreen: (context) => LoginScreen(),
-      },
-    )
+    child: ChangeNotifierProvider(
+      create: (context) => FacebookSignInProvider(),
+      child: MaterialApp(
+        title: 'Your App',
+        initialRoute: '/login',
+        onGenerateRoute: Routers.generateRoute,
+        routes: 
+        {
+          RegistrationScreen.idScreen: (context) => RegistrationScreen(),
+          LoginScreen.idScreen: (context) => LoginScreen(),
+        },
+      )
+    ),
   );
-    
 }
 

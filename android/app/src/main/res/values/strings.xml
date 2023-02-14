@@ -1,0 +1,8 @@
+<resources>
+    <string name="facebook_app_id">673453571146122</string>
+    <string name="fb_login_protocol_scheme">fb673453571146122</string>
+    <string name="facebook_client_token">a8371c8baaf6f9db63c4f028943e35f7</string>
+    <string name="app_name"> Jodap </string>
+
+    
+</resources>
