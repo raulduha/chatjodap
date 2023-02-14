@@ -131,7 +131,11 @@ void _getMarkers() async {
             height: 50.0,
             fit: BoxFit.cover,
             ),  
-        title: const Text('Map')),
+        title: Container(
+            child: Image.asset('images/map_page2.png'),
+            height: 50,
+  ),
+        ),
       body:
       Stack(
       children: [

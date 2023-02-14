@@ -102,6 +102,22 @@ flutter:
     - images/binario.png
     - images/finalmarker3.png
     - images/markerballfinal.png
+    - images/events_page.png
+    - images/home_page.png
+    - images/home_page2.png
+    - images/home_page3.png
+    - images/map_page.png
+    - images/map_page2.png
+    - images/events_page2.png
+    - images/events_page3.png
+    - images/jodap_image.png
+    - images/jodap_imagemuna.png
+    - images/Upcoming_events.png
+    - images/popular_events.png
+    - images/faq.png
+    - images/reportbug.png
+    - images/terms.png
+    - images/invite.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

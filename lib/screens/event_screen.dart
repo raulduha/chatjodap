@@ -95,7 +95,10 @@ class _EventsPageState extends State<EventsPage> {
             height: 10.0,
             fit: BoxFit.cover,
             ),  
-        title: const Text('Events close to you'),
+        title: Container(
+            child: Image.asset('images/events_page3.png'),
+            height: 50,
+  ),
       ),
       body: Column(
         children: <Widget>[

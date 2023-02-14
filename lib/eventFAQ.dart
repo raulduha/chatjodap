@@ -15,7 +15,12 @@ class EventFAQPage extends StatelessWidget {
             fit: BoxFit.cover,
             ),   
             SizedBox(width: 16.0),
-            Text("Event Finder FAQ", style: TextStyle(color: Colors.grey)),
+            Container(
+  child: Image.asset('images/faq.png',
+  height: 50,
+  
+  )
+),
           ],
         ),
       ),

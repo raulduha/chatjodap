@@ -48,11 +48,12 @@ class LoginScreen extends StatelessWidget
           // ),
 
           const SizedBox(height: 20),
-          const Text(
-            "JODAP",
-            style: TextStyle(fontSize: 40, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
+          Container(
+  child: Image.asset('images/jodap_image.png',
+  height: 100,
+  width: 200,
+  fit: BoxFit.cover)
+),
           /** 
           Image.asset(
               'images/evnt1.png',
