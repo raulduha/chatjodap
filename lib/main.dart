@@ -21,7 +21,9 @@ DatabaseReference usersRef = FirebaseDatabase.instance.ref().child("users");
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
+    
     create: (context) => GoogleSignInProvider(),
+
     child: ChangeNotifierProvider(
       create: (context) => FacebookSignInProvider(),
       child: MaterialApp(
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
         },
       )
     ),
+
   );
 }
 

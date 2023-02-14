@@ -15,7 +15,12 @@ class TermsAndConditions extends StatelessWidget {
             fit: BoxFit.cover,
             ),   
             SizedBox(width: 16.0),
-            Text("Terms and conditions", style: TextStyle(color: Colors.grey)),
+            Container(
+  child: Image.asset('images/terms.png',
+  height: 40,
+  
+  )
+),
           ],
         ),
       ),
