@@ -108,20 +108,23 @@ class _EventsPageState extends State<EventsPage> {
           Container(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search for events',
-                prefixIcon: const Icon(Icons.search),
+                hintStyle: TextStyle(color: Colors.white),
+                prefixIcon: Icon(Icons.search, color: Colors.white),
                 filled: true,
-                fillColor: Colors.grey[800],
+                fillColor: Color.fromRGBO(28, 27, 27, 1),
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
+                labelStyle: TextStyle(color: Colors.white),
               ),
+              style: TextStyle(color: Colors.white),
               onChanged: (text) {
                 _filterEvents(text);
               },
