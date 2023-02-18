@@ -1,12 +1,9 @@
-
-
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/widgets/historyCard.dart';
-
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -37,18 +34,23 @@ class _HistoryPageState extends State<HistoryPage> {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent[200],
-        title: const Text(
-          "Your Events History",
+        backgroundColor: const Color(0xFF1C1B1B),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+              const Text(
+              "Your Events History",
+            ),
+          ],
         ),
         centerTitle: true,
       ),
 
-      backgroundColor: rgb(28, 27, 27),
+      backgroundColor: const Color(0xFF1C1B1B),
       resizeToAvoidBottomInset: false,
 
       body: FutureBuilder(
-        future: Future.delayed(Duration(seconds: 5)), // 3 seconds delay
+        future: Future.delayed(const Duration(seconds: 5)), // 3 seconds delay
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -76,20 +78,8 @@ class _HistoryPageState extends State<HistoryPage> {
           }
         },
       ),
-
-    
-
-
-
-
-
-
-
     );
-    
   }
-
-
 
 
 

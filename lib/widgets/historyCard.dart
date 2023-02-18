@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/feedback.dart';
 class HistoryCard extends StatelessWidget {
   final String eventName;
   final String eventLocation;
@@ -61,6 +61,21 @@ class HistoryCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 16.0,
+              ),
+            ),
+            SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FeedbackPage()),
+                );
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Text('Submit Feedback'),
+                ),
               ),
             ),
           ],
