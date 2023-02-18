@@ -18,8 +18,9 @@ class HistoryCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.grey[800],
+        color: Color.fromRGBO(27, 28, 28, 1),
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        border: Border.all(color: Colors.white),
       ),
       child: Padding(
         padding: EdgeInsets.all(10.0),
@@ -43,7 +44,7 @@ class HistoryCard extends StatelessWidget {
             Text(
               eventDate,
               style: TextStyle(
-                color: Colors.grey[400],
+                color: Colors.white,
                 fontSize: 16.0,
               ),
             ),
@@ -51,7 +52,7 @@ class HistoryCard extends StatelessWidget {
             Text(
               eventLocation,
               style: TextStyle(
-                color: Colors.grey[400],
+                color: Colors.white,
                 fontSize: 16.0,
               ),
             ),
@@ -71,10 +72,19 @@ class HistoryCard extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => FeedbackPage()),
                 );
               },
-              child: Card(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: const Text('Submit Feedback'),
+                  child: const Text(
+                    'Submit Feedback',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
