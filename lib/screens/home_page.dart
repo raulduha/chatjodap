@@ -196,8 +196,12 @@ class EventCard extends StatelessWidget {
         margin: EdgeInsets.all(10.0),
         padding: EdgeInsets.all(20.0),
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Color(0xFF1C1B1B), //rgb(28, 27, 27)
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          border: Border.all(
+            color: Colors.white,
+            width: 2.0,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
