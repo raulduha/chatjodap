@@ -157,7 +157,7 @@ class LoginScreen extends StatelessWidget
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(const Size(350, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Colors.purple),
+                        backgroundColor: MaterialStateProperty.all(Color(0xFF993A84)),
                         textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 18, color: Colors.white),
                         ),
@@ -265,7 +265,7 @@ class LoginScreen extends StatelessWidget
                       }, 
                       child: const Text(
                         "Sign Up here",
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF993A84)),
                       ),
                     ),
                   ],

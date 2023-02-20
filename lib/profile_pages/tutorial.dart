@@ -140,7 +140,7 @@ class _TutorialPageState extends State<TutorialPage> {
   }
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-    primary: Colors.purple,
+    primary: Color(0xFF993A84),
   ),
     child: const Text("Siguiente"),
     

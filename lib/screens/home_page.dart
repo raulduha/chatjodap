@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
   child: (_recommendedEvents.isEmpty)
       ? const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),),
           ),
         )
       : ListView.builder(
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
   child: (_popularEvents.isEmpty)
       ? const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84)),
           ),
         )
       : ListView.builder(
@@ -192,10 +192,17 @@ class EventCard extends StatelessWidget {
             margin: EdgeInsets.all(10.0),
             padding: EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-              color: Color(0xFF1C1B1B), //rgb(28, 27, 27)
+              color: Color.fromRGBO(36, 36, 39, 1), // Color(0xFF39393D)
+              /**
+               * Color.fromRGBO(36, 36, 39, 1) //usando este ahora
+               * 
+Color.fromRGBO(37, 37, 41, 1)
+Color.fromRGBO(38, 38, 42, 1)
+Color.fromRGBO(40, 40, 44, 1)
+               */
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               border: Border.all(
-                color: Colors.white,
+                color: Color.fromRGBO(36, 36, 39, 1),
                 width: 2.0,
               ),
             ),
@@ -220,7 +227,7 @@ class EventCard extends StatelessWidget {
                   children: <Widget>[
                     Icon(
                       Icons.location_on,
-                      color: Colors.white,
+                      color: Color(0xFF993A84),
                     ),
                     SizedBox(width: 10.0),
                     Expanded(
@@ -239,7 +246,7 @@ class EventCard extends StatelessWidget {
                   children: <Widget>[
                     Icon(
                       Icons.calendar_today,
-                      color: Colors.white,
+                      color: Color(0xFF993A84),
                     ),
                     SizedBox(width: 10.0),
                     Expanded(
@@ -263,7 +270,7 @@ class EventCard extends StatelessWidget {
               eventage,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 15.0,
               ),
             ),
           ),

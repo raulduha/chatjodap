@@ -245,7 +245,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
 
-const SizedBox(height: 20),
+const SizedBox(height: 10),
 InkWell(
   onTap: () async {
     final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
@@ -255,26 +255,35 @@ InkWell(
     }
   },
   splashColor: Colors.white,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  child: Column(
     children: [
+      const SizedBox(height: 20),
       Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            Icons.logout,
-            color: Colors.redAccent[200],
-            size: 28,
-          ),
-          const SizedBox(width: 8),
-          const Text(
-            "Logout",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.logout,
+                  color: Colors.redAccent[200],
+                  size: 28,
+                ),
+                const SizedBox(width: 08),
+                const Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     ],
   ),
 ),
+const SizedBox(height: 30),
+
 ],
 );
 } else if (snapshot.hasError) {
@@ -295,14 +304,15 @@ return const SizedBox.shrink();
 ),
 ),
 );
-}Widget _buildProfileItem({required IconData icon, required String label}) {
+}
+Widget _buildProfileItem({required IconData icon, required String label}) {
   return Container(
     height: 60,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
-      color: Color.fromRGBO(28, 27, 27, 1),
+      color: Color.fromRGBO(36, 36, 39, 1),
       border: Border.all(
-        color: Colors.white,
+        color: Color.fromRGBO(36, 36, 39, 1),
         width: 2,
       ),
     ),
@@ -314,7 +324,7 @@ return const SizedBox.shrink();
             const SizedBox(width: 20),
             Icon(
               icon,
-              color: Colors.white,
+              color: Color(0xFF993A84),
               size: 30,
             ),
             const SizedBox(width: 20),

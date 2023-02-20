@@ -53,7 +53,7 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
             SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
-                color: Colors.purple,
+                color: Color(0xFF993A84),
                 borderRadius: BorderRadius.circular(8.0)
               ),
               padding: EdgeInsets.all(16.0),
@@ -81,14 +81,14 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
                         ),
                       );
                     },
-                    child: Text("COPY", style: TextStyle(color: Colors.purple)),
+                    child: Text("COPY", style: TextStyle(color: Color(0xFF993A84))),
                 ),
               SizedBox(width: 8.0),
               TextButton(
                 onPressed: () {
                   Share.share(defaultLink);
                   },
-                child: Text("SHARE", style: TextStyle(color: Colors.purple)),
+                child: Text("SHARE", style: TextStyle(color: Color(0xFF993A84))),
                 )
               ],
             )

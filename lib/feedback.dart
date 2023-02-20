@@ -46,10 +46,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
   style: const TextStyle(color: Colors.white),
   decoration: InputDecoration(
     border: OutlineInputBorder(
-      borderSide: BorderSide(color: _comment != null ? Colors.purple : Colors.grey),
+      borderSide: BorderSide(color: _comment != null ? Color(0xFF993A84): Colors.grey),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.purple),
+      borderSide: BorderSide(color: Color(0xFF993A84)),
     ),
     hintText: 'Leave a comment (optional)',
     hintStyle: const TextStyle(color: Colors.white),
@@ -65,7 +65,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             const SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.purple,
+                primary: Color(0xFF993A84),
                 onPrimary: Colors.white,
               ),
               onPressed: () {
@@ -103,7 +103,7 @@ class RatingWidget extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.purple),
+                border: Border.all(color: Color(0xFF993A84),),
                 color: i <= rating ? const Color.fromRGBO(28, 27, 27, 1) : const Color.fromRGBO(28, 27, 27, 1),
               ),
               child: Center(

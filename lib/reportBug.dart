@@ -51,10 +51,10 @@ class _ReportBugPageState extends State<ReportBugPage> {
                 maxLines: 5,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.purple, width: 2.0),
+                    borderSide: BorderSide(color: Color(0xFF993A84), width: 2.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.purple, width: 2.0),
+                    borderSide: BorderSide(color: Color(0xFF993A84), width: 2.0),
                   ),
                 ),
                 style: TextStyle(color: Colors.grey[300]),
@@ -85,7 +85,7 @@ class _ReportBugPageState extends State<ReportBugPage> {
                     }
                   },
                   child: const Text("Submit", style: TextStyle(color: Colors.white)),
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.purple),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF993A84)),
                   ),
                 ),
               ]
