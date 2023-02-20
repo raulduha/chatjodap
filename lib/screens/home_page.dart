@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Event> _recommendedEvents = [];
   List<Event> _popularEvents = [];
+  
 
   @override
   void initState() {
@@ -45,13 +46,14 @@ class _HomePageState extends State<HomePage> {
     events.add(event);
   });
   geo.Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
-
+  
 
   List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
     List<geocoding.Location> locations = await  geocoding.locationFromAddress(event.address);
     geocoding.Location location = locations.first;
     event.lati = location.latitude;
     event.longi = location.longitude;
+    event.dis = haversine(currentPosition.latitude, currentPosition.longitude, event.lati, event.longi);
     
     return event;
   }));
@@ -62,7 +64,8 @@ class _HomePageState extends State<HomePage> {
         ..sort((event1, event2) => event1.date.compareTo(event2.date));
       _popularEvents = events
         .where((event) => event.promocionar == "si")
-        .toList();
+        .toList()
+        ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
     });
     
   }
@@ -144,22 +147,13 @@ class _HomePageState extends State<HomePage> {
           itemCount: _popularEvents.length,
           itemBuilder: (context, index) {
             
-            DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
-            DateTime currentDate = DateTime.now();
-
-            // Compare year, month, and day
-            if (eventDate.year > currentDate.year ||
-                (eventDate.year == currentDate.year && eventDate.month > currentDate.month) ||
-                (eventDate.year == currentDate.year && eventDate.month == currentDate.month && eventDate.day >= currentDate.day)) {
               return EventCard(
-                event: _recommendedEvents[index],
+                event: _popularEvents[index],
                 eventDate: '',
                 eventLocation: '',
                 eventName: '',
               );
-            } else {
-              return Container();
-            }
+            
           },
         ),
 ),

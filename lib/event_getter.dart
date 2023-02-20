@@ -15,6 +15,7 @@ class Event {
   
   late double lati;
   late double longi;
+  late double dis;
 
 
 
