@@ -150,7 +150,7 @@ class ProfileScreen extends StatelessWidget {
                                             children: const [
                                               Icon(
                                                 Icons.history,
-                                                color: Colors.blueAccent,
+                                                color: Colors.purple,
                                                 size: 28,
                                               ),
                                               SizedBox(width: 8),
@@ -164,7 +164,7 @@ class ProfileScreen extends StatelessWidget {
 
                                           const Icon(
                                             Icons.arrow_forward_ios,
-                                            color: Colors.white24,
+                                            color: Colors.white,
                                             size: 28,
                                           )
                                         ],
@@ -205,7 +205,7 @@ class ProfileScreen extends StatelessWidget {
                                             children: const [
                                               Icon(
                                                 Icons.settings,
-                                                color: Colors.grey,
+                                                color: Colors.purple,
                                                 size: 28,
                                               ),
                                               SizedBox(width: 8),
@@ -219,7 +219,7 @@ class ProfileScreen extends StatelessWidget {
 
                                           const Icon(
                                             Icons.arrow_forward_ios,
-                                            color: Colors.white24,
+                                            color: Colors.white,
                                             size: 28,
                                           )
                                         ],
@@ -244,7 +244,7 @@ class ProfileScreen extends StatelessWidget {
                                             children: [
                                               Icon(
                                                 Icons.notifications_on,
-                                                color: Colors.yellow[700],
+                                                color: Colors.purple,
                                                 size: 28,
                                               ),
                                               const SizedBox(width: 8),
@@ -258,7 +258,7 @@ class ProfileScreen extends StatelessWidget {
 
                                           const Icon(
                                             Icons.arrow_forward_ios,
-                                            color: Colors.white24,
+                                            color: Colors.white,
                                             size: 28,
                                           )
                                         ],
@@ -305,7 +305,7 @@ class ProfileScreen extends StatelessWidget {
                                             children: [
                                               Icon(
                                                 Icons.live_help_rounded,
-                                                color: Colors.deepPurpleAccent[200],
+                                                color: Colors.purple,
                                                 size: 28,
                                               ),
                                               const SizedBox(width: 8),
@@ -319,7 +319,7 @@ class ProfileScreen extends StatelessWidget {
 
                                           const Icon(
                                             Icons.arrow_forward_ios,
-                                            color: Colors.white24,
+                                            color: Colors.white,
                                             size: 28,
                                           )
                                         ],
@@ -345,7 +345,7 @@ class ProfileScreen extends StatelessWidget {
                                           children: const [
                                             Icon(
                                               Icons.question_answer_rounded,
-                                              color: Colors.blueAccent,
+                                              color: Colors.purple,
                                               size: 28,
                                             ),
                                             SizedBox(width: 8),
@@ -357,7 +357,7 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios,
-                                          color: Colors.white24,
+                                          color: Colors.white,
                                           size: 28,
                                         )
                                       ],
@@ -384,7 +384,7 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.report_problem,
-                                              color: Colors.yellow[700],
+                                              color: Colors.purple,
                                               size: 28,
                                             ),
                                             const SizedBox(width: 8),
@@ -397,7 +397,7 @@ class ProfileScreen extends StatelessWidget {
 
                                         const Icon(
                                           Icons.arrow_forward_ios,
-                                          color: Colors.white24,
+                                          color: Colors.white,
                                           size: 28,
                                         )
                                       ],
@@ -438,7 +438,7 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.person_add,
-                                              color: Colors.green[700],
+                                              color: Colors.purple,
                                               size: 28,
                                             ),
                                             const SizedBox(width: 8),
@@ -450,7 +450,7 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios,
-                                          color: Colors.white24,
+                                          color: Colors.white,
                                           size: 28,
                                         )
                                       ],
@@ -489,7 +489,7 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.handshake,
-                                              color: Colors.brown[600],
+                                              color: Colors.purple,
                                               size: 28,
                                             ),
                                             const SizedBox(width: 8),
@@ -501,7 +501,7 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                         const Icon(
                                           Icons.arrow_forward_ios,
-                                          color: Colors.white24,
+                                          color: Colors.white,
                                           size: 28,
                                         )
                                       ],

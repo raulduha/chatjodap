@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         .toList()
         ..sort((event1, event2) => event1.date.compareTo(event2.date));
       _popularEvents = events
-        .where((event) => event.promocionar == 'si')
+        .where((event) => event.promocionar == "si")
         .toList();
     });
     
@@ -134,14 +134,14 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
             ),          
             Expanded(
-  child: (_recommendedEvents.isEmpty)
+  child: (_popularEvents.isEmpty)
       ? const Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
           ),
         )
       : ListView.builder(
-          itemCount: _recommendedEvents.length,
+          itemCount: _popularEvents.length,
           itemBuilder: (context, index) {
             
             DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
