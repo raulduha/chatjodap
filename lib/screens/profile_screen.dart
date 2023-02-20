@@ -3,6 +3,7 @@ import 'package:division/division.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_application_1/loginScreen.dart';
 import 'package:flutter_application_1/profile_pages/edit_profile.dart';
 import 'package:flutter_application_1/profile_pages/history.dart';
 import 'package:flutter_application_1/profile_pages/tutorial.dart';
@@ -21,23 +22,18 @@ import 'package:flutter_application_1/terms.dart';
 
 
 class ProfileScreen extends StatelessWidget {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
-@override
+  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: rgb(28, 27, 27),
+      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: 
-        Column (
-
+        child: Column(
           children: [
-
             StreamBuilder<User?>(
               stream: _auth.authStateChanges(),
               builder: (context, snapshot) {
@@ -53,562 +49,333 @@ class ProfileScreen extends StatelessWidget {
                       if (snapshot.hasData &&
                           !snapshot.hasError &&
                           snapshot.data?.snapshot.value != null) {
-                        Map<dynamic, dynamic> userData = snapshot.data?.snapshot.value as Map<dynamic, dynamic>;
-                        
+                        Map<dynamic, dynamic> userData =
+                            snapshot.data?.snapshot.value as Map<dynamic, dynamic>;
+
                         return Column(
-                          children: <Widget>[
-
+                          children: [
                             Stack(
-                              
-                              children: <Widget>[
-
+                              children: [
                                 ShadowOverlay(
                                   shadowWidth: 400,
                                   shadowHeight: 250,
                                   shadowColor: Colors.black,
-                                  child:
-                                    Image.asset(
-                                      'images/profileparty.png',
-                                      height: 250,
-                                      width: 400,
-                                      fit: BoxFit.cover,
-                                      
-                                    ),
-                                  
+                                  child: Image.asset(
+                                    'images/profileparty.png',
+                                    height: 250,
+                                    width: 400,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-
-
                                 Column(
-
                                   children: [
-
-                                    const SizedBox(height: 180,),
+                                    const SizedBox(
+                                      height: 175,
+                                    ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           userData['name'],
-                                          style: const TextStyle(fontSize: 30.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontSize: 30.0,
+                                              fontFamily: "Brand Bold",
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
                                         ),
-
                                         const SizedBox(width: 10),
                                         Text(
                                           userData['lastname'],
-                                          style: const TextStyle(fontSize: 30.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontSize: 30.0,
+                                              fontFamily: "Brand Bold",
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ],
                                     ),
-
-                                    const SizedBox(height: 10),
-                                    Text(
-                                          userData['email'],
-                                          style: const TextStyle(fontSize: 20.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.normal),
+                                    const SizedBox(
+                                      height: 10,
                                     ),
-
+                                    Text(
+                                      userData['email'],
+                                      style: const TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: "Brand Bold",
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ],
-
                                 ),
-                                
                               ],
                             ),
-
-                            
-                            const Divider(
-                              // color: Colors.deepPurpleAccent[200],
-                              color: Colors.white38,
-                              thickness: 4,
-                            ),
-                            const SizedBox(height: 10,),
-
-
-
-                            // HISTORY
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-
-                                  InkWell(
-                                    
-                                    onTap: () {
-                                      print("tapped History");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const HistoryPage()),
-                                      );
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: const [
-                                              Icon(
-                                                Icons.history,
-                                                color: Colors.purple,
-                                                size: 28,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                "History",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to History page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HistoryPage(),
                                   ),
-                                ],
+                                );
+                              },
+                              child: _buildProfileItem(
+                                icon: Icons.history,
+                                label: "History",
                               ),
                             ),
-
-
-
-                            // EDIT PROFILE, NOTIFICATIONS AND LANGUAGE
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-
-
-                                  InkWell(
-                                
-                                    onTap: () {
-                                      print("tapped Edit Profile");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => EditProfilePage()),
-                                      );
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: const [
-                                              Icon(
-                                                Icons.settings,
-                                                color: Colors.purple,
-                                                size: 28,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                "Edit Profile",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Edit Profile page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(),
                                   ),
-
-
-                                  const SizedBox(height: 15,),
-                                  InkWell(
-                                    
-                                    onTap: () {
-                                      print("tapped Notifications");
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.notifications_on,
-                                                color: Colors.purple,
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Notifications",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
-                                  ),
-
-                                ],
+                                );
+                              },
+                              child: _buildProfileItem(
+                                icon: Icons.edit,
+                                label: "Edit Profile",
                               ),
                             ),
-
-
-
-
-
-
-                            // TUTORIAL, FAQ, REPORT A BUG
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-
-
-                                  InkWell(
-                                
-                                    onTap: () {
-                                      print("tapped Edit TUtorial");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => TutorialPage(),
-                                        ),
-                                      );
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.live_help_rounded,
-                                                color: Colors.purple,
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Tutorial",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white,
-                                            size: 28,
-                                          )
-                                        ],
-                                      ),
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Notifications page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        HistoryPage(),
                                   ),
-
-
-                                  const SizedBox(height: 15,),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => EventFAQPage(),
-                                        ),
-                                      );
-                                    },
-                                    splashColor: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: const [
-                                            Icon(
-                                              Icons.question_answer_rounded,
-                                              color: Colors.purple,
-                                              size: 28,
-                                            ),
-                                            SizedBox(width: 8),
-                                            Text(
-                                              "Jodap FAQ",
-                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 28,
-                                        )
-                                      ],
+                                );
+                              },
+                              child: _buildProfileItem(
+                                icon: Icons.notifications,
+                                label: "Notifications",
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TutorialPage(),
                                     ),
-                                  ),
-
-
-                                  const SizedBox(height: 15,),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => ReportBugPage(),
-                                        ),
-                                      );
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.report_problem,
-                                              color: Colors.purple,
-                                              size: 28,
-                                            ),
-                                            const SizedBox(width: 8),
-                                            const Text(
-                                              "Report a Bug",
-                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 28,
-                                        )
-                                      ],
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.help_outline,
+                                label: "Tutorial",
+  
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReportBugPage(),
                                     ),
-                                  ),
-
-
-                                ],
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.bug_report,
+                                label: "report a bug",
+  
+                                ),
                               ),
-                            ),
-
-
-
-
-                            // INVITE A FRIEND
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-
-                                  InkWell(
-                                    onTap: () {
-                                      print("tapped INVITE");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => InviteFriendPage(),
-                                        ),
-                                      );
-                                    },
-                                    splashColor: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.person_add,
-                                              color: Colors.purple,
-                                              size: 28,
-                                            ),
-                                            const SizedBox(width: 8),
-                                            const Text(
-                                              "Invite a Friend",
-                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 28,
-                                        )
-                                      ],
+                              const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InviteFriendPage(),
                                     ),
-                                  ),
-
-                                ],
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.person_add,
+                                label: "Invite a Friend",
+  
+                                ),
                               ),
-                            ),
-
-
-
-
-                            // TERMS AND CONDITIONS
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      print("tapped TERMS");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => TermsAndConditions(),
-                                        ),
-                                      );
-                                    },
-                                    splashColor: Colors.white,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.handshake,
-                                              color: Colors.purple,
-                                              size: 28,
-                                            ),
-                                            const SizedBox(width: 8),
-                                            const Text(
-                                              "Terms and conditions",
-                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
-                                          size: 28,
-                                        )
-                                      ],
+                              const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EventFAQPage(),
                                     ),
-                                  ),
-
-                                ],
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.question_answer,
+                                label: "Jodap FAQ",
+  
+                                ),
                               ),
-                            ),
-
-
-                            // LOGOUT
-
-                            Padding(
-                              
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                              child: Column(
-                                children: [
-
-                                  InkWell(
-                                    
-                                    onTap: () async {
-                                      final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
-                                      if (action == DialogsAction.yes) {
-                                        final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-                                        provider.googleLogout(context);
-                                      }
-                                    },
-
-                                    splashColor: Colors.white,
-
-                                    child:
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.logout,
-                                                color: Colors.redAccent[200],
-                                                size: 28,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              const Text(
-                                                "Logout",
-                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                                              ),
-                                            ],
-                                                  
-                                          ),
-
-                                          
-                                        ],
-                                      ),
-                                  ),
-
-                                ],
+                              const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TermsAndConditions(),
+                                    ),
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.description,
+                                label: "Terms & Conditions",
+  
+                                ),
                               ),
-                            ),
 
+const SizedBox(height: 20),
+InkWell(
+  onTap: () async {
+    final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
+    if (action == DialogsAction.yes) {
+      final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+      provider.googleLogout(context);
+    }
+  },
+  splashColor: Colors.white,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          Icon(
+            Icons.logout,
+            color: Colors.redAccent[200],
+            size: 28,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Logout",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+    ],
+  ),
+),
+],
+);
+} else if (snapshot.hasError) {
+return const Text("Error fetching user data");
+} else {
+return const Center(
+child: CircularProgressIndicator(),
+);
+}
+},
+);
+}
+return const SizedBox.shrink();
 
-
-
-
-
-
-
-                          // aca en vola logo con color??
-
-
-
-
-
-
-                          ],
-                        );
-                      } else {
-                        return Container(
-                            width: 500,
-                            height: 500,
-                            alignment: Alignment.center,
-                            child: const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                          ),
-                        );
-                      }
-                    },
-                  );
-                } else {
-                  return Container(
-                            width: 500,
-                            height: 500,
-                            alignment: Alignment.center,
-                            child: const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
-                          ),
-                        );
-                      }
-              },
+},
+),
+],
+),
+),
+);
+}Widget _buildProfileItem({required IconData icon, required String label}) {
+  return Container(
+    height: 60,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15),
+      color: Color.fromRGBO(28, 27, 27, 1),
+      border: Border.all(
+        color: Colors.white,
+        width: 2,
+      ),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            const SizedBox(width: 20),
+            Icon(
+              icon,
+              color: Colors.white,
+              size: 30,
+            ),
+            const SizedBox(width: 20),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
+        const Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.white,
+          size: 30,
+        ),
+      ],
+    ),
+  );
+}
+}
+
+
+class ShadowOverlay extends StatelessWidget {
+  final double shadowWidth;
+  final double shadowHeight;
+  final Color shadowColor;
+  final Widget child;
+
+  const ShadowOverlay({
+    Key? key,
+    required this.shadowWidth,
+    required this.shadowHeight,
+    required this.shadowColor,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(28, 27, 27,1),
+        
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor,
+            spreadRadius: 0,
+            blurRadius: 50,
+            offset: Offset(0, 0),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        ),
+        child: child,
       ),
     );
   }
 }
-
-
-
-
