@@ -20,6 +20,7 @@ class _TutorialPageState extends State<TutorialPage> {
       appBar: AppBar(
         title: Text('Tutorial'),
         centerTitle: true,
+        backgroundColor: rgb(28,27,27),
       ),
 
       body: Column(
@@ -138,7 +139,11 @@ class _TutorialPageState extends State<TutorialPage> {
     );
   }
   return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    primary: Colors.purple,
+  ),
     child: const Text("Siguiente"),
+    
     onPressed: () {
       setState(() {
         _currentStep + 1 < _totalSteps

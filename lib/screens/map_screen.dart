@@ -126,11 +126,7 @@ void _getMarkers() async {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-        leading: Image.asset('images/binario1.png', 
-            width: 50.0,
-            height: 50.0,
-            fit: BoxFit.cover,
-            ),  
+        
         title: Container(
             child: Image.asset('images/map_page2.png'),
             height: 50,

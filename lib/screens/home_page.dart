@@ -77,11 +77,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        leading: Image.asset('images/binario1.png', 
-            width: 10.0,
-            height: 10.0,
-            fit: BoxFit.cover,
-            ),       
+        
         title: Container(
             child: Image.asset('images/home_page3.png'),
             height: 50,
@@ -121,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                 eventDate: '',
                 eventLocation: '',
                 eventName: '',
+                eventage: _recommendedEvents[index].age,
               );
             } else {
               return Container();
@@ -152,6 +149,7 @@ class _HomePageState extends State<HomePage> {
                 eventDate: '',
                 eventLocation: '',
                 eventName: '',
+                eventage: _popularEvents[index].age,
               );
             
           },
@@ -169,13 +167,15 @@ class EventCard extends StatelessWidget {
   final String eventName;
   final String eventLocation;
   final String eventDate;
+  final String eventage;
   late double eventDis;
 
   EventCard({
     required this.eventName,
     required this.eventLocation,
-    required this.eventDate, 
+    required this.eventDate,
     required this.event,
+    required this.eventage,
   });
 
   @override
@@ -186,47 +186,88 @@ class EventCard extends StatelessWidget {
           builder: (_) => EventDetailPage(event: event),
         ),
       ),
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: Color(0xFF1C1B1B), //rgb(28, 27, 27)
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          border: Border.all(
-            color: Colors.white,
-            width: 2.0,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Color(0xFF1C1B1B), //rgb(28, 27, 27)
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              border: Border.all(
+                color: Colors.white,
+                width: 2.0,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    SizedBox(width: 10.0),
+                    Text(
+                      event.name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.location_on,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: Text(
+                        event.address,
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.calendar_today,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: Text(
+                        event.date,
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              event.name,
+          Positioned(
+            bottom: 15,
+            right: 15,
+            child: Text(
+              eventage,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
               ),
             ),
-            SizedBox(height: 10.0),
-            Text(
-              event.address,
-              style: TextStyle(
-                color: Colors.grey[300],
-                fontSize: 18.0,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              event.date,
-              style: TextStyle(
-                color: Colors.grey[300],
-                fontSize: 18.0,
-              ),
-            ),
-            
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
