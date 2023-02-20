@@ -34,16 +34,23 @@ class _HistoryPageState extends State<HistoryPage> {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1C1B1B),
+        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-              const Text(
-              "Your Events History",
-            ),
+            Image.asset('images/binario1.png', 
+            width: 50.0,
+            height: 50.0,
+            fit: BoxFit.cover,
+            ),   
+            SizedBox(width: 16.0),
+            Container(
+  child: Image.asset('images/history.png',
+  height: 40,
+  
+  )
+),
           ],
         ),
-        centerTitle: true,
       ),
 
       backgroundColor: const Color(0xFF1C1B1B),
