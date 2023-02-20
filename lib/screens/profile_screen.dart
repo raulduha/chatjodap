@@ -289,8 +289,12 @@ const SizedBox(height: 30),
 } else if (snapshot.hasError) {
 return const Text("Error fetching user data");
 } else {
-return const Center(
-child: CircularProgressIndicator(),
+return  Center(
+  // ACA EL CIRCULAR NOSE PQ APARECE MUY ARRIBA ENTONCES LO PUSE INVISible. el color seria Color(0xFF993A84)
+child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color.fromRGBO(28, 27, 27, 1),),
+            
+          ),
 );
 }
 },

@@ -60,7 +60,9 @@ class _HistoryPageState extends State<HistoryPage> {
         future: Future.delayed(const Duration(seconds: 5)), // 3 seconds delay
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),),
+          ),);
           } else {
             return _events.isEmpty
             ? const Center(
