@@ -19,7 +19,7 @@ class EditProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent[200],
+        backgroundColor: Color.fromRGBO(28,27,27,1),
         title: const Text(
           "Edit Profile",
         ),
@@ -107,7 +107,7 @@ class EditProfilePage extends StatelessWidget {
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(const Size(350, 45)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        backgroundColor: MaterialStateProperty.all(Color(0xFF993A84)),
                         textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 18, color: Colors.white),
                         ),
