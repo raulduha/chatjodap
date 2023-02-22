@@ -18,8 +18,23 @@ class _TutorialPageState extends State<TutorialPage> {
       backgroundColor: rgb(28, 27, 27),
 
       appBar: AppBar(
-        title: Text('Tutorial'),
-        centerTitle: true,
+        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        title: Row(
+          children: [
+            Image.asset('images/binario1.png', 
+            width: 50.0,
+            height: 50.0,
+            fit: BoxFit.cover,
+            ),   
+            SizedBox(width: 16.0),
+            Container(
+  child: Image.asset('images/tutorial.png',
+  height: 40,
+  
+  )
+),
+          ],
+        ),
       ),
 
       body: Column(
@@ -138,7 +153,11 @@ class _TutorialPageState extends State<TutorialPage> {
     );
   }
   return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+    primary: Color(0xFF993A84),
+  ),
     child: const Text("Siguiente"),
+    
     onPressed: () {
       setState(() {
         _currentStep + 1 < _totalSteps

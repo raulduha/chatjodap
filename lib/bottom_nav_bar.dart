@@ -35,17 +35,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        backgroundColor: Colors.white,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         selectedFontSize: 14.0,
         unselectedFontSize: 10.0,
-        selectedItemColor: Colors.white,
-        selectedLabelStyle: TextStyle(color: Colors.grey),
-        unselectedLabelStyle: TextStyle(color: Colors.grey.withOpacity(0.8)),
+        selectedItemColor: Color(0xFF993A84),
+        selectedLabelStyle: TextStyle(color: Colors.grey[900]),
+        unselectedLabelStyle: TextStyle(color: Colors.grey.withOpacity(0.1)),
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: ('Home'),

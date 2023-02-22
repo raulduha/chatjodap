@@ -256,7 +256,7 @@ class RatingWidget extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.purple),
+                border: Border.all(color: Color(0xFF993A84),),
                 color: i <= rating ? const Color.fromRGBO(28, 27, 27, 1) : const Color.fromRGBO(28, 27, 27, 1),
               ),
               child: Center(

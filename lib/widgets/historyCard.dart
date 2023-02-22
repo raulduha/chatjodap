@@ -29,9 +29,9 @@ class _HistoryCardState extends State<HistoryCard> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(27, 28, 28, 1),
+        color: Color.fromRGBO(36, 36, 39, 1), 
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        border: Border.all(color: Colors.white),
+        border: Border.all(color: Color.fromRGBO(36, 36, 39, 1), ),
       ),
       child: Padding(
         padding: EdgeInsets.all(10.0),
@@ -91,7 +91,7 @@ class _HistoryCardState extends State<HistoryCard> {
               } : null,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.purple,
+                  color: Color(0xFF993A84),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 child: Padding(

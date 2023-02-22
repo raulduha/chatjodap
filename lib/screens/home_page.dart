@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Event> _recommendedEvents = [];
   List<Event> _popularEvents = [];
+  
 
   @override
   void initState() {
@@ -48,13 +49,14 @@ class _HomePageState extends State<HomePage> {
   final permission = await geo.Geolocator.requestPermission();
 
   geo.Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
-
+  
 
   List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
     List<geocoding.Location> locations = await  geocoding.locationFromAddress(event.address);
     geocoding.Location location = locations.first;
     event.lati = location.latitude;
     event.longi = location.longitude;
+    event.dis = haversine(currentPosition.latitude, currentPosition.longitude, event.lati, event.longi);
     
     return event;
   }));
@@ -64,8 +66,9 @@ class _HomePageState extends State<HomePage> {
         .toList()
         ..sort((event1, event2) => event1.date.compareTo(event2.date));
       _popularEvents = events
-        .where((event) => event.promocionar == 'si')
-        .toList();
+        .where((event) => event.promocionar == "si")
+        .toList()
+        ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
     });
     
   }
@@ -77,11 +80,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        leading: Image.asset('images/binario1.png', 
-            width: 10.0,
-            height: 10.0,
-            fit: BoxFit.cover,
-            ),       
+        
         title: Container(
             child: Image.asset('images/home_page3.png'),
             height: 50,
@@ -102,7 +101,7 @@ class _HomePageState extends State<HomePage> {
   child: (_recommendedEvents.isEmpty)
       ? const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),),
           ),
         )
       : ListView.builder(
@@ -121,6 +120,7 @@ class _HomePageState extends State<HomePage> {
                 eventDate: '',
                 eventLocation: '',
                 eventName: '',
+                eventage: _recommendedEvents[index].age,
               );
             } else {
               return Container();
@@ -137,32 +137,24 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
             ),          
             Expanded(
-  child: (_recommendedEvents.isEmpty)
+  child: (_popularEvents.isEmpty)
       ? const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.purple),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84)),
           ),
         )
       : ListView.builder(
-          itemCount: _recommendedEvents.length,
+          itemCount: _popularEvents.length,
           itemBuilder: (context, index) {
             
-            DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
-            DateTime currentDate = DateTime.now();
-
-            // Compare year, month, and day
-            if (eventDate.year > currentDate.year ||
-                (eventDate.year == currentDate.year && eventDate.month > currentDate.month) ||
-                (eventDate.year == currentDate.year && eventDate.month == currentDate.month && eventDate.day >= currentDate.day)) {
               return EventCard(
-                event: _recommendedEvents[index],
+                event: _popularEvents[index],
                 eventDate: '',
                 eventLocation: '',
                 eventName: '',
+                eventage: _popularEvents[index].age,
               );
-            } else {
-              return Container();
-            }
+            
           },
         ),
 ),
@@ -178,13 +170,15 @@ class EventCard extends StatelessWidget {
   final String eventName;
   final String eventLocation;
   final String eventDate;
+  final String eventage;
   late double eventDis;
 
   EventCard({
     required this.eventName,
     required this.eventLocation,
-    required this.eventDate, 
+    required this.eventDate,
     required this.event,
+    required this.eventage,
   });
 
   @override
@@ -195,47 +189,95 @@ class EventCard extends StatelessWidget {
           builder: (_) => EventDetailPage(event: event),
         ),
       ),
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: Color(0xFF1C1B1B), //rgb(28, 27, 27)
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          border: Border.all(
-            color: Colors.white,
-            width: 2.0,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(36, 36, 39, 1), // Color(0xFF39393D)
+              /**
+               * Color.fromRGBO(36, 36, 39, 1) //usando este ahora
+               * 
+Color.fromRGBO(37, 37, 41, 1)
+Color.fromRGBO(38, 38, 42, 1)
+Color.fromRGBO(40, 40, 44, 1)
+               */
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              border: Border.all(
+                color: Color.fromRGBO(36, 36, 39, 1),
+                width: 2.0,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    SizedBox(width: 10.0),
+                    Text(
+                      event.name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.location_on,
+                      color: Color(0xFF993A84),
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: Text(
+                        event.address,
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.calendar_today,
+                      color: Color(0xFF993A84),
+                    ),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: Text(
+                        event.date,
+                        style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              event.name,
+          Positioned(
+            bottom: 15,
+            right: 15,
+            child: Text(
+              eventage,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+                fontSize: 15.0,
               ),
             ),
-            SizedBox(height: 10.0),
-            Text(
-              event.address,
-              style: TextStyle(
-                color: Colors.grey[300],
-                fontSize: 18.0,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              event.date,
-              style: TextStyle(
-                color: Colors.grey[300],
-                fontSize: 18.0,
-              ),
-            ),
-            
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
