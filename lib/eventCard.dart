@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -33,7 +31,10 @@ class EventCard extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(Icons.emoji_symbols_outlined),
+              Icon(
+                Icons.emoji_symbols_outlined,
+                color: Colors.white,
+              ),
               SizedBox(width: 10.0),
               Text(
                 eventName,
@@ -45,20 +46,48 @@ class EventCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.0),
-          Text(
-            eventLocation,
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16.0,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    eventLocation,
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           SizedBox(height: 10.0),
-          Text(
-            '$eventDate, $eventTime',
-            style: TextStyle(
-              color: Colors.grey[400],
-              fontSize: 16.0,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.calendar_today,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    '$eventDate, $eventTime',
+                    style: TextStyle(
+                      color: Colors.grey[400],
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           SizedBox(height: 10.0),
           Text(

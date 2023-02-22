@@ -93,11 +93,7 @@ class _EventsPageState extends State<EventsPage> {
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-        leading: Image.asset('images/binario1.png', 
-            width: 10.0,
-            height: 10.0,
-            fit: BoxFit.cover,
-            ),  
+        
         title: Container(
             child: Image.asset('images/events_page3.png'),
             height: 50,
@@ -110,10 +106,10 @@ class _EventsPageState extends State<EventsPage> {
             child: TextField(
               decoration: const InputDecoration(
                 hintText: 'Search for events',
-                hintStyle: TextStyle(color: Colors.white),
-                prefixIcon: Icon(Icons.search, color: Colors.white),
+                hintStyle: TextStyle(color: Color.fromRGBO(28, 27, 27, 1)),
+                prefixIcon: Icon(Icons.search, color:Color.fromRGBO(28, 27, 27, 1)),
                 filled: true,
-                fillColor: Color.fromRGBO(28, 27, 27, 1),
+                fillColor: Colors.white,
                 enabledBorder: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(color: Colors.white),
@@ -124,7 +120,7 @@ class _EventsPageState extends State<EventsPage> {
                 ),
                 labelStyle: TextStyle(color: Colors.white),
               ),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Color.fromRGBO(28, 27, 27, 1)),
               onChanged: (text) {
                 _filterEvents(text);
               },
@@ -133,7 +129,7 @@ class _EventsPageState extends State<EventsPage> {
           Expanded(
             
             child: filteredSearch.isEmpty 
-              ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.purple)))
+              ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),)))
               : ListView.builder(
               itemCount: filteredSearch.length,
               itemBuilder: (context, index) {
@@ -149,6 +145,7 @@ class _EventsPageState extends State<EventsPage> {
                   eventLocation: filteredSearch[index].address,
                   eventDate: '${filteredSearch[index].date} ${filteredSearch[index].time}', 
                   event: filteredSearch[index], 
+                  eventage: filteredSearch[index].age,
                 );
               
               },
