@@ -44,6 +44,9 @@ class _HomePageState extends State<HomePage> {
     final event = Event.fromJson(value);
     events.add(event);
   });
+  
+  final permission = await geo.Geolocator.requestPermission();
+
   geo.Position currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
 
 

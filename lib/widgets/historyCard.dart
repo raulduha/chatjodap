@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/feedback.dart';
-class HistoryCard extends StatelessWidget {
+
+class HistoryCard extends StatefulWidget {
   final String eventName;
-  final String eventLocation;
+  final String eventAddress;
   final String eventDate;
   final String eventType;
 
   HistoryCard({
     required this.eventName,
-    required this.eventLocation,
+    required this.eventAddress,
     required this.eventDate,
     required this.eventType,
+    
   });
+
+
+  @override
+  _HistoryCardState createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends State<HistoryCard> {
+
+  bool isButtonEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class HistoryCard extends StatelessWidget {
                 Icon(Icons.history, color: Colors.white),
                 SizedBox(width: 10.0),
                 Text(
-                  eventName,
+                  widget.eventName,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -42,7 +53,7 @@ class HistoryCard extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              eventDate,
+              widget.eventDate,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
@@ -50,7 +61,7 @@ class HistoryCard extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              eventLocation,
+              widget.eventAddress,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
@@ -58,7 +69,7 @@ class HistoryCard extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              eventType,
+              widget.eventType,
               style: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 16.0,
@@ -66,12 +77,18 @@ class HistoryCard extends StatelessWidget {
             ),
             SizedBox(height: 16),
             GestureDetector(
-              onTap: () {
+              onTap: isButtonEnabled ? () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FeedbackPage()),
+                  MaterialPageRoute(builder: (context) => FeedbackPage(
+                    event_name: widget.eventName,
+                    event_date: widget.eventDate,
+                    event_type: widget.eventType,
+                    event_address: widget.eventAddress,
+                    
+                  )),
                 );
-              },
+              } : null,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.purple,
