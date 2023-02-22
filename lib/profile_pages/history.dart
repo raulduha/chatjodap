@@ -22,6 +22,15 @@ class _HistoryPageState extends State<HistoryPage> {
   bool _isLoading = true;
   bool _getHistoryCalled = false;
 
+  List _feedbacks = [];
+  bool isHistoryCardEnabled = true;
+
+  void _handleButtonEnabledChanged(bool isEnabled) {
+    setState(() {
+      isHistoryCardEnabled = isEnabled;
+    });
+  }
+
 
   @override
   void initState() {
@@ -71,15 +80,20 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
               )
             : ListView.builder(
+                
                 itemCount: _events.length,
                 itemBuilder: (context, index) {
                   final event = _events[index];
+                  
 
                   return HistoryCard(
                     eventName: event['name'], 
-                    eventLocation: event['address'], 
+                    eventAddress: event['address'], 
                     eventDate: event['date'], 
                     eventType: event['type'],
+                    
+                    
+                    
                   );
                   
                 },

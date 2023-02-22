@@ -219,9 +219,6 @@ class EventDetailPage extends StatelessWidget {
         print("VALIDO");
         print(userHistory.snapshot.value);
 
-        // ACA CHECKEAR CUAL ES REALMENTE EL EVENTID
-        // String eventid = "eventid2";
-
         userSnapshot.child("history").push().set(eventid);
         
       }
@@ -229,9 +226,6 @@ class EventDetailPage extends StatelessWidget {
       else {
 
         print("NO HAY NODO HISTORY");
-
-        // ACA CHECKEAR CUAL ES REALMENTE EL EVENTID
-        // String eventid = "eventid1";
         userSnapshot.child("history").push().set(eventid);
         final userHistory = await userSnapshot.child("history").once();
         print(userHistory.snapshot.value);
