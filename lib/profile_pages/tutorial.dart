@@ -28,11 +28,11 @@ class _TutorialPageState extends State<TutorialPage> {
             ),   
             SizedBox(width: 16.0),
             Container(
-  child: Image.asset('images/tutorial.png',
-  height: 40,
-  
-  )
-),
+              child: Image.asset('images/tutorial.png',
+              height: 40,
+              
+              )
+            ),
           ],
         ),
       ),
@@ -146,6 +146,9 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget _buildButton() {
   if (_currentStep == _totalSteps - 1) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF993A84),
+      ),
       child: const Text("Volver al Perfil"),
       onPressed: () {
         Navigator.pop(context);
@@ -154,8 +157,8 @@ class _TutorialPageState extends State<TutorialPage> {
   }
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-    primary: Color(0xFF993A84),
-  ),
+      backgroundColor: Color(0xFF993A84),
+    ),
     child: const Text("Siguiente"),
     
     onPressed: () {

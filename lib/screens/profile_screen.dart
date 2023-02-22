@@ -145,23 +145,6 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
-                                // Navigate to Notifications page
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        HistoryPage(),
-                                  ),
-                                );
-                              },
-                              child: _buildProfileItem(
-                                icon: Icons.notifications,
-                                label: "Notifications",
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            GestureDetector(
-                              onTap: () {
                                 // Navigate to Tutorial page
                                 Navigator.push(
                                   context,
@@ -245,44 +228,44 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
 
-const SizedBox(height: 10),
-InkWell(
-  onTap: () async {
-    final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
-    if (action == DialogsAction.yes) {
-      final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-      provider.googleLogout(context);
-    }
-  },
-  splashColor: Colors.white,
-  child: Column(
-    children: [
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.logout,
-                  color: Colors.redAccent[200],
-                  size: 28,
-                ),
-                const SizedBox(width: 08),
-                const Text(
-                  "Logout",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
-  ),
-),
-const SizedBox(height: 30),
+                            const SizedBox(height: 10),
+                            InkWell(
+                              onTap: () async {
+                                final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
+                                if (action == DialogsAction.yes) {
+                                  final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                                  provider.googleLogout(context);
+                                }
+                              },
+                              splashColor: Colors.white,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.logout,
+                                              color: Colors.redAccent[200],
+                                              size: 28,
+                                            ),
+                                            const SizedBox(width: 08),
+                                            const Text(
+                                              "Logout",
+                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 30),
 
 ],
 );
