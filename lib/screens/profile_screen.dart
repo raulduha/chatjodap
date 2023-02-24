@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                                   child: Image.asset(
                                     'images/profileparty.png',
                                     height: 250,
-                                    width: 400,
+                                    width: 500,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
