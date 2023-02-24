@@ -45,18 +45,12 @@ class LoginScreen extends StatelessWidget
 
           const SizedBox(height: 20),
           Container(
-  child: Image.asset('images/jodap_image.png',
-  height: 100,
-  width: 200,
-  fit: BoxFit.cover)
-),
-          /** 
-          Image.asset(
-              'images/evnt1.png',
-              height: 100,
-              width: 300,
-              fit: BoxFit.cover,),
-          */
+            child: Image.asset('images/jodap_image.png',
+            height: 100,
+            width: 200,
+            fit: BoxFit.cover)
+          ),
+    
           const SizedBox(height: 25),
           const Text(
             "Welcome Back!",
@@ -231,16 +225,16 @@ class LoginScreen extends StatelessWidget
 
 
                 // Facebook Login
-                const SizedBox(height: 15,),
-                SignInButton(
-                  Buttons.FacebookNew,
-                  text: "Continue with Facebook",
-                  onPressed: () {
-                    print("tapped FBLOGIN");
-                    final provider = Provider.of<FacebookSignInProvider>(context, listen: false);
-                    provider.facebookLogin(context);
-                  },
-                ),
+                // const SizedBox(height: 15,),
+                // SignInButton(
+                //   Buttons.FacebookNew,
+                //   text: "Continue with Facebook",
+                //   onPressed: () {
+                //     print("tapped FBLOGIN");
+                //     final provider = Provider.of<FacebookSignInProvider>(context, listen: false);
+                //     provider.facebookLogin(context);
+                //   },
+                // ),
 
 
 

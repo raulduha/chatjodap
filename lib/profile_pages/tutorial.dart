@@ -21,12 +21,6 @@ class _TutorialPageState extends State<TutorialPage> {
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
         title: Row(
           children: [
-            Image.asset('images/binario1.png', 
-            width: 50.0,
-            height: 50.0,
-            fit: BoxFit.cover,
-            ),   
-            SizedBox(width: 16.0),
             Container(
               child: Image.asset('images/tutorial.png',
               height: 40,
@@ -63,11 +57,19 @@ class _TutorialPageState extends State<TutorialPage> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            children: const [
+            children: [
 
               // imagen bacan
+              Container(
+                height: 300,
+                child: Image.asset(
+                  "images/tutorial-1.png",
+                  fit: BoxFit.cover,
+                ),
+                
+              ),
 
-              Text(
+              const Text(
                 "Tienes ganas de salir con tus amigos, pero no sabes realmente a donde deberias ir?",
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
@@ -83,11 +85,19 @@ class _TutorialPageState extends State<TutorialPage> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            children: const [
+            children: [
 
               // imagen bacan
+              Container(
+                height: 300,
+                child: Image.asset(
+                  "images/tutorial-2.png",
+                  fit: BoxFit.cover,
+                ),
+                
+              ),
 
-              Text(
+              const Text(
                 "Ve en el Mapa los eventos cerca tuyo para el día que quieras!",
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
@@ -102,11 +112,19 @@ class _TutorialPageState extends State<TutorialPage> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            children: const [
+            children: [
 
               // imagen bacan
+              Container(
+                height: 300,
+                child: Image.asset(
+                  "images/tutorial-3.png",
+                  fit: BoxFit.cover,
+                ),
+                
+              ),
 
-              Text(
+              const Text(
                 "En Eventos busca el evento ideal para ti según tus preferencias! Ya sea por nombre, ambiente, promotora, etc.",
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
@@ -122,11 +140,19 @@ class _TutorialPageState extends State<TutorialPage> {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            children: const [
+            children: [
 
               // imagen bacan
-              
-              Text(
+              Container(
+                height: 300,
+                child: Image.asset(
+                  "images/tutorial-4.png",
+                  fit: BoxFit.cover,
+                ),
+                
+              ),
+
+              const Text(
                 "Adelante! tus eventos favoritos están esperandote.",
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,

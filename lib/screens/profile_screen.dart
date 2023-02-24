@@ -228,7 +228,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
 
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 20),
                             InkWell(
                               onTap: () async {
                                 final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
@@ -238,14 +238,12 @@ class ProfileScreen extends StatelessWidget {
                                 }
                               },
                               splashColor: Colors.white,
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Flexible(
-                                        child: Row(
+                                      
+                                        Row(
                                           children: [
                                             Icon(
                                               Icons.logout,
@@ -259,12 +257,12 @@ class ProfileScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                      ),
+                                      
                                     ],
                                   ),
-                                ],
+                                
                               ),
-                            ),
+                            
                             const SizedBox(height: 30),
 
 ],

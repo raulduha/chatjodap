@@ -21,19 +21,12 @@ class _ReportBugPageState extends State<ReportBugPage> {
           backgroundColor:const Color.fromRGBO(28, 27, 27, 1),
           title: Row(
             children: [
-              Image.asset(
-                'images/binario1.png',
-                height: 50,
-                width: 50,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(width: 16.0),
               Container(
-  child: Image.asset('images/reportbug.png',
-  height: 50,
-  
-  )
-),
+                child: Image.asset('images/reportbug.png',
+                height: 50,
+                
+                )
+              ),
             ],
           ),
         ),
