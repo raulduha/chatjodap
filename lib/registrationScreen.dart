@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
+import 'package:flutter_application_1/terms.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
@@ -28,6 +29,7 @@ class RegistrationScreen extends StatelessWidget
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController repeatpasswordTextEditingController = TextEditingController();
+  bool termsChecked = false;
 
   // ignore: non_constant_identifier_names
   bool minim_age = true;
@@ -173,7 +175,25 @@ class RegistrationScreen extends StatelessWidget
                         DateTime? pickedDate = await showDatePicker(
                             context: context, initialDate: DateTime.now(),
                             firstDate: DateTime(1930), //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime.now()
+                            lastDate: DateTime.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: const ColorScheme.light(
+                                    primary: Color(0xFF993A84), // <-- SEE HERE
+                                    onPrimary: Colors.white, // <-- SEE HERE
+                                    onSurface: Color(0xFF993A84), // <-- SEE HERE
+                                  ),
+                                  textButtonTheme: TextButtonThemeData(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: const Color(0xFF993A84)// button text color
+                                    ),
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                            
                         );
 
                           if(pickedDate != null ){
@@ -257,6 +277,30 @@ class RegistrationScreen extends StatelessWidget
                     ),
                 ),
 
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    const Text(
+                      "Aceptas los",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+
+                    TextButton(
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TermsAndConditions()),
+                        );
+                      }, 
+                      child: const Text(
+                        "Términos y condiciones",
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF993A84)),
+                      ),
+                    ),
+                  ],
+                ),
 
 
 

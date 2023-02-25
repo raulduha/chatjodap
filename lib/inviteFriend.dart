@@ -28,19 +28,12 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              'images/binario1.png',
-              height: 50,
-              width: 50,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 16),
             Container(
-  child: Image.asset('images/invite.png',
-  height: 50,
-  
-  )
-),
+              child: Image.asset('images/invite.png',
+              height: 50,
+              
+              )
+            ),
           ],
         ),
       ),

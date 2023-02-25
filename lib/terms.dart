@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TermsAndConditions extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,18 +10,12 @@ class TermsAndConditions extends StatelessWidget {
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
         title: Row(
           children: [
-            Image.asset('images/binario1.png', 
-            width: 50.0,
-            height: 50.0,
-            fit: BoxFit.cover,
-            ),   
-            SizedBox(width: 16.0),
             Container(
-  child: Image.asset('images/terms.png',
-  height: 40,
-  
-  )
-),
+              child: Image.asset('images/terms.png',
+              height: 40,
+              
+              )
+            ),
           ],
         ),
       ),

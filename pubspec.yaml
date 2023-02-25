@@ -95,17 +95,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/evnt1.png
-    - images/party2.jpg
-  #   - images/a_dot_burr.jpeg
-    - images/markerpink1.png
-    - images/markerpink2.png
-    - images/markerpink3.png
-    - images/google_button.png
-    - images/google_icon.png
+    
     - images/popularevents.png
     - images/binario1.png
-    - images/binario.png
     - images/profileparty.png
     - images/finalmarker3.png
     - images/markerballfinal.png
@@ -129,7 +121,11 @@ flutter:
     - images/history.png
     - images/tutorial.png
     - images/edit_profile.png
-    
+    - images/tutorial-1.png
+    - images/tutorial-2.png
+    - images/tutorial-3.png
+    - images/tutorial-4.png
+
 
 
 

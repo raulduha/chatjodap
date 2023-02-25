@@ -340,10 +340,27 @@ void _getMarkers() async {
 
                 onPressed: () async {
                   final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: filterDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2030)
+                    context: context,
+                    initialDate: filterDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary: Color(0xFF993A84), // <-- SEE HERE
+                            onPrimary: Colors.white, // <-- SEE HERE
+                            onSurface: Color(0xFF993A84), // <-- SEE HERE
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              foregroundColor: const Color(0xFF993A84)// button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
                   
                   );
                     if (selectedDate != null) {
