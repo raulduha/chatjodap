@@ -194,13 +194,6 @@ class EventCard extends StatelessWidget {
         margin: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: Color.fromRGBO(36, 36, 39, 1), // Color(0xFF39393D)
-          /**
-           * Color.fromRGBO(36, 36, 39, 1) //usando este ahora
-           * 
-Color.fromRGBO(37, 37, 41, 1)
-Color.fromRGBO(38, 38, 42, 1)
-Color.fromRGBO(40, 40, 44, 1)
-           */
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           border: Border.all(
             color: Color.fromRGBO(36, 36, 39, 1),
@@ -270,15 +263,34 @@ Color.fromRGBO(40, 40, 44, 1)
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Text(
-                        eventage,
-                        style: TextStyle(
-
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 21,
+                            width: 28,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF993A84),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            child: Center(
+                              child: Text(
+                                eventage,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      
                     ],
                   ),
                 ],
