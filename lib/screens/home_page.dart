@@ -165,7 +165,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 class EventCard extends StatelessWidget {
   final Event event;
   final String eventName;
@@ -262,34 +261,23 @@ class EventCard extends StatelessWidget {
                           fontSize: 16.0,
                         ),
                       ),
-                      SizedBox(width: 10.0),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 21,
-                            width: 28,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF993A84),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
+                      Spacer(),
+                      Container(
+                        height: 21,
+                        width: 28,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF993A84),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            eventage,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
                             ),
                           ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            left: 0,
-                            child: Center(
-                              child: Text(
-                                eventage,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
