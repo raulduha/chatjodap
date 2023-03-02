@@ -17,6 +17,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Event> _recommendedEvents = [];
   List<Event> _popularEvents = [];
+  bool _showUpcoming = false;
+
   
 
   @override
@@ -73,97 +75,93 @@ class _HomePageState extends State<HomePage> {
     
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  return DefaultTabController(
+    length: 2,
+    child: Scaffold(
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
       appBar: AppBar(
-        
         backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        
         title: Container(
-            child: Image.asset('images/home_page3.png'),
-            height: 50,
-  ),
-        
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-  padding: EdgeInsets.all(20.0),
-  child: Container(
-    child: Image.asset('images/Upcoming_events.png'),
-    height: 50,
-  ),
-),
-            Expanded(
-  child: (_recommendedEvents.isEmpty)
-      ? const Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),),
-          ),
-        )
-      : ListView.builder(
-          itemCount: _recommendedEvents.length,
-          itemBuilder: (context, index) {
-            
-            DateTime eventDate = DateTime.parse(_recommendedEvents[index].date);
-            DateTime currentDate = DateTime.now();
-
-            // Compare year, month, and day
-            if (eventDate.year > currentDate.year ||
-                (eventDate.year == currentDate.year && eventDate.month > currentDate.month) ||
-                (eventDate.year == currentDate.year && eventDate.month == currentDate.month && eventDate.day >= currentDate.day)) {
-              return EventCard(
-                event: _recommendedEvents[index],
-                eventDate: '',
-                eventLocation: '',
-                eventName: '',
-                eventage: _recommendedEvents[index].age,
-              );
-            } else {
-              return Container();
-            }
-          },
+          child: Image.asset('images/home_page3.png'),
+          height: 50,
         ),
-),
-            
-            
-              
-            Image.asset('images/popular_events.png', 
-            width: 180.0,
-            height: 60.0,
-            fit: BoxFit.cover,
-            ),          
-            Expanded(
-  child: (_popularEvents.isEmpty)
-      ? const Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84)),
-          ),
-        )
-      : ListView.builder(
-          itemCount: _popularEvents.length,
-          itemBuilder: (context, index) {
-            
-              return EventCard(
-                event: _popularEvents[index],
-                eventDate: '',
-                eventLocation: '',
-                eventName: '',
-                eventage: _popularEvents[index].age,
-              );
-            
-          },
-        ),
-),
-
+        bottom: TabBar(
+          tabs: [
+            Tab(text: 'Popular'),
+            Tab(text: 'Upcoming'),
           ],
+          onTap: (index) {
+            setState(() {
+              _showUpcoming = index == 1;
+            });
+          },
+          indicatorColor: Color(0xFF993A84),
+
         ),
       ),
-    );
-  }
+      body: TabBarView(
+        children: [
+          (_popularEvents.isEmpty)
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF993A84),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: _popularEvents.length,
+                  itemBuilder: (context, index) {
+                    return EventCard(
+                      event: _popularEvents[index],
+                      eventDate: '',
+                      eventLocation: '',
+                      eventName: '',
+                      eventage: _popularEvents[index].age,
+                    );
+                  },
+                ),
+          (_recommendedEvents.isEmpty)
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF993A84),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: _recommendedEvents.length,
+                  itemBuilder: (context, index) {
+                    DateTime eventDate =
+                        DateTime.parse(_recommendedEvents[index].date);
+                    DateTime currentDate = DateTime.now();
+
+                    // Compare year, month, and day
+                    if (eventDate.year > currentDate.year ||
+                        (eventDate.year == currentDate.year &&
+                            eventDate.month > currentDate.month) ||
+                        (eventDate.year == currentDate.year &&
+                            eventDate.month == currentDate.month &&
+                            eventDate.day >= currentDate.day)) {
+                      return EventCard(
+                        event: _recommendedEvents[index],
+                        eventDate: '',
+                        eventLocation: '',
+                        eventName: '',
+                        eventage: _recommendedEvents[index].age,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+        ],
+      ),
+    ),
+  );
+}
 }
 class EventCard extends StatelessWidget {
   final Event event;
