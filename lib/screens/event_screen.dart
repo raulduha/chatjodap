@@ -81,6 +81,9 @@ class _EventsPageState extends State<EventsPage> {
           (event.name.toLowerCase().contains(searchText.toLowerCase()) ||
           event.address.toLowerCase().contains(searchText.toLowerCase()) ||
           event.date.toLowerCase().contains(searchText.toLowerCase()) ||
+          event.promotora.toLowerCase().contains(searchText.toLowerCase()) ||
+          event.age.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+          event.type.toString().toLowerCase().contains(searchText.toLowerCase()) ||
           event.time.toLowerCase().contains(searchText.toLowerCase()));
     }).toList();
   });

@@ -165,6 +165,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 class EventCard extends StatelessWidget {
   final Event event;
   final String eventName;
@@ -189,95 +190,102 @@ class EventCard extends StatelessWidget {
           builder: (_) => EventDetailPage(event: event),
         ),
       ),
-      child: Stack(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(36, 36, 39, 1), // Color(0xFF39393D)
-              /**
-               * Color.fromRGBO(36, 36, 39, 1) //usando este ahora
-               * 
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(36, 36, 39, 1), // Color(0xFF39393D)
+          /**
+           * Color.fromRGBO(36, 36, 39, 1) //usando este ahora
+           * 
 Color.fromRGBO(37, 37, 41, 1)
 Color.fromRGBO(38, 38, 42, 1)
 Color.fromRGBO(40, 40, 44, 1)
-               */
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              border: Border.all(
-                color: Color.fromRGBO(36, 36, 39, 1),
-                width: 2.0,
+           */
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          border: Border.all(
+            color: Color.fromRGBO(36, 36, 39, 1),
+            width: 2.0,
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 120.0,
+              width: 120.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                image: DecorationImage(
+                  image: AssetImage('images/event_card_image.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SizedBox(width: 10.0),
-                    Text(
-                      event.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
+            SizedBox(width: 10.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 10.0),
+                  Text(
+                    event.name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        color: Color(0xFF993A84),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.location_on,
-                      color: Color(0xFF993A84),
-                    ),
-                    SizedBox(width: 10.0),
-                    Expanded(
-                      child: Text(
-                        event.address,
-                        style: TextStyle(
-                          color: Colors.grey[300],
-                          fontSize: 16.0,
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        child: Text(
+                          event.address,
+                          style: TextStyle(
+                            color: Colors.grey[300],
+                            fontSize: 16.0,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.calendar_today,
-                      color: Color(0xFF993A84),
-                    ),
-                    SizedBox(width: 10.0),
-                    Expanded(
-                      child: Text(
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.calendar_today,
+                        color: Color(0xFF993A84),
+                      ),
+                      SizedBox(width: 10.0),
+                      Text(
                         event.date,
                         style: TextStyle(
                           color: Colors.grey[300],
                           fontSize: 16.0,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 15,
-            right: 15,
-            child: Text(
-              eventage,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
+                      SizedBox(width: 10.0),
+                      Text(
+                        eventage,
+                        style: TextStyle(
+
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      
+                    ],
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
