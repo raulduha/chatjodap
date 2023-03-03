@@ -163,6 +163,7 @@ Widget build(BuildContext context) {
   );
 }
 }
+
 class EventCard extends StatelessWidget {
   final Event event;
   final String eventName;
@@ -198,12 +199,13 @@ class EventCard extends StatelessWidget {
           ),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 120.0,
-              width: 120.0,
-              decoration: BoxDecoration(
+              height: 100.0,
+              width: 100.0,
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 image: DecorationImage(
                   image: AssetImage('images/event_card_image.jpg'),
@@ -216,30 +218,31 @@ class EventCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 10.0),
+                  SizedBox(height: 5.0),
                   Text(
                     event.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 10.0),
                   Row(
                     children: <Widget>[
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         color: Color(0xFF993A84),
                       ),
                       SizedBox(width: 10.0),
                       Expanded(
                         child: Text(
-                          event.address,
+                          event.address.split(',').sublist(0, 2).join(','),
                           style: TextStyle(
                             color: Colors.grey[300],
-                            fontSize: 16.0,
+                            fontSize: 15.0,
                           ),
+                          
                         ),
                       ),
                     ],
@@ -256,7 +259,7 @@ class EventCard extends StatelessWidget {
                         event.date,
                         style: TextStyle(
                           color: Colors.grey[300],
-                          fontSize: 16.0,
+                          fontSize: 15.0,
                         ),
                       ),
                       Spacer(),

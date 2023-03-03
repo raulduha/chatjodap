@@ -304,7 +304,7 @@ class RegistrationScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 25.0,),
+                const SizedBox(height: 15.0,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Center(
@@ -352,7 +352,7 @@ class RegistrationScreen extends StatelessWidget
 
 
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
