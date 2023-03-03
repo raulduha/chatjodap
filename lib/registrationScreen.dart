@@ -404,7 +404,10 @@ class RegistrationScreen extends StatelessWidget
       barrierDismissible: false,
       builder: (BuildContext context)
       {
-          return ProgessDialog(message: "Registering, please wait..");
+          return Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(
+          Color(0xFF993A84),)));
       }
     );
 

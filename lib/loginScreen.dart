@@ -281,7 +281,10 @@ class LoginScreen extends StatelessWidget
       barrierDismissible: false,
       builder: (BuildContext context)
       {
-          return ProgessDialog(message: "authenticating, please wait..");
+          return Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(
+          Color(0xFF993A84),)));
       }
     );
     final User? firebaseUser  = (await _firebaseAuth.signInWithEmailAndPassword(
