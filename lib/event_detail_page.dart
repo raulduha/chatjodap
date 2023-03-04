@@ -33,7 +33,7 @@ class EventDetailPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Text(
-                "Name:",
+                "Nombre:",
                 style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
               ),
             ),
@@ -47,7 +47,7 @@ class EventDetailPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Text(
-                "Date and Time:",
+                "Fecha y hora:",
                 style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
               ),
             ),
@@ -61,7 +61,7 @@ class EventDetailPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Text(
-                "Description:",
+                "Descripcion:",
                 style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
               ),
             ),
@@ -75,7 +75,7 @@ class EventDetailPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Text(
-                "Type:",
+                "Tipo de musica:",
                 style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
               ),
             ),
@@ -89,7 +89,7 @@ class EventDetailPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Text(
-                "Address:",
+                "dirección:",
                 style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
               ),
             ),

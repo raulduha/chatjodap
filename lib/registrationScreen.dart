@@ -56,14 +56,14 @@ class RegistrationScreen extends StatelessWidget
           // ),
 
           const Text(
-            "Sign Up!",
-            style: TextStyle(fontSize: 34.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
+            "Registrarse!",
+            style: TextStyle(fontSize: 30.0, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
 
           const SizedBox(height: 10),
           const Text(
-            "The best events are waiting for you",
+            "Los mejores eventos te esperan!",
             style: TextStyle(fontSize: 20, fontFamily: "Brand Bold", color: Colors.white),
             textAlign: TextAlign.center,
           ),
@@ -93,7 +93,7 @@ class RegistrationScreen extends StatelessWidget
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Name',
+                          hintText: 'Nombre',
                           icon: Icon(Icons.person, color: Colors.grey,),
                         ),
                       ),
@@ -119,7 +119,7 @@ class RegistrationScreen extends StatelessWidget
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Last Name',
+                          hintText: 'Apellido(s)',
                           icon: Icon(Icons.person, color: Colors.grey,),
                         ),
                       ),
@@ -217,7 +217,7 @@ class RegistrationScreen extends StatelessWidget
 
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Birthday',
+                          hintText: 'Fecha de nacimiento',
                           icon: Icon(Icons.calendar_month, color: Colors.grey,),
                         ),
                       ),
@@ -245,7 +245,7 @@ class RegistrationScreen extends StatelessWidget
                         obscureText: true,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Password',
+                          hintText: 'Contraseña',
                           icon: Icon(Icons.lock, color: Colors.grey,),
                         ),
                       ),
@@ -269,7 +269,7 @@ class RegistrationScreen extends StatelessWidget
                         obscureText: true,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Repeat Password',
+                          hintText: 'Repite la contraseña',
                           icon: Icon(Icons.lock, color: Colors.grey,),
                         ),
                       ),
@@ -322,30 +322,30 @@ class RegistrationScreen extends StatelessWidget
                       onPressed: () async {
                         if(nameTextEditingController.text.length < 3)
                         {
-                          displayToastMessage("name must be atleast 3 characters.");
+                          displayToastMessage("El nombre debe tener mas de 3 caracteres.");
                         }
                         else if(!emailTextEditingController.text.contains("@"))
                         {
-                          displayToastMessage("email address is not Valid.");
+                          displayToastMessage("El email no es valido.");
                         }
                         else if(passwordTextEditingController.text.length<6)
                         {
-                          displayToastMessage("password must be atleast 6 characters.");
+                          displayToastMessage("La contraseña debe tener mas de 6 caracteres.");
                         }
                         else if (minim_age == false) {
-                          displayToastMessage("You must be 18+ years to Join");
+                          displayToastMessage("Debes tener +18 de edad para registrarte");
                         }
                         else if (passwordTextEditingController.text != repeatpasswordTextEditingController.text) {
-                          displayToastMessage("Passwords must match");
+                          displayToastMessage("Las contraseñas deben coincidir");
                         }
                         else if (await checkIfEmailExists(emailTextEditingController.text)) {
-                          displayToastMessage("Email already used");
+                          displayToastMessage("Email ya esta en uso");
                         }
                         else {
                           registerNewUser(context);
                         }
                       },
-                      child: const Text('Sign Up')),
+                      child: const Text('Registrarse')),
                   ),
                 ),
 
@@ -358,7 +358,7 @@ class RegistrationScreen extends StatelessWidget
                   children: [
 
                     const Text(
-                      "Already have an account?",
+                      "Ya tienes una cuenta?",
                       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                     ),
 
@@ -367,7 +367,7 @@ class RegistrationScreen extends StatelessWidget
                         Navigator.pushNamedAndRemoveUntil(context, LoginScreen.idScreen, (route) => false);
                       }, 
                       child: const Text(
-                        "Login here",
+                        "Iniciar sesión aqui",
                         style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF993A84)),
                       ),
                     ),
@@ -431,14 +431,14 @@ class RegistrationScreen extends StatelessWidget
       
     };
     usersRef.child(firebaseUser.uid).set(userDataMap);
-    displayToastMessage("Congratulations, yout account has been created.");
+    displayToastMessage("Felicidades, tu cuenta ha sido creada.");
 
     Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
   }
   else
   {
     Navigator.pop(context);
-    displayToastMessage("New user account has not been Created");
+    displayToastMessage("La cuenta no ha podido ser creada");
   }
 
   }

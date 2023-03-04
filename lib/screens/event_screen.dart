@@ -108,7 +108,7 @@ class _EventsPageState extends State<EventsPage> {
             padding: const EdgeInsets.all(20.0),
             child: TextField(
               decoration: const InputDecoration(
-                hintText: 'Search for events',
+                hintText: 'Busca eventos',
                 hintStyle: TextStyle(color: Color.fromRGBO(28, 27, 27, 1)),
                 prefixIcon: Icon(Icons.search, color:Color.fromRGBO(28, 27, 27, 1)),
                 filled: true,

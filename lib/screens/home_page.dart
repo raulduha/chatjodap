@@ -90,7 +90,7 @@ Widget build(BuildContext context) {
         bottom: TabBar(
           tabs: [
             Tab(text: 'Popular'),
-            Tab(text: 'Upcoming'),
+            Tab(text: 'Proximamente'),
           ],
           onTap: (index) {
             setState(() {

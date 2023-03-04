@@ -63,7 +63,7 @@ class _ReportBugPageState extends State<ReportBugPage> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // show a snackbar to confirm the bug report was sent
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bug report sent!', style: TextStyle(color: Colors.grey[300]))));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Reporte enviado!', style: TextStyle(color: Colors.grey[300]))));
 
                     // launch the email client with the problem description
                     final url = 'mailto:raulduhaldee@gmail.com?subject=Bug%20Report&body=${_problemController.text}';
@@ -77,7 +77,7 @@ class _ReportBugPageState extends State<ReportBugPage> {
                     _problemController.clear();
                     }
                   },
-                  child: const Text("Submit", style: TextStyle(color: Colors.white)),
+                  child: const Text("Enviar", style: TextStyle(color: Colors.white)),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF993A84)),
                   ),
                 ),
