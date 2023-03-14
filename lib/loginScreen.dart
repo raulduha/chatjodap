@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget
     
           const SizedBox(height: 25),
           const Text(
-            "Welcome Back!",
+            "Bienvenido de vuelta!",
             style: TextStyle(fontSize: 20, fontFamily: "Brand Bold", color: Colors.white),
             textAlign: TextAlign.center,
           ),
@@ -109,7 +109,7 @@ class LoginScreen extends StatelessWidget
                         obscureText: true,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Password',
+                          hintText: 'contraseña',
                           icon: Icon(Icons.lock, color: Colors.grey,),
                         ),
                       ),
@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget
                         );
                       }, 
                       child: const Text(
-                        "Forgot Password?",
+                        "Olvidaste tu contraseña?",
                         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ),                  ),
@@ -172,7 +172,7 @@ class LoginScreen extends StatelessWidget
                         }
                       },
 
-                      child: const Text("Sign in"),
+                      child: const Text("Iniciar sesión"),
                     ),
                   ),
                 ),
@@ -196,7 +196,7 @@ class LoginScreen extends StatelessWidget
                                 ),
                             ),
                             SizedBox(width: 8),
-                            Text("OR", style: TextStyle(color: Colors.white),),
+                            Text("O", style: TextStyle(color: Colors.white),),
                             SizedBox(width: 8),
                             Expanded(
                                 child: Divider(
@@ -249,7 +249,7 @@ class LoginScreen extends StatelessWidget
                   children: [
 
                     const Text(
-                      "Do not have an account?",
+                      "No tienes una cuenta?",
                       style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                     ),
 
@@ -258,7 +258,7 @@ class LoginScreen extends StatelessWidget
                         Navigator.pushNamedAndRemoveUntil(context, RegistrationScreen.idScreen, (route) => false);
                       }, 
                       child: const Text(
-                        "Sign Up here",
+                        "Registrate aqui!",
                         style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF993A84)),
                       ),
                     ),
@@ -281,7 +281,10 @@ class LoginScreen extends StatelessWidget
       barrierDismissible: false,
       builder: (BuildContext context)
       {
-          return ProgessDialog(message: "authenticating, please wait..");
+          return Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(
+          Color(0xFF993A84),)));
       }
     );
     final User? firebaseUser  = (await _firebaseAuth.signInWithEmailAndPassword(
@@ -300,20 +303,20 @@ class LoginScreen extends StatelessWidget
         if(snap.snapshot.value != null)
           {
             Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);;
-            displayToastMessage("You are logged in now. ");
+            displayToastMessage("Ha iniciado sesion con exito. ");
           }
           else
           {
             Navigator.pop(context); 
             _firebaseAuth.signOut();
-            displayToastMessage("No record exists for this user, please create a new account. ");
+            displayToastMessage("No existe ningún registro para este usuario, cree una nueva cuenta. ");
           }
         });
       
     }
     else {
       Navigator.pop(context);
-      displayToastMessage("Error Ocurred, can not Sign in.");
+      displayToastMessage("Se produjo un error, no se puede iniciar sesión.");
     }
   }
 

@@ -123,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                               },
                               child: _buildProfileItem(
                                 icon: Icons.history,
-                                label: "History",
+                                label: "Tu historial",
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -139,7 +139,7 @@ class ProfileScreen extends StatelessWidget {
                               },
                               child: _buildProfileItem(
                                 icon: Icons.edit,
-                                label: "Edit Profile",
+                                label: "Editar perfil",
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -172,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                               child: _buildProfileItem(
                                 icon: Icons.bug_report,
-                                label: "report a bug",
+                                label: "reporta un bug",
   
                                 ),
                               ),
@@ -189,7 +189,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                               child: _buildProfileItem(
                                 icon: Icons.person_add,
-                                label: "Invite a Friend",
+                                label: "Invita un amigo",
   
                                 ),
                               ),
@@ -223,7 +223,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                               child: _buildProfileItem(
                                 icon: Icons.description,
-                                label: "Terms & Conditions",
+                                label: "Terminos y condiciones",
   
                                 ),
                               ),
@@ -231,7 +231,7 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             InkWell(
                               onTap: () async {
-                                final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Logout', 'Are you Sure?', 'Cancel', 'Yes', Colors.redAccent[400]);
+                                final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Cerrar sesion', 'Estas seguro?', 'Cancelar', 'Si', Colors.redAccent[400]);
                                 if (action == DialogsAction.yes) {
                                   final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
                                   provider.googleLogout(context);
@@ -252,7 +252,7 @@ class ProfileScreen extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 08),
                                             const Text(
-                                              "Logout",
+                                              "Cerrar sesion",
                                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
                                             ),
                                           ],

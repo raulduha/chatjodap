@@ -48,19 +48,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: ('Home'),
+            label: ('Inicio'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
-            label: ('Map'),
+            label: ('Mapa'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
-            label: ('Events'),
+            label: ('Eventos'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: ('Profile'),
+            label: ('Perfil'),
           ),
         ],
       ),

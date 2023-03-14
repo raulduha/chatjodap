@@ -1,44 +1,35 @@
 import 'package:flutter/material.dart';
 
+class CustomProgressDialog extends StatelessWidget {
+  final String message;
 
-class ProgessDialog extends StatelessWidget
-{ 
-  String message;
-  ProgessDialog({required this.message});
+  const CustomProgressDialog({required this.message});
 
   @override
-  Widget build(BuildContext context)
-  {
-    
-
+  Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.purple,
+      backgroundColor: Colors.transparent,
       child: Container(
-        margin: EdgeInsets.all(15.0),
-        width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(6.0),
-
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              SizedBox(width:6.0,),
-              CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black),),
-              SizedBox(width: 26.0,),
-              Text(
-                message,
-              
-                style: TextStyle(color: Colors.black, fontSize: 10.0),
+        padding: EdgeInsets.all(20),
+        child: Row(
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Color(0xFF993A84),
               ),
-            ],
-          ),
+            ),
+            SizedBox(width: 20),
+            Text(
+              message,
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       ),
     );
-
-
   }
 }

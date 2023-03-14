@@ -39,7 +39,7 @@ class EditProfilePage extends StatelessWidget {
         children: [
 
           const Text(
-            "Edit your data if you want to",
+            "Edita tus datos (opcional)",
             style: TextStyle(fontSize: 25.5, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
@@ -62,7 +62,7 @@ class EditProfilePage extends StatelessWidget {
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Name',
+                      hintText: 'Nombre',
                       icon: Icon(
                         Icons.person,
                         color: Colors.grey,
@@ -93,7 +93,7 @@ class EditProfilePage extends StatelessWidget {
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Last Name',
+                      hintText: 'Apellido(s)',
                       icon: Icon(
                         Icons.person,
                         color: Colors.grey,
@@ -147,7 +147,7 @@ class EditProfilePage extends StatelessWidget {
                           updateUserData(context);
                         }
                       },
-                      child: const Text('Update')),
+                      child: const Text('Actualizar')),
                   ),
           ),
 

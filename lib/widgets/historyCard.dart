@@ -97,7 +97,7 @@ class _HistoryCardState extends State<HistoryCard> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const Text(
-                    'Submit Feedback',
+                    'Enviar Feedback',
                     style: TextStyle(
                       color: Colors.white,
                     ),

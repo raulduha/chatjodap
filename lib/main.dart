@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     child: ChangeNotifierProvider(
       create: (context) => FacebookSignInProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Your App',
         initialRoute: '/login',
         onGenerateRoute: Routers.generateRoute,

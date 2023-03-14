@@ -42,7 +42,7 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Share the following link with your friends to download the app:", style: TextStyle(color: Colors.grey[300], fontSize: 18)),
+            Text("Comparte el siguiente enlace con tus amigos para descargar la aplicación:", style: TextStyle(color: Colors.grey[300], fontSize: 18)),
             SizedBox(height: 8.0),
             Container(
               decoration: BoxDecoration(
@@ -74,14 +74,14 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
                         ),
                       );
                     },
-                    child: Text("COPY", style: TextStyle(color: Color(0xFF993A84))),
+                    child: Text("Copiar", style: TextStyle(color: Color(0xFF993A84))),
                 ),
               SizedBox(width: 8.0),
               TextButton(
                 onPressed: () {
                   Share.share(defaultLink);
                   },
-                child: Text("SHARE", style: TextStyle(color: Color(0xFF993A84))),
+                child: Text("Compartir", style: TextStyle(color: Color(0xFF993A84))),
                 )
               ],
             )

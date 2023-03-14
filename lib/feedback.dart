@@ -44,7 +44,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Submit Feedback', style: TextStyle(color: Colors.white)),
+        title: const Text('Feedback del evento', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
       ),
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
@@ -54,7 +54,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Rate this event:',
+              'Evalua el evento:',
               style: TextStyle(fontSize: 24, color: Colors.white),
             ),
             const SizedBox(height: 8),
@@ -76,7 +76,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.purple),
                 ),
-                hintText: 'Leave a comment (optional)',
+                hintText: 'Cuéntanos por qué (opcional)',
                 hintStyle: const TextStyle(color: Colors.white),
               ),
               maxLines: null,
@@ -104,7 +104,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 Navigator.pop(context);
 
               } : null,
-              child: const Text('Submit Feedback'),
+              child: const Text('Enviar Feedback'),
             ),
           ],
         ),

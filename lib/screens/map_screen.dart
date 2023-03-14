@@ -372,7 +372,7 @@ void _getMarkers() async {
                   }
                 },
                       
-                      child: const  Text('Filter by Date',style:  const TextStyle(fontSize: 20,color: Colors.white,),),
+                      child: const  Text('Filtrar por fecha',style:  const TextStyle(fontSize: 20,color: Colors.white,),),
                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF993A84),),
                       ),
                     ),
