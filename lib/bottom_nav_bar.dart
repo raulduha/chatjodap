@@ -63,7 +63,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon( FontAwesomeIcons.users),
-            label: ('Social'),
+            label: ('  Social'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -17,149 +17,180 @@ class EventDetailPage extends StatelessWidget {
   final Event event;
 
   EventDetailPage({Key? key, required this.event}) : super(key: key);
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Text(event.name),
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+    appBar: AppBar(
+      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      title: Text(
+        event.name,
+        style: TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Nombre:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
+      centerTitle: true,
+    ),
+    body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('images/event_card_image.jpg'),
+                fit: BoxFit.cover,
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                event.name,
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Fecha y hora:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                '${event.date} ${event.time}',
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Descripcion:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                event.description,
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Tipo de musica:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                event.type,
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "dirección:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                event.address,
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Promotora:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                event.promotora,
-                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: Text(
-                "Link de compra:",
-                style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 15.0),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              child: GestureDetector(
-
-                onTap: () {
-                  launchUrl(Uri.parse(event.buyLink));
-                  Future.delayed(Duration(seconds: 4), () async {
-                    final action = await AlertDialogsInteractive.yesCancelDialog(context, 'Responder', 'Compraste Entrada?', 'No', 'Si', Colors.green);
-                    if (action == DialogsAction.yes) {
-                      _addHistory();
-                    }
-                  });
-                },
-
-                child: InkWell(
-                  child: Text(
-                    event.buyLink,
-                    style: const 
-                      TextStyle(color: Colors.blue,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+            height: 130,
+            margin: EdgeInsets.only(bottom: 10.0),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${event.name}: ${event.date} ${event.time}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              
-            )
-          ]
-        )
-      )
-    );
-  }
-
-
-
-
-
-
-
+                
+              ],
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Descripción:",
+                  style: TextStyle(
+                    color: Colors.grey.withOpacity(0.8),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Evento de ${event.type}. ${event.description}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                
+                SizedBox(height: 8.0),
+                Text(
+                  event.address,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Promotora:",
+                  style: TextStyle(
+                    color: Colors.grey.withOpacity(0.8),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  event.promotora,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Link de compra:",
+                  style: TextStyle(
+                    color: Colors.grey.withOpacity(0.8),
+                    fontSize:15.0,
+),
+),
+SizedBox(height: 5),
+GestureDetector(
+onTap: () {
+launchUrl(Uri.parse(event.buyLink));
+Future.delayed(Duration(seconds: 4), () async {
+final action = await AlertDialogsInteractive.yesCancelDialog(
+context,
+'Responda',
+'¿Compraste una entrada?',
+'No',
+'Si',
+Colors.green
+);
+if (action == DialogsAction.yes) {
+_addHistory();
+}
+});
+},
+child: Container(
+padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+decoration: BoxDecoration(
+color: Color(0xFF993A84),
+borderRadius: BorderRadius.circular(10),
+),
+child: Text(
+event.buyLink,
+style: TextStyle(
+color: Colors.white,
+fontSize: 16.0,
+fontWeight: FontWeight.bold,
+),
+maxLines: 5, // limits the text to two lines
+overflow: TextOverflow.ellipsis, // adds "..." if text exceeds two lines
+),
+),
+),
+],
+),
+),
+],
+),
+),
+);
+} 
 
 
   void _addHistory () async {
