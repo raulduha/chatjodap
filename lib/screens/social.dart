@@ -41,7 +41,7 @@ class _SocialPageState extends State<SocialPage>
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 child: TextField(
                   style: TextStyle(
                     color: Color.fromRGBO(28, 27, 27, 1),
@@ -55,7 +55,7 @@ class _SocialPageState extends State<SocialPage>
                       color: Color.fromRGBO(28, 27, 27, 1),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none,
                     ),
                   ),
