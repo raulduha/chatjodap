@@ -26,6 +26,7 @@ class RegistrationScreen extends StatelessWidget
 
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController lastnameTextEditingController = TextEditingController();
+  TextEditingController usernameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController repeatpasswordTextEditingController = TextEditingController();
@@ -120,6 +121,30 @@ class RegistrationScreen extends StatelessWidget
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Apellido(s)',
+                          icon: Icon(Icons.person, color: Colors.grey,),
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: usernameTextEditingController,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Nombre de Usuario',
                           icon: Icon(Icons.person, color: Colors.grey,),
                         ),
                       ),
@@ -322,11 +347,15 @@ class RegistrationScreen extends StatelessWidget
                       onPressed: () async {
                         if(nameTextEditingController.text.length < 3)
                         {
-                          displayToastMessage("El nombre debe tener mas de 3 caracteres.");
+                          displayToastMessage("El Nombre debe tener al menos 3 caracteres.");
+                        }
+                        else if(usernameTextEditingController.text.length < 2)
+                        {
+                          displayToastMessage("El Nombre de Usuario debe tener al menos caracteres.");
                         }
                         else if(!emailTextEditingController.text.contains("@"))
                         {
-                          displayToastMessage("El email no es valido.");
+                          displayToastMessage("El Email no es valido.");
                         }
                         else if(passwordTextEditingController.text.length<6)
                         {
@@ -339,7 +368,10 @@ class RegistrationScreen extends StatelessWidget
                           displayToastMessage("Las contraseñas deben coincidir");
                         }
                         else if (await checkIfEmailExists(emailTextEditingController.text)) {
-                          displayToastMessage("Email ya esta en uso");
+                          displayToastMessage("Email ya está en uso");
+                        }
+                        else if (await checkIfUsernameExists(usernameTextEditingController.text)) {
+                          displayToastMessage("Nombre de usuario ya está en uso");
                         }
                         else {
                           registerNewUser(context);
@@ -413,7 +445,7 @@ class RegistrationScreen extends StatelessWidget
 
     final User? firebaseUser  = (await _firebaseAuth.createUserWithEmailAndPassword(
     email: emailTextEditingController.text,
-    password: passwordTextEditingController.text
+    password: passwordTextEditingController.text,
   ).catchError((errMsg)
   {
     Navigator.pop(context);
@@ -428,6 +460,7 @@ class RegistrationScreen extends StatelessWidget
       "name": nameTextEditingController.text.trim(),
       "lastname": lastnameTextEditingController.text.trim(),
       "email": emailTextEditingController.text.trim(),
+      "username": usernameTextEditingController.text.trim(),
       
     };
     usersRef.child(firebaseUser.uid).set(userDataMap);
@@ -450,6 +483,21 @@ class RegistrationScreen extends StatelessWidget
 
   Future<bool> checkIfEmailExists(String email) async {
     final query = FirebaseDatabase.instance.ref().child('users').orderByChild('email').equalTo(email);
+    final DatabaseEvent event = await query.once();
+    print(event.snapshot);
+    if (event.snapshot.exists) {
+      print(true);
+      return true;
+    }
+    else {
+      print(false);
+      return false;
+    }
+    
+  }
+
+  Future<bool> checkIfUsernameExists(String username) async {
+    final query = FirebaseDatabase.instance.ref().child('users').orderByChild('username').equalTo(username);
     final DatabaseEvent event = await query.once();
     print(event.snapshot);
     if (event.snapshot.exists) {

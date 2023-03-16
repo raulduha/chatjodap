@@ -11,7 +11,6 @@ import 'package:flutter_application_1/widgets/alert_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-
 import 'package:shadow_overlay/shadow_overlay.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
 import 'package:flutter_application_1/eventFAQ.dart';
@@ -48,68 +47,78 @@ class ProfileScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.hasData &&
                           !snapshot.hasError &&
-                          snapshot.data?.snapshot.value != null) {
-                        Map<dynamic, dynamic> userData =
-                            snapshot.data?.snapshot.value as Map<dynamic, dynamic>;
+                          snapshot.data?.snapshot.value != null
+                        ) {
+                        Map<dynamic, dynamic> userData = snapshot.data?.snapshot.value as Map<dynamic, dynamic>;
+
+                        String? photoURL = userData['photoURL'];
 
                         return Column(
                           children: [
-                            Stack(
+
+                            Column(
                               children: [
-                                ShadowOverlay(
-                                  shadowWidth: 400,
-                                  shadowHeight: 250,
-                                  shadowColor: Colors.black,
-                                  child: Image.asset(
-                                    'images/profileparty.png',
-                                    height: 250,
-                                    width: 500,
-                                    fit: BoxFit.cover,
+                                const SizedBox(height: 30,),
+                                SizedBox(
+                                  width: 120,
+                                  height: 120,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    // child: Image(image: AssetImage("images/empty_profile.png")),
+
+                                    child: photoURL != null ? Image.network(photoURL, fit: BoxFit.cover)
+                                      : const Image(image: AssetImage("images/empty_profile.png"), fit: BoxFit.cover),
+                                    
                                   ),
                                 ),
-                                Column(
+
+                                const SizedBox(height: 10,),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
                                   children: [
-                                    const SizedBox(
-                                      height: 175,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          userData['name'],
-                                          style: const TextStyle(
-                                              fontSize: 30.0,
-                                              fontFamily: "Brand Bold",
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          userData['lastname'],
-                                          style: const TextStyle(
-                                              fontSize: 30.0,
-                                              fontFamily: "Brand Bold",
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
                                     Text(
-                                      userData['email'],
+                                      userData['name'],
                                       style: const TextStyle(
-                                          fontSize: 20.0,
+                                          fontSize: 30.0,
                                           fontFamily: "Brand Bold",
                                           color: Colors.white,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.bold),
                                     ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      userData['lastname'],
+                                      style: const TextStyle(
+                                          fontSize: 30.0,
+                                          fontFamily: "Brand Bold",
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+
                                   ],
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  userData['username'],
+                                  style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontFamily: "Brand Bold",
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal),
+                                ),
+
+                                // Agregar algo de Amigos
+
+
                               ],
                             ),
+
+
+                            // Comienzo de GestureDectectors
+
+
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
@@ -126,6 +135,7 @@ class ProfileScreen extends StatelessWidget {
                                 label: "Tu historial",
                               ),
                             ),
+
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
@@ -139,9 +149,31 @@ class ProfileScreen extends StatelessWidget {
                               },
                               child: _buildProfileItem(
                                 icon: Icons.edit,
-                                label: "Editar perfil",
+                                label: "Editar Perfil",
                               ),
                             ),
+
+                            
+
+
+                            // Crear página de privacidad
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigate to Tutorial page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TutorialPage(),
+                                    ),
+                                  );
+                                },
+                              child: _buildProfileItem(
+                                icon: Icons.lock,
+                                label: "Privacidad",
+                                ),
+                            ),
+
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
@@ -158,8 +190,8 @@ class ProfileScreen extends StatelessWidget {
                                 label: "Tutorial",
   
                                 ),
-                              ),
-                              const SizedBox(height: 20),
+                            ),
+                            const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
                                 // Navigate to Tutorial page
@@ -172,7 +204,7 @@ class ProfileScreen extends StatelessWidget {
                                 },
                               child: _buildProfileItem(
                                 icon: Icons.bug_report,
-                                label: "reporta un bug",
+                                label: "Reporta un bug",
   
                                 ),
                               ),
@@ -266,6 +298,8 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(height: 30),
 
 ],
+
+
 );
 } else if (snapshot.hasError) {
 return const Text("Error fetching user data");
@@ -332,45 +366,4 @@ Widget _buildProfileItem({required IconData icon, required String label}) {
     ),
   );
 }
-}
-
-
-class ShadowOverlay extends StatelessWidget {
-  final double shadowWidth;
-  final double shadowHeight;
-  final Color shadowColor;
-  final Widget child;
-
-  const ShadowOverlay({
-    Key? key,
-    required this.shadowWidth,
-    required this.shadowHeight,
-    required this.shadowColor,
-    required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(28, 27, 27,1),
-        
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor,
-            spreadRadius: 0,
-            blurRadius: 50,
-            offset: Offset(0, 0),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
-        ),
-        child: child,
-      ),
-    );
-  }
 }
