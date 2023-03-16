@@ -8,9 +8,7 @@ import 'package:flutter_application_1/screens/profile_screen.dart';
 import 'package:flutter_application_1/registrationScreen.dart';
 import 'screens/event_screen.dart';
 import 'screens/home_page.dart';
-
-
-
+import 'package:flutter_application_1/screens/social.dart';
 import 'package:flutter/material.dart';
 
 
@@ -30,6 +28,9 @@ class Routers {
         break;
       case '/events':
         page = EventsPage();
+        break;
+      case'/social':
+        page = SocialPage();
         break;
       case '/profile':
         page = ProfileScreen();

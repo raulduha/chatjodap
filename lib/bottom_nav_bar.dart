@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:flutter_application_1/screens/profile_screen.dart';
+import 'package:flutter_application_1/screens/social.dart';
 import 'package:meta/meta.dart';
 import 'screens/event_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:flutter/material.dart';
+
 
 
 class BottomNavBar extends StatefulWidget {
@@ -21,6 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   _pages = [  HomePage(),
               MapPage(),
               EventsPage(),
+              SocialPage(),
               ProfileScreen(),
             ];
 
@@ -57,6 +60,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
             label: ('Eventos'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon( FontAwesomeIcons.users),
+            label: ('  Social'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
