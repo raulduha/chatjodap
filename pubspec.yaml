@@ -64,6 +64,8 @@ dependencies:
   flutter_facebook_auth: ^5.0.7
   flutter_signin_button: ^2.0.0
   flutter_rating_bar: ^4.0.1
+  firebase_storage: ^11.0.15
+  image_picker: ^0.8.7
 
   
   
@@ -127,7 +129,9 @@ flutter:
     - images/tutorial-4.png
     - images/event_card_image.jpg
     - images/finalmarker4.png
+    - images/empty_profile.png
     - images/social.png
+
 
 
 

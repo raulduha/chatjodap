@@ -36,20 +36,24 @@ class GoogleSignInProvider extends ChangeNotifier {
 
         String name = "";
         String last_name = "";
+        String username = "";
 
         if (user!.displayName != null) {
           final display_name = user.displayName!.split(" ");
           name = display_name[0];
           last_name = display_name[1];
+          username = user.email!.split("@")[0];
         }
 
         print("firstName: $name");
         print("lastName: $last_name");
+        print("userName: $username");
 
         final Map<String, dynamic> userData = {
           'email': user.email,
           'name': name,
           'lastname': last_name,
+          'username': username
         };
 
 

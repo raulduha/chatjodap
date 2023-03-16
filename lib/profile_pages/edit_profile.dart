@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 
 class EditProfilePage extends StatelessWidget {
 
@@ -38,13 +42,48 @@ class EditProfilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
+          GestureDetector(
+            onTap: () async {
+              final imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+              if (imageFile != null) {
+                final user = FirebaseAuth.instance.currentUser;
+                final storageRef = FirebaseStorage.instance.ref().child('users/${user!.uid}/profile_picture.jpg');
+                final uploadTask = storageRef.putFile(File(imageFile.path));
+                final downloadUrl = await (await uploadTask).ref.getDownloadURL();
+                await user.updatePhotoURL(downloadUrl);
+                
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Foto de perfil actualizada de forma exitosa'),
+                ));
+
+                await _database
+                  .ref()
+                  .child('users')
+                  .child(user.uid)
+                  .update({'photoURL': downloadUrl});
+                
+
+              }
+            },
+            child: _buildEditProfileButton(icon: Icons.add_a_photo_outlined, label: "Cambiar Foto"),
+          ),
+          const SizedBox(height: 30,),
+
+          GestureDetector(
+            onTap: () {
+              
+            },
+            child: _buildEditProfileButton(icon: Icons.delete_forever_outlined, label: "Eliminar Foto"),
+          ),
+          const SizedBox(height: 30,),
+
           const Text(
-            "Edita tus datos (opcional)",
+            "Edita tu Nombre (opcional)",
             style: TextStyle(fontSize: 25.5, fontFamily: "Brand Bold", color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 50,),
+          const SizedBox(height: 30,),
 
           // Name
 
@@ -74,8 +113,7 @@ class EditProfilePage extends StatelessWidget {
           ),
 
 
-          const SizedBox(height: 50,),
-
+          const SizedBox(height: 30,),
 
           // Last Name
 
@@ -104,52 +142,39 @@ class EditProfilePage extends StatelessWidget {
               )
           ),
 
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
 
-          Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Center(
-                    child: ElevatedButton(
+          GestureDetector(
+            onTap: () async {
+              if(nameTextEditingController.text.length < 3)
+                  {
+                    displayToastMessage("Name must be atleast 3 characters.");
+                  }
+                  else if(nameTextEditingController.text.length > 10)
+                  {
+                    displayToastMessage("Name must be max. 10 characters.");
+                  }
+                  else if(lastnameTextEditingController.text.length < 3)
+                  {
+                    displayToastMessage("Lastname must be atleast 3 characters.");
+                  }
+                  else if(lastnameTextEditingController.text.length > 10)
+                  {
+                    displayToastMessage("Lastname must be max. 10 characters.");
+                  }
 
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(const Size(350, 45)),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                        backgroundColor: MaterialStateProperty.all(Color(0xFF993A84)),
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                      ),
+                  // Más validaciones
 
-                      onPressed: () async {
-                        if(nameTextEditingController.text.length < 3)
-                        {
-                          displayToastMessage("Name must be atleast 3 characters.");
-                        }
-                        else if(nameTextEditingController.text.length > 10)
-                        {
-                          displayToastMessage("Name must be max. 10 characters.");
-                        }
-                        else if(lastnameTextEditingController.text.length < 3)
-                        {
-                          displayToastMessage("Lastname must be atleast 3 characters.");
-                        }
-                        else if(lastnameTextEditingController.text.length > 10)
-                        {
-                          displayToastMessage("Lastname must be max. 10 characters.");
-                        }
-
-
-                        // Más validaciones
-
-
-
-                        else {
-                          updateUserData(context);
-                        }
-                      },
-                      child: const Text('Actualizar')),
-                  ),
+                  else {
+                    updateUserData(context);
+                  }
+            },
+            child: _buildEditProfileButton(
+              icon: Icons.edit_note,
+              label: "Actualizar Nombre",
+            ),
           ),
+
 
 
         ],
@@ -187,4 +212,45 @@ class EditProfilePage extends StatelessWidget {
 
 
 }
+
+Widget _buildEditProfileButton({required IconData icon, required String label}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+    height: 50,
+    width: 340,
+    decoration: BoxDecoration(
+      
+      borderRadius: BorderRadius.circular(15),
+      color: Color.fromRGBO(36, 36, 39, 1),
+      border: Border.all(
+        color: Color.fromRGBO(36, 36, 39, 1),
+        width: 2,
+      ),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Icon(
+              icon,
+              color: Color(0xFF993A84),
+              size: 30,
+            ),
+            const SizedBox(width: 20),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
 
