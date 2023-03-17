@@ -1,18 +1,21 @@
+import 'package:firebase_database/firebase_database.dart';
+
 class UserModel {
   String id;
   final String name;
   final String username;
   final String lastname;
   final String email;
-  //final String photoUrl;
-
+  List<String> friends; // add this property
+  
   UserModel({
     required this.id,
     required this.name,
     required this.username,
     required this.lastname,
     required this.email,
-//required this.photoUrl,
+    required this.friends,
+
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +25,10 @@ class UserModel {
       username: json['username'] ?? '',
       lastname: json['lastname'] ?? '',
       email: json['email'] ?? '',
-      //photoUrl: json['photoUrl'] ?? '',
+      friends: json['friends'] != null
+          ? List<String>.from(json['friends'])
+          : [], // parse the friends array
+
     );
   }
 
@@ -33,7 +39,18 @@ class UserModel {
       'username': username,
       'lastname': lastname,
       'email': email,
-      //'photoUrl': photoUrl,
+      'friends': friends, // include the friends array in the JSON representation
+  
     };
+  }
+  void addFriend(String friendId) {
+    if (!friends.contains(friendId)) {
+      friends.add(friendId);
+      FirebaseDatabase.instance
+          .reference()
+          .child('users')
+          .child(id)
+          .update({'friends': friends});
+    }
   }
 }

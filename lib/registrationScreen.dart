@@ -461,6 +461,8 @@ class RegistrationScreen extends StatelessWidget
       "lastname": lastnameTextEditingController.text.trim(),
       "email": emailTextEditingController.text.trim(),
       "username": usernameTextEditingController.text.trim(),
+      "friends": [], // initialize an empty list for friends
+      "friendsReq": [],
       
     };
     usersRef.child(firebaseUser.uid).set(userDataMap);
