@@ -38,64 +38,61 @@ void initState() {
     }
   });
 }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        title: Container(
-          child: Image.asset('images/social.png'),
-          height: 50,
-        ),
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: 'Tu circulo'),
-            Tab(text: 'Buscar usuarios'),
-          ],
-          indicatorColor: Color(0xFF993A84),
-        ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+    appBar: AppBar(
+      title: Container(
+        child: Image.asset('images/social.png'),
+        height: 50,
       ),
-      body: TabBarView(
+      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      bottom: TabBar(
         controller: _tabController,
-        children: [
-          Center(child: Text('Tu circulo')),
-          Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                child: TextField(
-                  style: TextStyle(
+        tabs: [
+          Tab(text: 'Tu circulo'),
+          Tab(text: 'Buscar usuarios'),
+        ],
+        indicatorColor: Color(0xFF993A84),
+      ),
+    ),
+    body: TabBarView(
+      controller: _tabController,
+      children: [
+        Center(child: Text('Tu circulo')),
+        Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: TextField(
+                style: TextStyle(
+                  color: Color.fromRGBO(28, 27, 27, 1),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  prefixIcon:
+                      Icon(Icons.search, color: Color.fromRGBO(28, 27, 27, 1)),
+                  hintText: 'Buscar usuarios',
+                  hintStyle: TextStyle(
                     color: Color.fromRGBO(28, 27, 27, 1),
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon:
-                        Icon(Icons.search, color: Color.fromRGBO(28, 27, 27, 1)),
-                    hintText: 'Buscar usuarios',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(28, 27, 27, 1),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),
-              Expanded(
-  child:ListView.builder(
+            ),
+            Expanded(
+              child: ListView.builder(
   itemCount: _searchQuery.isEmpty
       ? _users.length
       : _users
@@ -109,35 +106,45 @@ void initState() {
             .where((user) =>
                 user.username.toLowerCase().contains(_searchQuery.toLowerCase()))
             .elementAt(index);
-    return ListTile(
-      leading: Image.asset(
-        'images/empty_profile.png',
-        fit: BoxFit.cover,
-        height: 50,
-        width: 50,
-      ),
-      title: Text(
-        user.username,
-        style: TextStyle(color: Colors.white),
-      ),
-      subtitle: Text(
-        user.name,
-        style: TextStyle(color: Colors.white),
-      ),
+    return Row(
+      children: [
+        Expanded(
+          child: ListTile(
+            leading: Image.asset(
+              'images/empty_profile.png',
+              fit: BoxFit.cover,
+              height: 50,
+              width: 50,
+            ),
+            title: Text(
+              user.username,
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              user.name,
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.add, color: Colors.white),
+              onPressed: () {
+                // Add the user to the circle
+              },
+            ),
+          ),
+        ),
+      ],
     );
   },
 )
 
-
-),
-
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+    
   @override
   void dispose() {
     _tabController.dispose();
