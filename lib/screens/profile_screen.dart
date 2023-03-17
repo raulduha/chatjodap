@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_application_1/loginScreen.dart';
 import 'package:flutter_application_1/profile_pages/edit_profile.dart';
+import 'package:flutter_application_1/profile_pages/friends_page.dart';
 import 'package:flutter_application_1/profile_pages/history.dart';
+import 'package:flutter_application_1/profile_pages/privacy.dart';
 import 'package:flutter_application_1/profile_pages/tutorial.dart';
 import 'package:flutter_application_1/widgets/alert_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -109,8 +111,6 @@ class ProfileScreen extends StatelessWidget {
                                       fontWeight: FontWeight.normal),
                                 ),
 
-                                // Agregar algo de Amigos
-
 
                               ],
                             ),
@@ -139,6 +139,23 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
+                                // Navigate to Friends page
+                                Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(
+                                    builder: (context) => FriendsPage(),
+                                  )
+                                );
+                              },
+                              child: _buildProfileItem(
+                                icon: Icons.group_sharp,
+                                label: "Amigos",
+                              ),
+                            ),
+
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
                                 // Navigate to Edit Profile page
                                 Navigator.push(
                                   context,
@@ -160,14 +177,15 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () {
-                                // Navigate to Tutorial page
+                                // Navigate to Privacy page
+                                
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => TutorialPage(),
+                                    builder: (context) => PrivacyPage(),
                                     ),
-                                  );
-                                },
+                                );
+                              },
                               child: _buildProfileItem(
                                 icon: Icons.lock,
                                 label: "Privacidad",
