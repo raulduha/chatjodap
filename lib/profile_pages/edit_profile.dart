@@ -50,10 +50,11 @@ class EditProfilePage extends StatelessWidget {
                 final storageRef = FirebaseStorage.instance.ref().child('users/${user!.uid}/profile_picture.jpg');
                 final uploadTask = storageRef.putFile(File(imageFile.path));
                 final downloadUrl = await (await uploadTask).ref.getDownloadURL();
+                displayToastMessage("Actualizando...");
                 await user.updatePhotoURL(downloadUrl);
-                
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Foto de perfil actualizada de forma exitosa'),
+                  behavior: SnackBarBehavior.floating,
                 ));
 
                 await _database
@@ -70,8 +71,24 @@ class EditProfilePage extends StatelessWidget {
           const SizedBox(height: 30,),
 
           GestureDetector(
-            onTap: () {
-              
+            onTap: () async {
+              final user = FirebaseAuth.instance.currentUser;
+              final storageRef = FirebaseStorage.instance.ref().child('users/${user!.uid}/profile_picture.jpg');
+              await storageRef.delete();
+              await user.updatePhotoURL(null);
+
+              displayToastMessage("Eliminando...");
+              final databaseRef = FirebaseDatabase.instance.ref().child('users').child(user.uid).child('photoURL');
+              await databaseRef.remove();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Foto de perfil eliminada de forma exitosa'),
+                  behavior: SnackBarBehavior.floating,
+                  
+                ),
+              );
+
             },
             child: _buildEditProfileButton(icon: Icons.delete_forever_outlined, label: "Eliminar Foto"),
           ),
