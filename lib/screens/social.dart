@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+import 'package:flutter_application_1/user_model.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/mi_circulo.dart';
+import 'package:flutter_application_1/buscar_usuarios.dart';
 
 class SocialPage extends StatefulWidget {
   @override
@@ -37,37 +44,8 @@ class _SocialPageState extends State<SocialPage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: Text('Tu circulo')),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                child: TextField(
-                  style: TextStyle(
-                    color: Color.fromRGBO(28, 27, 27, 1),
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: Icon(Icons.search, color: Color.fromRGBO(28, 27, 27, 1)),
-                    hintText: 'Buscar usuarios',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(28, 27, 27, 1),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: Text('Buscar usuarios'),
-                ),
-              ),
-            ],
-          ),
+          MiCirculo(),
+          BuscarUsuarios(),
         ],
       ),
     );
