@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_application_1/user_model.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/mi_circulo.dart';
-import 'package:flutter_application_1/buscar_usuarios.dart';
+import 'package:flutter_application_1/social_part/mi_circulo.dart';
+import 'package:flutter_application_1/social_part/friends_page.dart';
 
 class SocialPage extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class _SocialPageState extends State<SocialPage>
         controller: _tabController,
         children: [
           MiCirculo(),
-          BuscarUsuarios(),
+          FriendsPage(),
         ],
       ),
     );

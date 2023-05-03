@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/feedback.dart';
+import 'package:flutter_application_1/profile_pages/feedback.dart';
 
 class HistoryCard extends StatefulWidget {
   final String eventName;
