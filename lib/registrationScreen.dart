@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
-import 'package:flutter_application_1/terms.dart';
+import 'package:flutter_application_1/profile_pages/terms.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';

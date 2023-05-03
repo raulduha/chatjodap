@@ -15,10 +15,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shadow_overlay/shadow_overlay.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
-import 'package:flutter_application_1/eventFAQ.dart';
-import 'package:flutter_application_1/reportBug.dart';
-import 'package:flutter_application_1/inviteFriend.dart';
-import 'package:flutter_application_1/terms.dart';
+import 'package:flutter_application_1/profile_pages/eventFAQ.dart';
+import 'package:flutter_application_1/profile_pages/reportBug.dart';
+import 'package:flutter_application_1/profile_pages/inviteFriend.dart';
+import 'package:flutter_application_1/profile_pages/terms.dart';
 
 
 
