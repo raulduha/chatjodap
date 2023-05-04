@@ -5,7 +5,7 @@ import 'package:flutter_application_1/user_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/social_part/mi_circulo.dart';
-import 'package:flutter_application_1/social_part/friends_page.dart';
+import 'package:flutter_application_1/social_part/search_users.dart';
 
 class SocialPage extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class _SocialPageState extends State<SocialPage>
         controller: _tabController,
         children: [
           MiCirculo(),
-          FriendsPage(),
+          SearchUsersPage(),
         ],
       ),
     );

@@ -48,18 +48,18 @@ class GoogleSignInProvider extends ChangeNotifier {
         print("firstName: $name");
         print("lastName: $last_name");
         print("userName: $username");
-
+        final ref = FirebaseDatabase.instance.ref().child('users').child(user.uid);
+        String ref_string = ref.toString();
+        print("this is th ref value: $ref_string");
+        print(user.uid);
         final Map<String, dynamic> userData = {
           'email': user.email,
           'name': name,
           'lastname': last_name,
-          'username': username
+          'username': username,
+          'id': user.uid,
+          'friends': []
         };
-
-
-        final ref = FirebaseDatabase.instance.ref().child('users').child(user.uid);
-        String ref_string = ref.toString();
-        print("this is th ref value: $ref_string");
         await ref.set(userData);
         
       }

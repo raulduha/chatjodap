@@ -456,16 +456,19 @@ class RegistrationScreen extends StatelessWidget
   if(firebaseUser != null) 
   {
     
+    print("El id:");
+    print(firebaseUser.uid);
     Map userDataMap = {
       "name": nameTextEditingController.text.trim(),
       "lastname": lastnameTextEditingController.text.trim(),
       "email": emailTextEditingController.text.trim(),
       "username": usernameTextEditingController.text.trim(),
       "friends": [], // initialize an empty list for friends
-      "friendsReq": [],
-      
+      "id": firebaseUser.uid
     };
     usersRef.child(firebaseUser.uid).set(userDataMap);
+
+    //agregar uid al nodo
     displayToastMessage("Felicidades, tu cuenta ha sido creada.");
 
     Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);

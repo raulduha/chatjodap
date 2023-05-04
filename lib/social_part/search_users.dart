@@ -5,15 +5,15 @@ import 'profile_page.dart';
 
 
 
-class FriendsPage extends StatefulWidget {
+class SearchUsersPage extends StatefulWidget {
   final String? currentUserID;
 
-  FriendsPage({this.currentUserID});
+  SearchUsersPage({this.currentUserID});
 
   @override
-  _FriendsPageState createState() => _FriendsPageState();
+  _SearchUsersPageState createState() => _SearchUsersPageState();
 }
-class _FriendsPageState extends State<FriendsPage> {
+class _SearchUsersPageState extends State<SearchUsersPage> {
   final TextEditingController _searchController = TextEditingController();
   final DatabaseReference _userRef = FirebaseDatabase.instance.reference().child('users');
   final DatabaseReference _friendReqRef = FirebaseDatabase.instance.reference().child('friend_requests');
@@ -54,6 +54,7 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void _searchForUser(String query) {
+    print("SEARCH");
     _userRef.orderByChild('username').startAt(query).endAt(query + '\uf8ff').once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       if (snapshot.value != null) {
@@ -70,10 +71,13 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void _sendFriendRequest(String? friendID) {
-  if (friendID != null) {
-    _friendReqRef.child(friendID).push().set(widget.currentUserID!);
+    print(friendID);
+    print("Puta");
+    if (friendID != null) {
+      print(friendID);
+      _friendReqRef.child(friendID).push().set(widget.currentUserID!);
+    }
   }
-}
 
 
   void _acceptFriendRequest(String friendID, String requestId) {
@@ -90,9 +94,6 @@ class _FriendsPageState extends State<FriendsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Friends'),
-      ),
       body: Column(
         children: [
           Padding(
@@ -100,9 +101,9 @@ class _FriendsPageState extends State<FriendsPage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search for friends',
+                hintText: 'Busca por nombre de usuario',
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     _searchForUser(_searchController.text);
                   },
@@ -117,6 +118,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     itemCount: _searchResults.length,
                     itemBuilder: (context, index) {
                       var user = _searchResults[index];
+                      
                       bool isFriend = _friends.contains(user['id']);
                       bool hasSentRequest = _friendRequests.any((element) => element['id'] == user['id']);
                       bool hasReceivedRequest = _friendRequests
@@ -154,9 +156,10 @@ class _FriendsPageState extends State<FriendsPage> {
                                 ? Text('Friends')
                                 : ElevatedButton(
                                     onPressed: () {
+                                      
                                       _sendFriendRequest(user['id']);
                                     },
-                                    child: Text('Add Friend'),
+                                    child: Text('Enviar solicitud'),
                                   ),
                     onTap: () {
   Navigator.push(
