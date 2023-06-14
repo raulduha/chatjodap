@@ -1,24 +1,23 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/provider/google_sign_in.dart';
+
 import 'package:flutter_application_1/profile_pages/terms.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+
 import 'main.dart';
 import 'loginScreen.dart';
-import 'screens/map_screen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_application_1/widgets/progressDiaalog.dart';
-import 'package:flutter_application_1/widgets/divider.dart';
+
 import 'package:division/division.dart';
-import 'router.dart';
+
 import 'package:intl/intl.dart';
 import 'package:age_calculator/age_calculator.dart';
 
 
 
+// ignore: must_be_immutable
 class RegistrationScreen extends StatelessWidget 
 {
 

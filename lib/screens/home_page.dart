@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:location/location.dart' as location;
+
 import '../event_detail_page.dart';
 import '../event_getter.dart';
 import 'dart:math';

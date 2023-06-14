@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:geocode/geocode.dart';
+
 import '../event_getter.dart';
-import 'package:location/location.dart';
+
 
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:geolocator/geolocator.dart' as geo;
 import 'home_page.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:location/location.dart';
+
 import 'dart:math';
 class EventsPage extends StatefulWidget {
   @override
@@ -50,6 +50,7 @@ class _EventsPageState extends State<EventsPage> {
   });
 
   // REQUEST PERMISO
+  // ignore: unused_local_variable
   final permission = await geo.Geolocator.requestPermission();
 
   currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);

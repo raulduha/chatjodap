@@ -1,12 +1,12 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:flutter_application_1/screens/profile_screen.dart';
 import 'package:flutter_application_1/screens/social.dart';
-import 'package:meta/meta.dart';
+
 import 'screens/event_screen.dart';
-import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -54,7 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: ('Inicio'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map),
+            icon: Icon(Icons.place),
             label: ('Mapa'),
           ),
           BottomNavigationBarItem(
@@ -66,7 +66,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: ('  Social'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(FontAwesomeIcons.userCircle),
             label: ('Perfil'),
           ),
         ],

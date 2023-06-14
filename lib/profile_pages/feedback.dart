@@ -1,9 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/profile_pages/history.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/widgets/historyCard.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FeedbackPage extends StatefulWidget {

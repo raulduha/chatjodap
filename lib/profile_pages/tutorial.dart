@@ -1,7 +1,6 @@
 import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 
 class TutorialPage extends StatefulWidget {
   @override

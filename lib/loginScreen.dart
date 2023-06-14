@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/provider/facebook_sign_in.dart';
+
 import 'package:flutter_application_1/screens/forgot_pw_page.dart';
 import 'main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'registrationScreen.dart';
-import 'package:flutter_application_1/widgets/progressDiaalog.dart';
+
 import 'package:division/division.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget
 {
 

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/alert_dialog.dart';
-import 'screens/event_screen.dart';
+
 import 'event_getter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
