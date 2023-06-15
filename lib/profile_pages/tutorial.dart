@@ -16,19 +16,20 @@ class _TutorialPageState extends State<TutorialPage> {
     return Scaffold(
       backgroundColor: rgb(28, 27, 27),
 
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          children: [
-            Container(
-              child: Image.asset('images/tutorial.png',
-              height: 40,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Tutorial',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
 
       body: Column(
         

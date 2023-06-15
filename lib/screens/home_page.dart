@@ -83,8 +83,24 @@ Widget build(BuildContext context) {
         backgroundColor: Color.fromRGBO(36, 36, 39, 1),
         elevation: 0, // Remove the blue line below the title
         title: Container(
-          child: Image.asset('images/home_page3.png'),
-          height: 50,
+  height: 50,
+  color: const Color.fromRGBO(36, 36, 39, 1),
+  padding: const EdgeInsets.only(left: 16),
+  child: Row(
+    children: [
+      Text(
+        'INICIO',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFF993A84),
+        ),
+      ),
+    ],
+  ),
+
+
+
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(40.0),

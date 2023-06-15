@@ -41,20 +41,20 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          children: [
-              
-            Container(
-              child: Image.asset('images/history.png',
-              height: 40,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Historial',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
 
       backgroundColor: const Color(0xFF1C1B1B),
       resizeToAvoidBottomInset: false,

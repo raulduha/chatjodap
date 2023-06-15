@@ -6,19 +6,20 @@ class TermsAndConditions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          children: [
-            Container(
-              child: Image.asset('images/terms.png',
-              height: 40,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Terminos y condiciones',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),

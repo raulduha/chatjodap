@@ -22,20 +22,20 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          children: [
-            
-            Container(
-              child: Image.asset('images/edit_profile.png',
-              height: 40,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Editar Perfil',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
       backgroundColor: rgb(28, 27, 27),
       resizeToAvoidBottomInset: false,
       body: Column(

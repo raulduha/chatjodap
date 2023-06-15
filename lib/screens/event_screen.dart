@@ -94,14 +94,27 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+      backgroundColor: const Color.fromRGBO(36, 36, 39, 1),
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+        backgroundColor: const Color.fromRGBO(36, 36, 39, 1),
         
         title: Container(
-            child: Image.asset('images/events_page3.png'),
-            height: 50,
+  height: 50,
+  color: const Color.fromRGBO(36, 36, 39, 1),
+  padding: const EdgeInsets.only(left: 16),
+  child: Row(
+    children: [
+      Text(
+        'Eventos Cercanos',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFF993A84),
+        ),
+      ),
+    ],
   ),
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -110,8 +123,8 @@ class _EventsPageState extends State<EventsPage> {
             child: TextField(
               decoration: const InputDecoration(
                 hintText: 'Busca eventos',
-                hintStyle: TextStyle(color: Color.fromRGBO(28, 27, 27, 1)),
-                prefixIcon: Icon(Icons.search, color:Color.fromRGBO(28, 27, 27, 1)),
+                hintStyle: TextStyle(color: Color.fromRGBO(36, 36, 39, 1)),
+                prefixIcon: Icon(Icons.search, color:Color.fromRGBO(36, 36, 39, 1)),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: const OutlineInputBorder(

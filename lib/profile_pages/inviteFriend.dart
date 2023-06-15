@@ -23,20 +23,20 @@ class _InviteFriendPageState extends State<InviteFriendPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              child: Image.asset('images/invite.png',
-              height: 50,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Invite',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
