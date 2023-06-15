@@ -4,7 +4,7 @@ import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:flutter_application_1/screens/profile_screen.dart';
 import 'package:flutter_application_1/screens/social.dart';
-
+import 'package:typicons_flutter/typicons_flutter.dart';
 import 'screens/event_screen.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,11 +50,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(FontAwesomeIcons.home),
             label: ('Inicio'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.place),
+            icon: Icon(Typicons.location_outline),
             label: ('Mapa'),
           ),
           BottomNavigationBarItem(

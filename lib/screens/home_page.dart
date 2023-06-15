@@ -78,9 +78,9 @@ Widget build(BuildContext context) {
   return DefaultTabController(
     length: 2,
     child: Scaffold(
-      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      backgroundColor: Color.fromRGBO(36, 36, 39, 1),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+        backgroundColor: Color.fromRGBO(36, 36, 39, 1),
         elevation: 0, // Remove the blue line below the title
         title: Container(
           child: Image.asset('images/home_page3.png'),
@@ -245,7 +245,7 @@ Widget build(BuildContext context) {
         Container(
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           decoration: BoxDecoration(
-            color: Color.fromRGBO(28, 27, 27, 1),
+            color: Color.fromRGBO(36, 36, 39, 1),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Row(
