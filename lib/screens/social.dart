@@ -25,13 +25,26 @@ class _SocialPageState extends State<SocialPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      backgroundColor: Color.fromRGBO(36, 36, 39, 1),
       appBar: AppBar(
         title: Container(
-          child: Image.asset('images/social.png'),
-          height: 50,
+  height: 50,
+  color: const Color.fromRGBO(36, 36, 39, 1),
+  padding: const EdgeInsets.only(left: 16),
+  child: Row(
+    children: [
+      Text(
+        'SOCIAL',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFF993A84),
         ),
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
+      ),
+    ],
+  ),
+        ),
+        backgroundColor: Color.fromRGBO(36, 36, 39, 1),
         bottom: TabBar(
           controller: _tabController,
           tabs: [

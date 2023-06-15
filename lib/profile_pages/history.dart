@@ -1,8 +1,6 @@
-import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/widgets/historyCard.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -19,10 +17,11 @@ class _HistoryPageState extends State<HistoryPage> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   final List _events = [];
+  // ignore: unused_field
   bool _isLoading = true;
   bool _getHistoryCalled = false;
 
-  List _feedbacks = [];
+
   bool isHistoryCardEnabled = true;
 
   void _handleButtonEnabledChanged(bool isEnabled) {
@@ -42,20 +41,20 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(28, 27, 27, 1),
-        title: Row(
-          children: [
-              
-            Container(
-              child: Image.asset('images/history.png',
-              height: 40,
-              
-              )
-            ),
-          ],
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Historial',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
       ),
+    ),
+  ),
+),
 
       backgroundColor: const Color(0xFF1C1B1B),
       resizeToAvoidBottomInset: false,

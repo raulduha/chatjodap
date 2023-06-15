@@ -16,10 +16,20 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        title: const Text("Amigos"),
-          backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Amigos',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
+      ),
+    ),
+  ),
+),
         
       
       resizeToAvoidBottomInset: true,

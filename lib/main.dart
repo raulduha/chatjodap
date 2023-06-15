@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/facebook_sign_in.dart';
 import 'package:flutter_application_1/provider/google_sign_in.dart';
-import 'package:flutter_application_1/screens/map_screen.dart';
+
 import 'package:provider/provider.dart';
 import 'router.dart';
 import 'registrationScreen.dart';
 import 'loginScreen.dart';
-import 'screens/map_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 void main() async{

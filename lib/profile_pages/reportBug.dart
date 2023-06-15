@@ -1,4 +1,3 @@
-import 'package:division/division.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,19 +16,20 @@ class _ReportBugPageState extends State<ReportBugPage> {
       color:const  Color.fromRGBO(28, 27, 27, 1),
       child: Scaffold(
         backgroundColor:const  Color.fromRGBO(28, 27, 27, 1),
-        appBar: AppBar(
-          backgroundColor:const Color.fromRGBO(28, 27, 27, 1),
-          title: Row(
-            children: [
-              Container(
-                child: Image.asset('images/reportbug.png',
-                height: 50,
-                
-                )
-              ),
-            ],
-          ),
-        ),
+              appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Reporta un bug',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
+      ),
+    ),
+  ),
+),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(

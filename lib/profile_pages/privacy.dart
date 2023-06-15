@@ -8,10 +8,20 @@ class PrivacyPage extends StatelessWidget {
     return Scaffold(
 
     backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-      appBar: AppBar(
-        title: const Text("Privacidad"),
-          backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
-        ),
+            appBar: AppBar(
+  backgroundColor: const Color.fromRGBO(28, 27, 27, 1),
+  title: Container(
+    padding: const EdgeInsets.only(left: 16),
+    child: Text(
+      'Privacidad',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF993A84),
+      ),
+    ),
+  ),
+),
         
       
       resizeToAvoidBottomInset: true,
