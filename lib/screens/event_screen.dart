@@ -162,7 +162,8 @@ class _EventsPageState extends State<EventsPage> {
                   eventLocation: filteredSearch[index].address,
                   eventDate: '${filteredSearch[index].date} ${filteredSearch[index].starttime}', 
                   event: filteredSearch[index], 
-                  eventage: filteredSearch[index].mage,
+                  eventMage: filteredSearch[index].mage,
+                  eventFage: filteredSearch[index].fage,
                 );
               
               },

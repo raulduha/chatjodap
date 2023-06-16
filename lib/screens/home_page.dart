@@ -207,7 +207,8 @@ Widget build(BuildContext context) {
                         eventDate: '',
                         eventLocation: '',
                         eventName: '',
-                        eventage: _recommendedEvents[index].mage,
+                        eventMage: _recommendedEvents[index].mage,
+                        eventFage: _recommendedEvents[index].fage,
                       );
                     } else {
                       return Container();
@@ -230,7 +231,8 @@ Widget build(BuildContext context) {
                       eventDate: '',
                       eventLocation: '',
                       eventName: '',
-                      eventage: _popularEvents[index].mage,
+                      eventMage: _popularEvents[index].mage,
+                      eventFage: _popularEvents[index].fage,
                     );
                   },
                 ),
@@ -238,12 +240,14 @@ Widget build(BuildContext context) {
   );
 }
 }
+// ignore: must_be_immutable
 class EventCard extends StatelessWidget {
   final Event event;
   final String eventName;
   final String eventLocation;
   final String eventDate;
-  final String eventage;
+  final String eventFage;
+  final String eventMage;
   late double eventDis;
 
   EventCard({
@@ -251,119 +255,135 @@ class EventCard extends StatelessWidget {
     required this.eventLocation,
     required this.eventDate,
     required this.event,
-    required this.eventage,
+    required this.eventFage,
+    required this.eventMage,
   });
-@override
-Widget build(BuildContext context) {
-  return GestureDetector(
-    onTap: () => Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => EventDetailPage(event: event),
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => EventDetailPage(event: event),
+        ),
       ),
-    ),
-    child: Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(36, 36, 39, 1),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 90.0,
-                width: 90.0,
-                margin: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: DecorationImage(
-                    image: AssetImage('images/event_card_image.jpg'),
-                    fit: BoxFit.cover,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(36, 36, 39, 1),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 90.0,
+                  width: 90.0,
+                  margin: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: DecorationImage(
+                      image: AssetImage('images/event_card_image.jpg'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 10.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 5.0),
-                    Text(
-                      event.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.location_on,
-                          color: Color.fromARGB(255, 181, 181, 181),
+                SizedBox(width: 10.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 5.0),
+                      Text(
+                        event.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(width: 10.0),
-                        Expanded(
-                          child: Text(
-                            event.address.split(',').sublist(0, 2).join(','),
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            color: Color.fromARGB(255, 181, 181, 181),
+                          ),
+                          SizedBox(width: 10.0),
+                          Expanded(
+                            child: Text(
+                              event.address.split(',').sublist(0, 2).join(','),
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 181, 181, 181),
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.calendar_today,
+                            color: Color.fromARGB(255, 181, 181, 181),
+                          ),
+                          SizedBox(width: 10.0),
+                          Text(
+                            event.date,
                             style: TextStyle(
                               color: Color.fromARGB(255, 181, 181, 181),
                               fontSize: 15.0,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.0),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.calendar_today,
-                          color: Color.fromARGB(255, 181, 181, 181),
-                        ),
-                        SizedBox(width: 10.0),
-                        Text(
-                          event.date,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 181, 181, 181),
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        Spacer(),
-                        Container(
-                          height: 21,
-                          width: 28,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF993A84),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              eventage,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                              ),
+                          Spacer(),
+                          Text(
+                            'M: ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Text(
+                            eventFage,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 6.0),
+                          Text(
+                            'H: ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Text(
+                            eventMage,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Container(
-          height: 1.0,
-          color: const Color.fromARGB(255, 69, 68, 68),
-        ),
-      ],
-    ),
-  );
-}
+          Container(
+            height: 1.0,
+            color: const Color.fromARGB(255, 69, 68, 68),
+          ),
+        ],
+      ),
+    );
+  }
 }
