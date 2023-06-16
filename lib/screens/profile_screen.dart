@@ -22,40 +22,50 @@ import 'package:flutter_application_1/profile_pages/terms.dart';
 
 
 
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
 
-class ProfileScreen extends StatelessWidget {
+class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseDatabase _database = FirebaseDatabase.instance;
+  double circleTopPosition = -150;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: const Color.fromRGBO(36, 36, 39, 1),
       resizeToAvoidBottomInset: true,
-      
       body: Stack(
-        
-  children: [
-    
-    // Purple Circle
-    Positioned(
-      
-      top: -150, // Set the top position of the circle manually
-      left: (MediaQuery.of(context).size.width - 400) / 2, // Adjust the left position as needed
-      child: Container(
-        width: 400, // Set the width of the circle manually
-        height: 400, // Set the height of the circle manually
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: const Color(0xFF993A84),
-        ),
-      ),
-    ),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
+        children: [
+          // Purple Circle
+          Positioned(
+            top: circleTopPosition, // Use a dynamic value for top position
+            left: (MediaQuery.of(context).size.width - 400) / 2,
+            child: Container(
+              width: 400,
+              height: 400,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFF993A84),
+              ),
+            ),
+          ),
+          NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollUpdateNotification) {
+                setState(() {
+                  // Update the top position of the circle based on the scroll offset
+                  circleTopPosition -= notification.scrollDelta!;
+                });
+              }
+              return true;
+            },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
                 StreamBuilder<User?>(
                   stream: _auth.authStateChanges(),
                   builder: (context, snapshot) {
@@ -333,13 +343,15 @@ class ProfileScreen extends StatelessWidget {
                   );
                 }
                 return const SizedBox.shrink();
-              },
+  })]),
+              ),
             ),
-          ],
-        ),
+          
+        ],
       ),
-    ]));
+    );
   }
+}
 
   Widget _buildProfileItem({required IconData icon, required String label}) {
     return Container(
@@ -378,4 +390,4 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-}
+
