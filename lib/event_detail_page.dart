@@ -67,7 +67,7 @@ class EventDetailPage extends StatelessWidget {
         ),
         TextSpan(text: '    '),
         TextSpan(
-          text: '${event.date}, ${event.time}hrs',
+          text: '${event.date}, ${event.starttime}hrs',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18.0,
@@ -237,7 +237,7 @@ void _addHistory () async {
       Map<String, dynamic> eventData = {
         "name": event.name,
         "date": event.date,
-        "time": event.time,
+        "time": event.starttime,
         "address": event.address,
         "latitude": event.lati,
         "longitude": event.longi,
