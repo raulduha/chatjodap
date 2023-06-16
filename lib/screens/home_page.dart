@@ -63,16 +63,21 @@ class _HomePageState extends State<HomePage> {
     }));
 
     setState(() {
-      _recommendedEvents = events
-          .where((event) => event.promocionar != null)
-          .toList()
-        ..sort((event1, event2) => event1.date.compareTo(event2.date));
-      _popularEvents = events
-          .where((event) => event.promocionar == "si")
-          .toList()
-        ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
-    });
-  }
+    _recommendedEvents = events
+        .where((event) => event.promocionar != null)
+        .toList()
+      ..sort((event1, event2) => event1.date.compareTo(event2.date));
+
+    // Filter out events that have already occurred
+    DateTime currentDate = DateTime.now();
+    _popularEvents = events
+        .where((event) =>
+            event.promocionar == "si" &&
+            DateTime.parse(event.date).isAfter(currentDate))
+        .toList()
+      ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
+  });
+}
 @override
 Widget build(BuildContext context) {
   return DefaultTabController(
@@ -202,7 +207,7 @@ Widget build(BuildContext context) {
                         eventDate: '',
                         eventLocation: '',
                         eventName: '',
-                        eventage: _recommendedEvents[index].age,
+                        eventage: _recommendedEvents[index].mage,
                       );
                     } else {
                       return Container();
@@ -225,7 +230,7 @@ Widget build(BuildContext context) {
                       eventDate: '',
                       eventLocation: '',
                       eventName: '',
-                      eventage: _popularEvents[index].age,
+                      eventage: _popularEvents[index].mage,
                     );
                   },
                 ),

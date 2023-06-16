@@ -83,9 +83,9 @@ class _EventsPageState extends State<EventsPage> {
           event.address.toLowerCase().contains(searchText.toLowerCase()) ||
           event.date.toLowerCase().contains(searchText.toLowerCase()) ||
           event.promotora.toLowerCase().contains(searchText.toLowerCase()) ||
-          event.age.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+          event.mage.toString().toLowerCase().contains(searchText.toLowerCase()) ||
           event.type.toString().toLowerCase().contains(searchText.toLowerCase()) ||
-          event.time.toLowerCase().contains(searchText.toLowerCase()));
+          event.starttime.toLowerCase().contains(searchText.toLowerCase()));
     }).toList();
   });
 }
@@ -152,7 +152,7 @@ class _EventsPageState extends State<EventsPage> {
               itemBuilder: (context, index) {
                 filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
                     .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
-                var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].time}");
+                var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].starttime}");
                 var currentDateTime = DateTime.now();
                 if (eventDateTime.millisecondsSinceEpoch < currentDateTime.millisecondsSinceEpoch) {
                   return Container();
@@ -160,9 +160,9 @@ class _EventsPageState extends State<EventsPage> {
                 return EventCard (
                   eventName: filteredSearch[index].name,
                   eventLocation: filteredSearch[index].address,
-                  eventDate: '${filteredSearch[index].date} ${filteredSearch[index].time}', 
+                  eventDate: '${filteredSearch[index].date} ${filteredSearch[index].starttime}', 
                   event: filteredSearch[index], 
-                  eventage: filteredSearch[index].age,
+                  eventage: filteredSearch[index].mage,
                 );
               
               },
