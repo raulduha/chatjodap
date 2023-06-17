@@ -164,6 +164,7 @@ class _EventsPageState extends State<EventsPage> {
                   event: filteredSearch[index], 
                   eventMage: filteredSearch[index].mage,
                   eventFage: filteredSearch[index].fage,
+                  eventPic: filteredSearch[index].picture,
                 );
               
               },

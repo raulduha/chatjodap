@@ -40,9 +40,11 @@ class EventDetailPage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: AssetImage('images/event_card_image.jpg'),
-                  fit: BoxFit.cover,
-                ),
+                      image: event.picture != null
+                          ? NetworkImage(event.picture)
+                          : const AssetImage('images/event_card_image.jpg') as ImageProvider<Object>,
+                      fit: BoxFit.cover,
+                    ),
               ),
               height: 130,
               margin: EdgeInsets.only(bottom: 10.0),

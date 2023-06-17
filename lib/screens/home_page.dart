@@ -209,6 +209,7 @@ Widget build(BuildContext context) {
                         eventName: '',
                         eventMage: _recommendedEvents[index].mage,
                         eventFage: _recommendedEvents[index].fage,
+                        eventPic: _recommendedEvents[index].picture,
                       );
                     } else {
                       return Container();
@@ -233,6 +234,7 @@ Widget build(BuildContext context) {
                       eventName: '',
                       eventMage: _popularEvents[index].mage,
                       eventFage: _popularEvents[index].fage,
+                      eventPic: _popularEvents[index].picture,
                     );
                   },
                 ),
@@ -248,6 +250,7 @@ class EventCard extends StatelessWidget {
   final String eventDate;
   final String eventFage;
   final String eventMage;
+  final String eventPic;
   late double eventDis;
 
   EventCard({
@@ -257,6 +260,7 @@ class EventCard extends StatelessWidget {
     required this.event,
     required this.eventFage,
     required this.eventMage,
+    required this.eventPic,
   });
 
   @override
@@ -277,10 +281,6 @@ class EventCard extends StatelessWidget {
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-
-
-
-              
               children: <Widget>[
                 Container(
                   height: 90.0,
@@ -289,11 +289,14 @@ class EventCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: AssetImage('images/event_card_image.jpg'),
+                      image: event.picture != null
+                          ? NetworkImage(event.picture)
+                          : const AssetImage('images/event_card_image.jpg') as ImageProvider<Object>,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
+
                 SizedBox(width: 10.0),
                 Expanded(
                   child: Column(
