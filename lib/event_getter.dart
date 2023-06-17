@@ -14,14 +14,14 @@ class Event {
   final String mage;
   final String fage;
   late String promotoraId;
-  late String picture;
+  final String picture;
   late double lati;
   late double longi;
   late double dis;
 
 
 
-  Event({required this.name, required this.address, required this.date,required this.starttime,required this.endtime, required this.description, required this.type,required this.promocionar,required this.promotora,required this.buyLink,required this.mage,required this.fage  });
+  Event({required this.name, required this.address, required this.date,required this.starttime,required this.endtime, required this.description, required this.type,required this.promocionar,required this.promotora,required this.buyLink,required this.mage,required this.fage, required this.picture  });
 
   factory Event.fromJson(Map<dynamic, dynamic> json) {
     return Event(
@@ -36,8 +36,8 @@ class Event {
       promotora: json['promotora'],
       buyLink: json['buylink'],
       mage: json['male_age'],
-      fage: json['fem_age']
-      
+      fage: json['fem_age'],
+      picture: json['picture'],
 
 
     );
