@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-
-
+import 'dart:async';
 import '../event_detail_page.dart';
 import '../event_getter.dart';
 import 'dart:math';
@@ -22,7 +21,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadData();
+
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false; // Set loading state to false after 2 seconds
+      });
+    });
   }
+  bool _isLoading = true;
 
   double haversine(double lat1, double lon1, double lat2, double lon2) {
     double dlat = (lat2 - lat1) * (pi / 180);
@@ -62,14 +68,27 @@ class _HomePageState extends State<HomePage> {
       return event;
     }));
 
-    setState(() {
-    _recommendedEvents = events
-        .where((event) => event.promocionar != null)
-        .toList()
-      ..sort((event1, event2) => event1.date.compareTo(event2.date));
-
-    // Filter out events that have already occurred
+  setState(() {
+    // Filter out events by conditions
     DateTime currentDate = DateTime.now();
+    double maxDistance = 1000000000000000.0; // Maximum distance in kilometer
+
+    // Recommended
+    _recommendedEvents = events
+        .where((event) =>
+            DateTime.parse(event.date).isAfter(currentDate) &&
+            event.dis <= maxDistance)
+            
+        .toList()
+      ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
+      
+      //   .where((event) => event.promocionar != null)
+      //   .toList()
+      // ..sort((event1, event2) => event1.date.compareTo(event2.date));
+        
+      
+
+    // Popular
     _popularEvents = events
         .where((event) =>
             event.promocionar == "si" &&
@@ -77,35 +96,34 @@ class _HomePageState extends State<HomePage> {
         .toList()
       ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
   });
+
+
 }
-@override
-Widget build(BuildContext context) {
-  return DefaultTabController(
-    length: 2,
-    child: Scaffold(
-      backgroundColor: Color.fromRGBO(36, 36, 39, 1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(36, 36, 39, 1),
-        elevation: 0, // Remove the blue line below the title
-        title: Container(
-  height: 50,
-  color: const Color.fromRGBO(36, 36, 39, 1),
-  padding: const EdgeInsets.only(left: 16),
-  child: Row(
-    children: [
-      Text(
-        'INICIO',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: const Color(0xFF993A84),
-        ),
-      ),
-    ],
-  ),
-
-
-
+    @override
+    Widget build(BuildContext context) {
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          backgroundColor: Color.fromRGBO(36, 36, 39, 1),
+          appBar: AppBar(
+            backgroundColor: Color.fromRGBO(36, 36, 39, 1),
+            elevation: 0, // Remove the blue line below the title
+            title: Container(
+              height: 50,
+              color: const Color.fromRGBO(36, 36, 39, 1),
+              padding: const EdgeInsets.only(left: 16),
+              child: Row(
+                children: const [
+                  Text(
+                    'INICIO',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF993A84),
+                    ),
+                  ),
+                ],
+              ),
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(40.0),
@@ -179,15 +197,22 @@ Widget build(BuildContext context) {
           ),
         ),
       ),
+
+
+      
       body: _showUpcoming
           ? (_recommendedEvents.isEmpty)
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFF993A84),
-                    ),
-                  ),
-                )
+              ? _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(0xFF993A84),
+                        ),
+                      ),
+                    )
+                  : const Center(
+                      child: Text("No events found near by"),
+                    )
               : ListView.builder(
                   itemCount: _recommendedEvents.length,
                   itemBuilder: (context, index) {
@@ -195,35 +220,32 @@ Widget build(BuildContext context) {
                         DateTime.parse(_recommendedEvents[index].date);
                     DateTime currentDate = DateTime.now();
 
-                    // Compare year, month, and day
-                    if (eventDate.year > currentDate.year ||
-                        (eventDate.year == currentDate.year &&
-                            eventDate.month > currentDate.month) ||
-                        (eventDate.year == currentDate.year &&
-                            eventDate.month == currentDate.month &&
-                            eventDate.day >= currentDate.day)) {
-                      return EventCard(
-                        event: _recommendedEvents[index],
-                        eventDate: '',
-                        eventLocation: '',
-                        eventName: '',
-                        eventMage: _recommendedEvents[index].mage,
-                        eventFage: _recommendedEvents[index].fage,
-                        eventPic: _recommendedEvents[index].picture,
-                      );
-                    } else {
-                      return Container();
-                    }
+                    return EventCard(
+                      event: _recommendedEvents[index],
+                      eventDate: '',
+                      eventLocation: '',
+                      eventName: '',
+                      eventMage: _recommendedEvents[index].mage,
+                      eventFage: _recommendedEvents[index].fage,
+                      eventPic: _recommendedEvents[index].picture,
+                    );
+
                   },
                 )
+
+
           : (_popularEvents.isEmpty)
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFF993A84),
-                    ),
-                  ),
-                )
+              ? _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(0xFF993A84),
+                        ),
+                      ),
+                    )
+                  : const Center(
+                      child: Text("No events found"),
+                    )
               : ListView.builder(
                   itemCount: _popularEvents.length,
                   itemBuilder: (context, index) {
@@ -238,10 +260,13 @@ Widget build(BuildContext context) {
                     );
                   },
                 ),
+
     ),
   );
 }
 }
+
+
 // ignore: must_be_immutable
 class EventCard extends StatelessWidget {
   final Event event;

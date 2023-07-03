@@ -25,49 +25,65 @@ class _EventsPageState extends State<EventsPage> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false; // Set loading state to false after 2 seconds
+      });
+    });
     _getEvents();
+    
   }
+  bool _isLoading = true;
   
   double haversine(double lat1, double lon1, double lat2, double lon2) {
-  double dlat = (lat2 - lat1) * (pi / 180);
-  double dlon = (lon2 - lon1) * (pi / 180);
-  double a = pow(sin(dlat / 2), 2) +
-      cos(lat1 * (pi / 180)) * cos(lat2 * (pi / 180)) * pow(sin(dlon / 2), 2);
-  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-  double d = 6371 * c;
-  return d;
-}
+    double dlat = (lat2 - lat1) * (pi / 180);
+    double dlon = (lon2 - lon1) * (pi / 180);
+    double a = pow(sin(dlat / 2), 2) +
+        cos(lat1 * (pi / 180)) * cos(lat2 * (pi / 180)) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double d = 6371 * c;
+    return d;
+  }
   void _getEvents() async {
-  FirebaseDatabase database = FirebaseDatabase.instance;
-  final eventsRef = database.ref().child("events");
-  final eventsSnapshot = await eventsRef.once();
-  Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
-  List<Event> events = [];
+    FirebaseDatabase database = FirebaseDatabase.instance;
+    final eventsRef = database.ref().child("events");
+    final eventsSnapshot = await eventsRef.once();
+    Map<dynamic, dynamic> eventsMap = (eventsSnapshot.snapshot.value) as Map<dynamic, dynamic>;
+    List<Event> events = [];
 
-  eventsMap.forEach((key, value) {
-    final event = Event.fromJson(value);
-    events.add(event);
-  });
+    eventsMap.forEach((key, value) {
+      final event = Event.fromJson(value);
+      events.add(event);
+    });
 
-  // REQUEST PERMISO
-  // ignore: unused_local_variable
-  final permission = await geo.Geolocator.requestPermission();
+    // REQUEST PERMISO
+    // ignore: unused_local_variable
+    final permission = await geo.Geolocator.requestPermission();
 
-  currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
-  List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
-    final locations = await geocoding.locationFromAddress(event.address);
-    final location = locations.first;
-    event.lati = location.latitude;
-    event.longi = location.longitude;
-    return event;
-  }));
+    currentPosition = await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+    List<Event> eventsWithCoordinates = await Future.wait(events.map((event) async {
+      final locations = await geocoding.locationFromAddress(event.address);
+      final location = locations.first;
+      event.lati = location.latitude;
+      event.longi = location.longitude;
+      return event;
+    }));
 
-  setState(() {
-      events = eventsWithCoordinates
-        ..sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
-            .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
-      originalEvents = events;
-      filteredSearch = events;
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      if (eventsWithCoordinates.isEmpty) {
+        // No events fetched
+        // Display empty message or handle as desired
+        // For example, you can show a snackbar or set a flag to indicate no events found
+        filteredSearch = [];
+      } else {
+        events = eventsWithCoordinates
+          ..sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+              .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+        originalEvents = events;
+        filteredSearch = events;
+      }
     });
   }
 
@@ -143,33 +159,63 @@ class _EventsPageState extends State<EventsPage> {
               },
             ),
           ),
-          Expanded(
+          // Expanded(
             
-            child: filteredSearch.isEmpty 
-              ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),)))
-              : ListView.builder(
-              itemCount: filteredSearch.length,
-              itemBuilder: (context, index) {
-                filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
-                    .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
-                var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].starttime}");
-                var currentDateTime = DateTime.now();
-                if (eventDateTime.millisecondsSinceEpoch < currentDateTime.millisecondsSinceEpoch) {
-                  return Container();
-                }
-                return EventCard (
-                  eventName: filteredSearch[index].name,
-                  eventLocation: filteredSearch[index].address,
-                  eventDate: '${filteredSearch[index].date} ${filteredSearch[index].starttime}', 
-                  event: filteredSearch[index], 
-                  eventMage: filteredSearch[index].mage,
-                  eventFage: filteredSearch[index].fage,
-                  eventPic: filteredSearch[index].picture,
-                );
+          //   child: filteredSearch.isEmpty 
+          //     ? Center(child: filteredSearch == events ? const Text("No events found") : const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF993A84),)))
+          //     : ListView.builder(
+          //     itemCount: filteredSearch.length,
+          //     itemBuilder: (context, index) {
+          //       filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+          //           .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+          //       var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].starttime}");
+          //       var currentDateTime = DateTime.now();
+          //       if (eventDateTime.millisecondsSinceEpoch < currentDateTime.millisecondsSinceEpoch) {
+          //         return Container();
+          //       }
+          //       return EventCard (
+          //         eventName: filteredSearch[index].name,
+          //         eventLocation: filteredSearch[index].address,
+          //         eventDate: '${filteredSearch[index].date} ${filteredSearch[index].starttime}', 
+          //         event: filteredSearch[index], 
+          //         eventMage: filteredSearch[index].mage,
+          //         eventFage: filteredSearch[index].fage,
+          //         eventPic: filteredSearch[index].picture,
+          //       );
               
-              },
-            ),
+          //     },
+          //   ),
+          // ),
+
+          Expanded(
+            child: filteredSearch.isEmpty
+                ? Center(
+                    child: const Text("No events found"),
+                  )
+                : ListView.builder(
+                    itemCount: filteredSearch.length,
+                    itemBuilder: (context, index) {
+                      filteredSearch.sort((event1, event2) => haversine(currentPosition.latitude, currentPosition.longitude, event1.lati, event1.longi)
+                          .compareTo(haversine(currentPosition.latitude, currentPosition.longitude, event2.lati, event2.longi)));
+                      var eventDateTime = DateTime.parse("${filteredSearch[index].date} ${filteredSearch[index].starttime}");
+                      var currentDateTime = DateTime.now();
+                      if (eventDateTime.millisecondsSinceEpoch < currentDateTime.millisecondsSinceEpoch) {
+                        return Container();
+                      }
+                      return EventCard(
+                        eventName: filteredSearch[index].name,
+                        eventLocation: filteredSearch[index].address,
+                        eventDate: '${filteredSearch[index].date} ${filteredSearch[index].starttime}',
+                        event: filteredSearch[index],
+                        eventMage: filteredSearch[index].mage,
+                        eventFage: filteredSearch[index].fage,
+                        eventPic: filteredSearch[index].picture,
+                      );
+                    },
+                  ),
           ),
+
+
         ],
       ),
     );
