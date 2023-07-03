@@ -1,4 +1,6 @@
 
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
@@ -68,34 +70,27 @@ class _HomePageState extends State<HomePage> {
       return event;
     }));
 
-  setState(() {
-    // Filter out events by conditions
-    DateTime currentDate = DateTime.now();
-    double maxDistance = 1000000000000000.0; // Maximum distance in kilometer
+setState(() {
+  // Filter out events by conditions
+  DateTime currentDate = DateTime.now();
+  double maxDistance = 1000000.0; // Maximum distance in kilometers
 
-    // Recommended
-    _recommendedEvents = events
-        .where((event) =>
-            DateTime.parse(event.date).isAfter(currentDate) &&
-            event.dis <= maxDistance)
-            
-        .toList()
-      ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
-      
-      //   .where((event) => event.promocionar != null)
-      //   .toList()
-      // ..sort((event1, event2) => event1.date.compareTo(event2.date));
-        
-      
+  // Recommended
+  _recommendedEvents = events
+      .where((event) =>
+          DateTime.parse(event.date).isAfter(currentDate.subtract(Duration(days: 1))) &&
+          event.dis <= maxDistance)
+      .toList()
+    ..sort((event1, event2) => DateTime.parse(event1.date).compareTo(DateTime.parse(event2.date)));
 
-    // Popular
-    _popularEvents = events
-        .where((event) =>
-            event.promocionar == "si" &&
-            DateTime.parse(event.date).isAfter(currentDate))
-        .toList()
-      ..sort((event1, event2) => event1.dis.compareTo(event2.dis));
-  });
+  // Popular
+  _popularEvents = events
+      .where((event) =>
+          (event.promocionar == "si") &&
+          DateTime.parse(event.date).isAfter(currentDate.subtract(Duration(days: 1))))
+      .toList()
+    ..sort((event1, event2) => DateTime.parse(event1.date).compareTo(DateTime.parse(event2.date)));
+});
 
 
 }
@@ -267,7 +262,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-// ignore: must_be_immutable
+
 class EventCard extends StatelessWidget {
   final Event event;
   final String eventName;
@@ -350,6 +345,7 @@ class EventCard extends StatelessWidget {
                               style: TextStyle(
                                 color: Color.fromARGB(255, 181, 181, 181),
                                 fontSize: 15.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -367,7 +363,9 @@ class EventCard extends StatelessWidget {
                             event.date,
                             style: TextStyle(
                               color: Color.fromARGB(255, 181, 181, 181),
+                              
                               fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Spacer(),
@@ -376,6 +374,7 @@ class EventCard extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -392,6 +391,7 @@ class EventCard extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
