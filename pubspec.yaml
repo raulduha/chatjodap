@@ -103,7 +103,7 @@ flutter:
     - images/popularevents.png
     - images/binario1.png
     - images/profileparty.png
-    - images/finalmarker3.png
+
     - images/markerballfinal.png
     - images/events_page.png
     - images/home_page.png
@@ -129,9 +129,10 @@ flutter:
     - images/tutorial-3.png
     - images/tutorial-4.png
     - images/event_card_image.jpg
-    - images/finalmarker4.png
+
     - images/empty_profile.png
     - images/social.png
+    - images/finalani.png
 
 
 

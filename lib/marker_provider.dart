@@ -17,7 +17,7 @@ class MarkerProvider {
 
   
   Future<List<Marker>> getMarkersFromAddresses(List<String> addresses, List<String> names, List<String> date) async {
-    final byteData = await rootBundle.load("images/finalmarker4.png");
+    final byteData = await rootBundle.load("images/finalani.png");
     final image = Uint8List.view(byteData.buffer);
     
     final markers = <Marker>[];
