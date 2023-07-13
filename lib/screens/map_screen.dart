@@ -33,10 +33,19 @@ class _MapPageState extends State<MapPage> {
     DateTime filterDate = DateTime.now();
     List<Marker> filteredMarkers = [];
     
+    final TextEditingController searchController = TextEditingController();
+    bool isSearchBarVisible = false;
+    FocusNode searchFocusNode = FocusNode();
+
+@override
+  void dispose() {
+    searchController.dispose();
+    searchFocusNode.dispose();
+    super.dispose();
+  }
 
 
-
-  Future<void> _getCurrentLocation() async {
+  void _getCurrentLocation() async {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       currentPosition = position;
 
@@ -55,27 +64,33 @@ class _MapPageState extends State<MapPage> {
 
 
 
-
   @override
   void initState() {
     super.initState();
-    _initializeMap();
+    
+    
+    _getMarkers();
+    _getCurrentLocation();
+    markers = filteredMarkers;
+    
+    
+    
   }
+Widget buildSearchBar() {
+  return TextField(
+    controller: searchController,
+    decoration: InputDecoration(
+      hintText: 'Search addresses',
+      border: InputBorder.none,
+      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+    ),
+    onSubmitted: (value) {
+      // TODO: Perform search based on the entered value
+    },
+  );
+}
 
-
-  void _initializeMap() {
-    _getCurrentLocation().then((_) {
-      _getMarkers().then((_) {
-        final defaultDate = DateTime.now();
-        _filterMarkers(defaultDate);
-      });
-    });
-  }
-
-
-  
-
-Future<void> _getMarkers() async {
+void _getMarkers() async {
     // Retrieve events data from Firebase
     final eventsSnapshot = await _database.ref().child("events").once();
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
@@ -99,12 +114,10 @@ Future<void> _getMarkers() async {
       markers = await markerProvider.getMarkersFromAddresses(addresses, names, dates);
       filteredMarkers = markers;
       setState(() {
-        filteredMarkers = markers;
+      
       });
       final defaultDate = DateTime.now();
       _filterMarkers(defaultDate);
-
-      
   
 }
   void _filterMarkers(DateTime date) {
@@ -112,20 +125,21 @@ Future<void> _getMarkers() async {
         
       filterDate = date;
       filteredMarkers = markers.where((markers) {  
-        // get the timestamp of the event date in the marker and compare it to the selected date
-        String eventDate;
-        if (markers.infoWindow.snippet != null) {
-          eventDate = markers.infoWindow.snippet!;
-        } else {
-          eventDate = "Unknown";
-        }
-        final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
-        
-        return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
+      // get the timestamp of the event date in the marker and compare it to the selected date
+      String eventDate;
+      if (markers.infoWindow.snippet != null) {
+        eventDate = markers.infoWindow.snippet!;
+      } else {
+        eventDate = "Unknown";
+      }
+      final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
+      
+      return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
 
-      }).toList();
-    });
-  }
+    }).toList();
+    
+  });
+}
   
   @override
   Widget build(BuildContext context) {
@@ -134,6 +148,21 @@ Future<void> _getMarkers() async {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(36, 36, 39, 1),
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                isSearchBarVisible = !isSearchBarVisible;
+                if (isSearchBarVisible) {
+                  FocusScope.of(context).requestFocus(searchFocusNode);
+                } else {
+                  searchController.clear();
+                }
+              });
+            },
+          ),
+        ],
         backgroundColor: const Color.fromRGBO(36, 36, 39, 1),
         
         title: Container(
@@ -170,6 +199,7 @@ Future<void> _getMarkers() async {
           zoomGesturesEnabled: true,
           zoomControlsEnabled: true,
           onMapCreated: (GoogleMapController controller)
+          
 
           {
             _controllerGoogleMap.complete(controller);
@@ -351,6 +381,7 @@ Future<void> _getMarkers() async {
           },
           ),
           
+
           Align(
             alignment: Alignment.bottomCenter,
             
@@ -388,7 +419,7 @@ Future<void> _getMarkers() async {
                     if (selectedDate != null) {
                     _filterMarkers(selectedDate);
                     setState(() {
-                      filterDate = selectedDate;
+                    filterDate = selectedDate;
                     
                     });
                   }
@@ -400,12 +431,32 @@ Future<void> _getMarkers() async {
                     ),
                   ),
                   
-                )
+                ),
+                // Search ,
+                if (isSearchBarVisible) buildSearchBar2(),
               ],
+              
             )
           );
-        }
-      }
+        } 
+    Widget buildSearchBar2() {
+    return Container(
+      color: Colors.white,
+      child: TextField(
+        controller: searchController,
+        decoration: InputDecoration(
+          hintText: 'Search addresses',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+        ),
+        onSubmitted: (value) {
+          // TODO: Perform search based on the entered value
+        },
+      ),
+    );
+  }
+}
+      
       
   
       
