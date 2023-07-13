@@ -36,7 +36,7 @@ class _MapPageState extends State<MapPage> {
 
 
 
-  void _getCurrentLocation() async {
+  Future<void> _getCurrentLocation() async {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       currentPosition = position;
 
@@ -55,19 +55,27 @@ class _MapPageState extends State<MapPage> {
 
 
 
+
   @override
   void initState() {
     super.initState();
-    
-    
-    _getMarkers();
-    _getCurrentLocation();
-    markers = filteredMarkers;
-    
-    
-    
+    _initializeMap();
   }
-void _getMarkers() async {
+
+
+  void _initializeMap() {
+    _getCurrentLocation().then((_) {
+      _getMarkers().then((_) {
+        final defaultDate = DateTime.now();
+        _filterMarkers(defaultDate);
+      });
+    });
+  }
+
+
+  
+
+Future<void> _getMarkers() async {
     // Retrieve events data from Firebase
     final eventsSnapshot = await _database.ref().child("events").once();
     final eventsData = eventsSnapshot.snapshot.value as Map<dynamic, dynamic>;
@@ -91,10 +99,12 @@ void _getMarkers() async {
       markers = await markerProvider.getMarkersFromAddresses(addresses, names, dates);
       filteredMarkers = markers;
       setState(() {
-      
+        filteredMarkers = markers;
       });
       final defaultDate = DateTime.now();
       _filterMarkers(defaultDate);
+
+      
   
 }
   void _filterMarkers(DateTime date) {
@@ -102,21 +112,20 @@ void _getMarkers() async {
         
       filterDate = date;
       filteredMarkers = markers.where((markers) {  
-      // get the timestamp of the event date in the marker and compare it to the selected date
-      String eventDate;
-      if (markers.infoWindow.snippet != null) {
-        eventDate = markers.infoWindow.snippet!;
-      } else {
-        eventDate = "Unknown";
-      }
-      final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
-      
-      return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
+        // get the timestamp of the event date in the marker and compare it to the selected date
+        String eventDate;
+        if (markers.infoWindow.snippet != null) {
+          eventDate = markers.infoWindow.snippet!;
+        } else {
+          eventDate = "Unknown";
+        }
+        final eventTimestamp = DateTime.parse(eventDate).millisecondsSinceEpoch;
+        
+        return eventTimestamp >= date.millisecondsSinceEpoch && eventTimestamp < date.add(const Duration(days: 1)).millisecondsSinceEpoch;
 
-    }).toList();
-    
-  });
-}
+      }).toList();
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -379,7 +388,7 @@ void _getMarkers() async {
                     if (selectedDate != null) {
                     _filterMarkers(selectedDate);
                     setState(() {
-                    filterDate = selectedDate;
+                      filterDate = selectedDate;
                     
                     });
                   }
