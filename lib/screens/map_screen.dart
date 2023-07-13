@@ -81,34 +81,53 @@ class _MapPageState extends State<MapPage> {
         contentPadding: EdgeInsets.symmetric(horizontal: 16),
       ),
       onSubmitted: (value) {
-        _placeTemporaryMarker(value);
+        _placeSearchMarker(value);
       },
     );
   }
 
-  void _placeTemporaryMarker(String address) async {
-    if (address.isNotEmpty) {
-      List<Location> locations = await locationFromAddress(address);
+void _placeSearchMarker(String address) async {
+  if (address.isNotEmpty) {
+    List<Location> locations = await locationFromAddress(address);
 
-      if (locations.isNotEmpty) {
-        Location location = locations.first;
-        LatLng latLng = LatLng(location.latitude!, location.longitude!);
+    if (locations.isNotEmpty) {
+      Location location = locations.first;
+      LatLng latLng = LatLng(location.latitude, location.longitude);
 
-        // Create a temporary marker
-        Marker temporaryMarker = Marker(
-          markerId: MarkerId('temporaryMarker'),
-          position: latLng,
-        );
+      // Create a temporary marker
+      Marker searchMarker = Marker(
+        markerId: MarkerId('searchMarker'),
+        position: latLng,
+      );
 
-        setState(() {
-          markers = [temporaryMarker];
-        });
+      setState(() {
+        markers = [searchMarker];
+      });
 
-        // Move the camera to the temporary marker's position
-        newGoogleMapController.animateCamera(CameraUpdate.newLatLng(latLng));
-      }
+      // Move the camera to the temporary marker's position
+      newGoogleMapController.animateCamera(CameraUpdate.newLatLng(latLng));
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Invalid address or unable to retrieve coordinates.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
+}
+
 
   void _getMarkers() async {
     final eventsSnapshot = await _database.ref().child("events").once();
@@ -293,20 +312,22 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  Widget buildSearchBar2() {
-    return Container(
-      color: Colors.white,
-      child: TextField(
-        controller: searchController,
-        decoration: InputDecoration(
-          hintText: 'Search addresses',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-        ),
-        onSubmitted: (value) {
-          _placeTemporaryMarker(value);
-        },
+Widget buildSearchBar2() {
+  return Container(
+    color: Colors.white,
+    child: TextField(
+      controller: searchController,
+      decoration: InputDecoration(
+        
+        hintText: 'Search addresses',
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16),
       ),
-    );
-  }
+      onEditingComplete: () {
+        _placeSearchMarker(searchController.text);
+      },
+    ),
+  );
+}
+
 }
